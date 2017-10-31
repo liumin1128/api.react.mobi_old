@@ -5,6 +5,9 @@ class QiniuController {
   async token(ctx) {
     ctx.body = getQiniuToken();
   }
+  async verifyPhone(ctx) {
+    ctx.body = getQiniuToken();
+  }
   async fetch(ctx) {
     const imgUrl = await fetchToQiniu('http://wx.qlogo.cn/mmhead/Q3auHgzwzM5xTOljjQicyDtZ3uyfQpCaT79ial5KibNZiac9WnXBjFT0Sg/0');
     ctx.body = imgUrl;

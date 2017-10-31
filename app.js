@@ -50,7 +50,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', oauth.routes())
   .post('/user/login', User.login)
-  .post('/register', User.register)
+  .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
   .post('/test', User.register)
   .post('/article/new', Article.new)

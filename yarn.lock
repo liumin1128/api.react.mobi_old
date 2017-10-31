@@ -2,6 +2,44 @@
 # yarn lockfile v1
 
 
+"@alicloud/dybaseapi@^1.0.0":
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/@alicloud/dybaseapi/download/@alicloud/dybaseapi-1.0.0.tgz#552edd0990f90dbd69d40237cdfeffc366d0a1f5"
+  dependencies:
+    "@alicloud/pop-core" "^1.3.3"
+
+"@alicloud/dysmsapi@^1.0.0":
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/@alicloud/dysmsapi/download/@alicloud/dysmsapi-1.0.0.tgz#712ddd7ecff5c063537a3c304867d2eae02ffc95"
+  dependencies:
+    "@alicloud/pop-core" "^1.3.3"
+
+"@alicloud/mns@^1.0.0-beta4":
+  version "1.0.0-beta5"
+  resolved "http://registry.npm.taobao.org/@alicloud/mns/download/@alicloud/mns-1.0.0-beta5.tgz#aea60984f6715bbc9f7ea2f8aaef844f241f4b68"
+  dependencies:
+    debug "^2.6.3"
+    httpx "^2.1.1"
+    kitx "^1.2.0"
+    xml2js "^0.4.17"
+
+"@alicloud/pop-core@^1.3.3":
+  version "1.5.0"
+  resolved "http://registry.npm.taobao.org/@alicloud/pop-core/download/@alicloud/pop-core-1.5.0.tgz#b0f44b216237ee278d4dde245f287c94daffd68d"
+  dependencies:
+    httpx "^2.1.2"
+    json-bigint "^0.2.3"
+    kitx "^1.2.1"
+    xml2js "^0.4.17"
+
+"@alicloud/sms-sdk@^1.0.2":
+  version "1.0.2"
+  resolved "http://registry.npm.taobao.org/@alicloud/sms-sdk/download/@alicloud/sms-sdk-1.0.2.tgz#8842ed88bc88e55a9deaf28ba5b2c872aa48f5c1"
+  dependencies:
+    "@alicloud/dybaseapi" "^1.0.0"
+    "@alicloud/dysmsapi" "^1.0.0"
+    "@alicloud/mns" "^1.0.0-beta4"
+
 abbrev@1:
   version "1.1.0"
   resolved "https://registry.npmjs.org/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"
@@ -724,6 +762,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bignumber.js@^4.0.0:
+  version "4.1.0"
+  resolved "http://registry.npm.taobao.org/bignumber.js/download/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
+
 binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
@@ -1059,7 +1101,7 @@ debug@2.6.8, debug@^2.2.0, debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@^2.6.0:
+debug@^2.6.0, debug@^2.6.3:
   version "2.6.9"
   resolved "http://registry.npm.taobao.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -1790,6 +1832,12 @@ http-signature@~1.1.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
+httpx@^2.1.1, httpx@^2.1.2:
+  version "2.1.2"
+  resolved "http://registry.npm.taobao.org/httpx/download/httpx-2.1.2.tgz#59aec158ad68df0aad368a729b25f22a8dbfb114"
+  dependencies:
+    debug "^2.2.0"
+
 humanize-ms@^1.2.0, humanize-ms@^1.2.1:
   version "1.2.1"
   resolved "http://registry.npm.taobao.org/humanize-ms/download/humanize-ms-1.2.1.tgz#c46e3159a293f6b896da29316d8b6fe8bb79bbed"
@@ -2090,6 +2138,12 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
 
+json-bigint@^0.2.3:
+  version "0.2.3"
+  resolved "http://registry.npm.taobao.org/json-bigint/download/json-bigint-0.2.3.tgz#118d7f6ff1d38659f19f94cf73e64a75a3f988a8"
+  dependencies:
+    bignumber.js "^4.0.0"
+
 json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
@@ -2187,6 +2241,10 @@ kind-of@^4.0.0:
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-4.0.0.tgz#20813df3d712928b207378691a45066fae72dd57"
   dependencies:
     is-buffer "^1.1.5"
+
+kitx@^1.2.0, kitx@^1.2.1:
+  version "1.3.0"
+  resolved "http://registry.npm.taobao.org/kitx/download/kitx-1.3.0.tgz#ab3ee7c598d2b1d629fd55568f868c4440c200ea"
 
 koa-bodyparser@^4.2.0:
   version "4.2.0"
@@ -3210,6 +3268,10 @@ safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
+sax@>=0.6.0:
+  version "1.2.4"
+  resolved "http://registry.npm.taobao.org/sax/download/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
+
 semver-diff@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/semver-diff/-/semver-diff-2.1.0.tgz#4bbb8437c8d37e4b0cf1a68fd726ec6d645d6d36"
@@ -3680,6 +3742,17 @@ x-xss-protection@1.0.0:
 xdg-basedir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
+
+xml2js@^0.4.17:
+  version "0.4.19"
+  resolved "http://registry.npm.taobao.org/xml2js/download/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~9.0.1"
+
+xmlbuilder@~9.0.1:
+  version "9.0.4"
+  resolved "http://registry.npm.taobao.org/xmlbuilder/download/xmlbuilder-9.0.4.tgz#519cb4ca686d005a8420d3496f3f0caeecca580f"
 
 xtend@^4.0.1:
   version "4.0.1"

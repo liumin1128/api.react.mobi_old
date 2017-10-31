@@ -2,13 +2,18 @@
 // import { SECRET } from '../../config';
 import { User } from '../../mongo/modals';
 import { getUserToken } from '../../utils/jwt';
+import { sentSMS } from '../../utils/sms';
 
 class UserController {
   // 用户注册
   async register(ctx) {
-    const { user } = ctx;
-    console.log(user);
-    ctx.body = user;
+    const { phone } = ctx.request.body;
+    console.log('phone');
+    console.log(phone);
+    const aaa = await sentSMS(18629974148, 'amor08');
+    console.log('aaa');
+    console.log(aaa);
+    ctx.body = phone;
   }
   // 获取用户信息
   async getUserInfo(ctx) {
@@ -30,9 +35,10 @@ class UserController {
 
     if (password === user.password) {
       const token = await getUserToken(user._id);
-      console.log('token');
-      console.log(token);
-      ctx.body = token;
+      ctx.body = {
+        token,
+        user,
+      };
     } else {
       ctx.throw(403, '用户名或密码不正确');
     }
