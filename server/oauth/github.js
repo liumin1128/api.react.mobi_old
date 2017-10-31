@@ -35,12 +35,14 @@ class Github {
       let oauth = await Oauth.findOne({ from: 'github', 'data.login': userinfo.login });
 
       if (!oauth) {
+        console.log('不存在');
         // 如果不存在则创建新用户，并保存该用户的第三方登录信息
         const { avatar_url, name } = userinfo;
 
         // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(avatar_url);
-
+        console.log('avatarUrl');
+        console.log(avatarUrl);
         const user = await User.create({ avatarUrl, nickName: name });
         // await client.setAsync(user._id, user);
         oauth = await Oauth.create({ from: 'github', data: userinfo, user });
