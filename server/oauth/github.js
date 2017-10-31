@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
 import github from '../../config/github';
 import fetch from '../../utils/fetch';
 import { User, Oauth } from '../../mongo/modals';
-import { DOMAIN, SECRET } from '../../config';
+import { DOMAIN } from '../../config';
 import { fetchToQiniu } from '../../utils/qiniu';
+import { getUserToken } from '../../utils/jwt';
 
 // import { client } from '../../utils/redis';
 
@@ -46,7 +46,7 @@ class Github {
         oauth = await Oauth.create({ from: 'github', data: userinfo, user });
       }
       // 生成token（用户身份令牌）
-      const token = await jwt.sign({ data: oauth.user }, SECRET, { expiresIn: '7d' });
+      const token = await getUserToken(oauth.user);
       // 重定向页面到用户登录页，并返回token
       ctx.redirect(`${DOMAIN}/login?token=${token}`);
     } catch (error) {

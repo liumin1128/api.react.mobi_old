@@ -1,6 +1,7 @@
 // import jwt from 'jsonwebtoken';
 // import { SECRET } from '../../config';
 import { User } from '../../mongo/modals';
+import { getUserToken } from '../../utils/jwt';
 
 class UserController {
   // 用户注册
@@ -20,10 +21,21 @@ class UserController {
 
   // 用户登录
   async login(ctx) {
-    console.log(ctx.state);
-    console.log('ctx.state.user');
-    console.log(ctx.state.user);
-    ctx.body = 'login';
+    const params = ctx.request.body;
+    const { password } = params;
+
+    delete params.password;
+
+    const user = await User.findOne(params);
+
+    if (password === user.password) {
+      const token = await getUserToken(user._id);
+      console.log('token');
+      console.log(token);
+      ctx.body = token;
+    } else {
+      ctx.throw(403, '用户名或密码不正确');
+    }
   }
 
   // 用户退出

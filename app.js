@@ -20,7 +20,7 @@ const router = new Router();
 
 const port = process.env.NODE_ENV === 'production' ? 3101 : PORT;
 
-mongoose.connect(LOCAL ? 'mongodb://localhost/apiReactMobi' : 'mongodb://react:lol970568830@localhost:27000/react', {
+mongoose.connect(true ? 'mongodb://localhost:27017/apiReactMobi' : 'mongodb://react:lol970568830@localhost:27000/react', {
   useMongoClient: true,
 });
 mongoose.set('debug', true);
@@ -46,7 +46,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
 router
   .use('/oauth', oauth.routes())
-  .get('/user/login', User.login)
+  .post('/user/login', User.login)
   .post('/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
   .post('/test', User.register)

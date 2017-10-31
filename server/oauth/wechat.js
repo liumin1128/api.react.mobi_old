@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
 import wechat from '../../config/wechat';
 import fetch from '../../utils/fetch';
 import { User, Oauth } from '../../mongo/modals';
-import { DOMAIN, SECRET } from '../../config';
+import { DOMAIN } from '../../config';
 import { fetchToQiniu } from '../../utils/qiniu';
+import { getUserToken } from '../../utils/jwt';
 
 class WeChat {
   // 用户注册
@@ -48,7 +48,7 @@ class WeChat {
       oauth = await Oauth.create({ from: 'wechat', data: userinfo, user });
     }
     // 生成token（用户身份令牌）
-    const token = await jwt.sign({ data: oauth.user }, SECRET, { expiresIn: '7d' });
+    const token = await getUserToken(oauth.user);
     // 重定向页面到用户登录页，并返回token
     ctx.redirect(`${DOMAIN}/login?token=${token}`);
   }
