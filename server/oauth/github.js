@@ -35,7 +35,7 @@ class Github {
       let oauth = await Oauth.findOne({ from: 'github', 'data.login': userinfo.login });
 
       if (!oauth) {
-        console.log('不存在');
+        console.log('新用户注册');
         // 如果不存在则创建新用户，并保存该用户的第三方登录信息
         const { avatar_url, name } = userinfo;
 
