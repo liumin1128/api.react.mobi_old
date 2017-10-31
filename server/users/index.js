@@ -20,6 +20,9 @@ class UserController {
 
   // 用户登录
   async login(ctx) {
+    console.log(ctx.state);
+    console.log('ctx.state.user');
+    console.log(ctx.state.user);
     ctx.body = 'login';
   }
 

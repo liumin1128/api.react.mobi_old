@@ -38,6 +38,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/say\/list/,
     /^\/say\/detail/,
     /^\/qiniu\/token/,
+    /^\/user\/login/,
   ],
 }));
 // app.use(authVerify);
@@ -45,7 +46,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
 router
   .use('/oauth', oauth.routes())
-  .get('/', User.login)
+  .get('/user/login', User.login)
   .post('/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
   .post('/test', User.register)
