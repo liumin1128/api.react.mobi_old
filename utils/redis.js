@@ -10,7 +10,7 @@ client.on('connect', () => {
   console.log('Redis is ready');
 });
 
-export const setAsync = (key, value) => client.setAsync(key, value);
+export const setAsync = (...params) => client.setAsync(params);
 
 export const getAsync = key => client.getAsync(key);
 

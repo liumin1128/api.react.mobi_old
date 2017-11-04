@@ -43,7 +43,7 @@ class Github {
         const avatarUrl = await fetchToQiniu(avatar_url);
         console.log('avatarUrl');
         console.log(avatarUrl);
-        const user = await User.create({ avatarUrl, nickName: name });
+        const user = await User.create({ avatarUrl, nickname: name });
         // await client.setAsync(user._id, user);
         oauth = await Oauth.create({ from: 'github', data: userinfo, user });
       }

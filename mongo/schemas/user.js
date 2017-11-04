@@ -3,7 +3,7 @@ export default {
   email: String,
   phone: String,
   password: String,
-  nickName: String,
+  nickname: String,
   avatarUrl: String,
   company: String,
   position: String,

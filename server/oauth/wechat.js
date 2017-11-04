@@ -43,7 +43,7 @@ class WeChat {
       const avatarUrl = await fetchToQiniu(headimgurl);
       console.log(avatarUrl);
 
-      const user = await User.create({ avatarUrl, nickName: nickname });
+      const user = await User.create({ avatarUrl, nickname });
       // await client.setAsync(user._id, user);
       oauth = await Oauth.create({ from: 'wechat', data: userinfo, user });
     }

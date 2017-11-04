@@ -2,28 +2,36 @@
 // import { SECRET } from '../../config';
 import { User } from '../../mongo/modals';
 import { getUserToken } from '../../utils/jwt';
-import { sentSMS } from '../../utils/sms';
-import { setAsync, getAsync, delAsync } from '../../utils/redis';
+import { getAsync } from '../../utils/redis';
+import joi, { phoneSchema, nicknameSchema, codeSchema } from '../../utils/joi';
 
 class UserController {
   // 用户注册
   async register(ctx) {
-    const { phone } = ctx.request.body;
-    const code = 'abc123';
-    console.log('phone');
-    console.log(phone);
-    await setAsync(`p${phone}c${code}`, code);
-    // await sentSMS(phone, code);
-    const aaa = await getAsync(`p${phone}c${code}`);
-    console.log(aaa);
-
-    await delAsync(`p${phone}c${code}`);
-    const bbb = await getAsync(`p${phone}c${code}`);
-
-
-    // const aaa = await sentSMS(18629974148, 'amor08');
-
-    ctx.body = phone;
+    try {
+      let { phone, nickname, code } = ctx.request.body;
+      phone = await joi(phone, phoneSchema);
+      nickname = await joi(nickname, nicknameSchema);
+      code = await joi(code, codeSchema);
+      const key = `p${phone}c${code}`;
+      // 校验验证码
+      const _code = await getAsync(key);
+      if (_code !== code) ctx.throw(403, '验证码不正确');
+      // 根据提交的用户名查找用户
+      let user = await User.findOne({ phone });
+      if (user) ctx.throw(403, `${phone} 已被使用`);
+      // 创建用户
+      user = await User.create({ phone, nickname });
+      const token = await getUserToken(user._id);
+      // 返回用户信息及token
+      ctx.body = {
+        token,
+        userInfo: user,
+      };
+    } catch (error) {
+      ctx.status = 403;
+      ctx.body = error;
+    }
   }
   // 获取用户信息
   async getUserInfo(ctx) {
