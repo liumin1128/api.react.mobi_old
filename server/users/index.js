@@ -14,15 +14,19 @@ class UserController {
       nickname = await joi(nickname, nicknameSchema);
       code = await joi(code, codeSchema);
       const key = `p${phone}c${code}`;
+
       // 校验验证码
       const _code = await getAsync(key);
       if (_code !== code) ctx.throw(403, '验证码不正确');
+
       // 根据提交的用户名查找用户
       let user = await User.findOne({ phone });
       if (user) ctx.throw(403, `${phone} 已被使用`);
+
       // 创建用户
       user = await User.create({ phone, nickname });
       const token = await getUserToken(user._id);
+
       // 返回用户信息及token
       ctx.body = {
         token,
