@@ -63,6 +63,7 @@ router
   .post('/say/list', Say.list)
   .post('/say/detail', Say.detail)
   .post('/common/getQiniuToken', Common.token)
+  .post('/common/verifyPhone', Common.verifyPhone)
   .post('/common/fetch', Common.fetch);
 
 app.use(router.routes());

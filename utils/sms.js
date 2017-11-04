@@ -28,6 +28,7 @@ export const sentSMS = (phone, code) => {
   }, (err) => {
     console.log('发送短信验证码失败');
     console.log(err);
+    throw err;
   });
 };
 

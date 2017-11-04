@@ -3,16 +3,26 @@
 import { User } from '../../mongo/modals';
 import { getUserToken } from '../../utils/jwt';
 import { sentSMS } from '../../utils/sms';
+import { setAsync, getAsync, delAsync } from '../../utils/redis';
 
 class UserController {
   // 用户注册
   async register(ctx) {
     const { phone } = ctx.request.body;
+    const code = 'abc123';
     console.log('phone');
     console.log(phone);
-    const aaa = await sentSMS(18629974148, 'amor08');
-    console.log('aaa');
+    await setAsync(`p${phone}c${code}`, code);
+    // await sentSMS(phone, code);
+    const aaa = await getAsync(`p${phone}c${code}`);
     console.log(aaa);
+
+    await delAsync(`p${phone}c${code}`);
+    const bbb = await getAsync(`p${phone}c${code}`);
+
+
+    // const aaa = await sentSMS(18629974148, 'amor08');
+
     ctx.body = phone;
   }
   // 获取用户信息

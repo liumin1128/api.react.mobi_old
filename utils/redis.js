@@ -9,3 +9,9 @@ client.on('error', (err) => { console.log(`Error ${err}`); });
 client.on('connect', () => {
   console.log('Redis is ready');
 });
+
+export const setAsync = (key, value) => client.setAsync(key, value);
+
+export const getAsync = key => client.getAsync(key);
+
+export const delAsync = key => client.delAsync(key);
