@@ -46,24 +46,28 @@ class UserController {
 
   // 用户登录
   async login(ctx) {
-    console.log('ctx.request.body');
-    console.log(ctx.request.body);
+    try {
+      console.log('ctx.request.body');
+      console.log(ctx.request.body);
 
-    const params = ctx.request.body;
-    const { password } = params;
+      const params = ctx.request.body;
+      const { password } = params;
 
-    delete params.password;
+      delete params.password;
 
-    const user = await User.findOne(params);
+      const user = await User.findOne(params);
 
-    if (password === user.password) {
-      const token = await getUserToken(user._id);
-      ctx.body = {
-        token,
-        user,
-      };
-    } else {
-      ctx.throw(403, '用户名或密码不正确');
+      if (user && password === user.password) {
+        const token = await getUserToken(user._id);
+        ctx.body = {
+          token,
+          user,
+        };
+      } else {
+        ctx.throw(403, '用户名或密码不正确');
+      }
+    } catch (error) {
+      ctx.throw(403, '登录失败');
     }
   }
 
