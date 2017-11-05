@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /config
-
+/.dump.rdb
 # misc
 .DS_Store
 npm-debug.log*

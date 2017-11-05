@@ -46,6 +46,9 @@ class UserController {
 
   // 用户登录
   async login(ctx) {
+    console.log('ctx.request.body');
+    console.log(ctx.request.body);
+
     const params = ctx.request.body;
     const { password } = params;
 
