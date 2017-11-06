@@ -15,11 +15,23 @@ class UserController {
 
       // 校验验证码
       const _code = await getAsync(key);
-      if (_code !== code) ctx.throw(403, '验证码不正确');
+      if (_code !== code) {
+        ctx.body = {
+          status: 403,
+          message: '验证码不正确',
+        };
+        return;
+      }
 
       // 根据提交的用户名查找用户
       let user = await User.findOne({ phone });
-      if (user) ctx.throw(403, `${phone} 已被使用`);
+      if (user) {
+        ctx.body = {
+          status: 403,
+          message: `${phone} 已被使用`,
+        };
+        return;
+      }
 
       // 创建用户
       user = await User.create({ phone, nickname });
@@ -32,7 +44,13 @@ class UserController {
       };
     } catch (error) {
       ctx.status = 403;
-      ctx.body = error;
+      if (error.isJoi) {
+        ctx.body = {
+          status: 403,
+          message: '参数错误',
+        };
+      }
+      // ctx.body = error;
     }
   }
   // 获取用户信息
