@@ -11,7 +11,10 @@ class SayController {
       ...ctx.request.body,
       user: data,
     });
-    ctx.body = say;
+    ctx.body = {
+      status: 200,
+      say,
+    };
   }
   async list(ctx) {
     const params = {
@@ -38,6 +41,7 @@ class SayController {
       .sort(sort);
 
     ctx.body = {
+      status: 200,
       count,
       isEnd: (page === 0 ? 1 : page) * pageSize > count,
       data: list,
@@ -46,6 +50,7 @@ class SayController {
   async detail(ctx) {
     const say = await Say.findById(ctx.request.body.id);
     ctx.body = {
+      status: 200,
       data: say,
     };
   }

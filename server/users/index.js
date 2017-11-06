@@ -39,6 +39,7 @@ class UserController {
 
       // 返回用户信息及token
       ctx.body = {
+        status: 200,
         token,
         userInfo: user,
       };
@@ -58,6 +59,7 @@ class UserController {
     const { data: id } = ctx.state.user;
     const user = await User.findById(id);
     ctx.body = {
+      status: 200,
       data: user,
     };
   }
@@ -78,14 +80,22 @@ class UserController {
       if (user && password === user.password) {
         const token = await getUserToken(user._id);
         ctx.body = {
+          status: 200,
           token,
-          user,
+          userInfo: user,
         };
       } else {
-        ctx.throw(403, '用户名或密码不正确');
+        ctx.body = {
+          status: 403,
+          message: '用户名或密码不正确',
+        };
       }
     } catch (error) {
-      ctx.throw(403, '登录失败');
+      ctx.body = {
+        status: 403,
+        message: '登录失败',
+        error,
+      };
     }
   }
 
