@@ -36,7 +36,7 @@ class SayController {
 
     const list = await Say.find(params)
       .skip((page === 0 ? page : page - 1) * pageSize)
-      .populate('user')
+      .populate('user.nickname user.avatarUrl')
       .limit(pageSize)
       .sort(sort);
 
