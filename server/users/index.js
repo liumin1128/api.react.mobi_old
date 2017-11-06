@@ -34,7 +34,7 @@ class UserController {
       }
 
       // 创建用户
-      user = await User.create({ phone, nickname });
+      user = await User.create({ username: phone, nickname });
       const token = await getUserToken(user._id);
 
       // 返回用户信息及token
@@ -61,20 +61,15 @@ class UserController {
     const user = await User.findById(id);
     ctx.body = {
       status: 200,
-      data: user,
+      userInfo: user,
     };
   }
 
   // 用户登录
   async login(ctx) {
     try {
-      console.log('ctx.request.body');
-      console.log(ctx.request.body);
-
       const { password, ...other } = ctx.request.body;
-
       const user = await User.findOne(other);
-
       if (user && `${password}` === user.password) {
         const token = await getUserToken(user._id);
         ctx.body = {
