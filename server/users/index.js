@@ -40,6 +40,7 @@ class UserController {
       // 返回用户信息及token
       ctx.body = {
         status: 200,
+        message: '注册成功',
         token,
         userInfo: user,
       };
