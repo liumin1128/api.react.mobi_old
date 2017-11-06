@@ -71,14 +71,11 @@ class UserController {
       console.log('ctx.request.body');
       console.log(ctx.request.body);
 
-      const params = ctx.request.body;
-      const { password } = params;
+      const { password, ...other } = ctx.request.body;
 
-      delete params.password;
+      const user = await User.findOne(other);
 
-      const user = await User.findOne(params);
-
-      if (user && password === user.password) {
+      if (user && `${password}` === user.password) {
         const token = await getUserToken(user._id);
         ctx.body = {
           status: 200,
