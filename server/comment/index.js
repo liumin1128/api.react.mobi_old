@@ -9,12 +9,9 @@ class CommentController {
   async create(ctx) {
     const { data } = ctx.state.user;
     const { content, id } = ctx.request.body;
-    console.log(content);
-    const comment = await Comment.create({
-      content,
-      id,
-      user: data,
-    }).populate('user', POPULATE_USER);
+    const comment = await Comment.create({ content, id, user: data })
+      .populate('user', POPULATE_USER);
+
     ctx.body = {
       status: 200,
       data: comment,
