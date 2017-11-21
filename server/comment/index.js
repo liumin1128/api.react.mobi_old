@@ -22,22 +22,29 @@ class CommentController {
     };
 
     const page = typeof params.page === 'number' ? params.page : 0;
-    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 5;
+    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
     const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
 
     delete params.page;
     delete params.pageSize;
     delete params.sort;
 
-    const comment = await Comment.find(params)
-      .skip(page * pageSize)
-      .limit(pageSize)
+    const count = await Comment.count(params);
+
+    console.log('--------count========================================================');
+    console.log(count);
+
+    const list = await Comment.find(params)
+      .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
+      .limit(pageSize)
       .sort(sort);
 
     ctx.body = {
       status: 200,
-      data: comment,
+      count,
+      isEnd: (page === 0 ? 1 : page) * pageSize > count,
+      data: list,
     };
   }
   async detail(ctx) {

@@ -20,7 +20,7 @@ class SayController {
     };
 
     const page = typeof params.page === 'number' ? params.page : 0;
-    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 5;
+    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
     const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
 
     delete params.page;
