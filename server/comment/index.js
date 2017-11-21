@@ -2,6 +2,7 @@
 // import { SECRET } from '../../config';
 // import { User } from '../../mongo/modals';
 import { Comment } from '../../mongo/modals';
+import { POPULATE_USER } from '../../constants';
 
 class CommentController {
   // 用户注册
@@ -10,12 +11,14 @@ class CommentController {
     const { content, id } = ctx.request.body;
     console.log(content);
     const comment = await Comment.create({
-      status: 200,
       content,
       id,
       user: data,
-    });
-    ctx.body = comment;
+    }).populate('user', POPULATE_USER);
+    ctx.body = {
+      status: 200,
+      data: comment,
+    };
   }
   async list(ctx) {
     const params = {
@@ -33,7 +36,7 @@ class CommentController {
     const comment = await Comment.find(params)
       .skip(page * pageSize)
       .limit(pageSize)
-      .populate('user')
+      .populate('user', POPULATE_USER)
       .sort(sort);
 
     ctx.body = {
