@@ -9,8 +9,7 @@ class CommentController {
   async create(ctx) {
     const { data } = ctx.state.user;
     const { content, id } = ctx.request.body;
-    const comment = await Comment.create({ content, id, user: data })
-      .populate('user', POPULATE_USER);
+    const comment = await Comment.create({ content, id, user: data });
 
     ctx.body = {
       status: 200,
