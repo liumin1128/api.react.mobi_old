@@ -23,7 +23,7 @@ class CommentController {
 
     const page = typeof params.page === 'number' ? params.page : 0;
     const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 5;
-    const sort = typeof params.sort === 'string' ? params.sort : '-created';
+    const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
 
     delete params.page;
     delete params.pageSize;
