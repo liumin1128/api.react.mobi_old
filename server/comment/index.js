@@ -40,10 +40,14 @@ class CommentController {
     };
   }
   async detail(ctx) {
-    const comment = await Comment.findById(ctx.request.body.id);
-    ctx.body = {
-      data: comment,
-    };
+    try {
+      await Comment.findById(ctx.request.body.id);
+      ctx.body = {
+        status: 200,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
