@@ -1,6 +1,3 @@
-// import jwt from 'jsonwebtoken';
-// import { SECRET } from '../../config';
-// import { User } from '../../mongo/modals';
 import { Say } from '../../mongo/modals';
 
 class SayController {
