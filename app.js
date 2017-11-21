@@ -39,6 +39,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/article\/list/,
     /^\/article\/detail/,
     /^\/say\/list/,
+    /^\/comment\/list/,
     /^\/say\/detail/,
     /^\/qiniu\/token/,
     /^\/user\/login/,
