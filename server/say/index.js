@@ -1,4 +1,5 @@
 import { Say } from '../../mongo/modals';
+import { POPULATE_USER } from '../../constants';
 
 class SayController {
   // 用户注册
@@ -33,7 +34,7 @@ class SayController {
 
     const list = await Say.find(params)
       .skip((page === 0 ? page : page - 1) * pageSize)
-      .populate('user', 'nickname avatarUrl')
+      .populate('user', POPULATE_USER)
       .limit(pageSize)
       .sort(sort);
 
@@ -46,7 +47,7 @@ class SayController {
   }
   async detail(ctx) {
     const say = await Say.findById(ctx.request.body.id)
-      .populate('user', 'nickname avatarUrl');
+      .populate('user', POPULATE_USER);
     ctx.body = {
       status: 200,
       data: say,
