@@ -10,6 +10,7 @@ class CommentController {
     const { content, id } = ctx.request.body;
     console.log(content);
     const comment = await Comment.create({
+      status: 200,
       content,
       id,
       user: data,
@@ -36,14 +37,16 @@ class CommentController {
       .sort(sort);
 
     ctx.body = {
+      status: 200,
       data: comment,
     };
   }
   async detail(ctx) {
     try {
-      await Comment.findById(ctx.request.body.id);
+      const comment = await Comment.findById(ctx.request.body.id);
       ctx.body = {
         status: 200,
+        data: comment,
       };
     } catch (error) {
       console.log(error);
