@@ -39,7 +39,7 @@ class CommentController {
     const list = await Comment.find(params)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
-      .populate('comment', 'content')
+      .populate('replyTo', 'content')
       .limit(pageSize)
       .sort(sort);
 
