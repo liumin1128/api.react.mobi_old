@@ -8,9 +8,9 @@ class CommentController {
   // 用户注册
   async create(ctx) {
     const { data } = ctx.state.user;
-    const { content, id, replayTo } = ctx.request.body;
+    const { content, id, replyTo } = ctx.request.body;
     const comment = await Comment.create({
-      content, id, replayTo, user: data,
+      content, id, replyTo, user: data,
     });
 
     ctx.body = {
