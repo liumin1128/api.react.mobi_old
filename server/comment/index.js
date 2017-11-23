@@ -8,8 +8,10 @@ class CommentController {
   // 用户注册
   async create(ctx) {
     const { data } = ctx.state.user;
-    const { content, id } = ctx.request.body;
-    const comment = await Comment.create({ content, id, user: data });
+    const { content, id, replayTo } = ctx.request.body;
+    const comment = await Comment.create({
+      content, id, replayTo, user: data,
+    });
 
     ctx.body = {
       status: 200,
