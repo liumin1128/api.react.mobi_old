@@ -17,11 +17,10 @@ class CommentController {
   async delete(ctx) {
     try {
       const { id } = ctx.request.body;
-      console.log('id');
-      console.log(id);
       await Comment.remove({ _id: id });
       await Comment.remove({ id });
       await Thumb.remove({ id });
+      console.log(`已删除与${id}有关的全部回复和点赞`);
       ctx.body = {
         status: 200,
       };
