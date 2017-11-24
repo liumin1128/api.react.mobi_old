@@ -39,14 +39,16 @@ class CommentController {
     delete params.pageSize;
     delete params.sort;
 
-    const count = await Comment.count(params)
+    const count = await Comment
+      .count(params)
       .exists('replyTo', false);
 
-    const list = await Comment.find(params)
+    const list = await Comment
+      .find(params)
       .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
-      .populate('replay.')
+      .populate('replay._id')
       .limit(pageSize)
       .sort(sort);
 
