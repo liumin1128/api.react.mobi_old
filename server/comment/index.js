@@ -82,8 +82,8 @@ class CommentController {
       .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .limit(pageSize)
-      .populate('user', POPULATE_USER)
-      .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
+      .populate('user', POPULATE_USER);
+      // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
       // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
 
     ctx.body = {
