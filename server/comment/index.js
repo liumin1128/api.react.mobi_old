@@ -75,6 +75,7 @@ class CommentController {
       message: `已${thumb ? '取消赞' : '赞'}`,
     };
   }
+
   async list(ctx) {
     const params = {
       ...ctx.request.body,
@@ -108,6 +109,7 @@ class CommentController {
       data: list,
     };
   }
+
   async detail(ctx) {
     try {
       const comment = await Comment.findById(ctx.request.body.id);
