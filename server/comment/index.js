@@ -9,13 +9,21 @@ class CommentController {
   async create(ctx) {
     const { data } = ctx.state.user;
     const { content, id, replyTo } = ctx.request.body;
-    const comment = await Comment.create({
-      content, id, replyTo, user: data,
-    });
+    let comment;
+    if (replyTo) {
+      comment = await Comment.findById({ id: replyTo });
+      console.log('comment');
+      console.log(comment);
+    } else {
+      comment = await Comment.create({
+        content, id, user: data,
+      });
+      console.log(comment);
+    }
+
 
     ctx.body = {
       status: 200,
-      data: comment,
     };
   }
   async list(ctx) {
@@ -32,25 +40,15 @@ class CommentController {
     delete params.sort;
 
     const count = await Comment.count(params);
-
-    console.log('--------count========================================================');
-    console.log(count);
+    // .exists('replyTo', false);
 
     const list = await Comment.find(params)
-      .exists('replyTo', false)
+      // .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
       // .populate('replyTo')
       .limit(pageSize)
       .sort(sort);
-
-    console.log('子查询开始');
-    await Promise.all(list, async ({ _id }) => {
-      const rrr = await Comment.find({ replyTo: _id });
-      console.log('rrr');
-      console.log(rrr);
-    });
-    console.log('子查询结束');
 
     ctx.body = {
       status: 200,
