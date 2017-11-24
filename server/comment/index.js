@@ -1,4 +1,4 @@
-import { Comment } from '../../mongo/modals';
+import { Comment, Thumb } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
 class CommentController {
@@ -25,7 +25,7 @@ class CommentController {
   }
 
   async thumb(ctx) {
-    const { data } = ctx.state.user;
+    const { data: user } = ctx.state.user;
     const { id } = ctx.request.body;
     if (!id) {
       ctx.body = {
@@ -34,10 +34,28 @@ class CommentController {
       };
       return;
     }
+    let thumb;
+    thumb = await Thumb.findOne({ id, user });
+    console.log('thumb');
+    console.log(thumb);
+
+    if (thumb) {
+      console.log('已经点过赞啦');
+      ctx.body = {
+        status: 403,
+        message: '已经点过赞啦',
+      };
+      return;
+    }
+
+    thumb = await Thumb.create({ id, user });
+
+    console.log('thumb');
+    console.log(thumb);
 
     await Comment
       .findById(id)
-      .update({ $addToSet: { thumb: data } });
+      .update({ $inc: { likes: 1 } });
 
     ctx.body = {
       status: 200,
@@ -62,12 +80,13 @@ class CommentController {
 
     const list = await Comment
       .find(params)
+      .sort(sort)
       .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
-      .populate('user', POPULATE_USER)
-      .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } })
       .limit(pageSize)
-      .sort(sort);
+      .populate('user', POPULATE_USER)
+      .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
+      // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
 
     ctx.body = {
       status: 200,

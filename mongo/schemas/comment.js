@@ -13,4 +13,5 @@ export default {
   reply: [
     { type: ObjectId, ref: 'Comment' },
   ],
+  likes: Number,
 };
