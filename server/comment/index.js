@@ -23,6 +23,7 @@ class CommentController {
       status: 200,
     };
   }
+
   async thumb(ctx) {
     const { data } = ctx.state.user;
     const { id } = ctx.request.body;
@@ -36,7 +37,7 @@ class CommentController {
 
     await Comment
       .findById(id)
-      .update({ $push: { thumb: data } });
+      .update({ $addToSet: { thumb: data } });
 
     ctx.body = {
       status: 200,
