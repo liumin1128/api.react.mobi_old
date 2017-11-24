@@ -17,6 +17,8 @@ class CommentController {
   async delete(ctx) {
     try {
       const { id } = ctx.request.body;
+      console.log('id');
+      console.log(id);
       await Comment.remove({ id });
       ctx.body = {
         status: 200,
