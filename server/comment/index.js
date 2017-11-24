@@ -34,25 +34,23 @@ class CommentController {
       };
       return;
     }
+
+    // 判断是否点过赞
     const thumb = await Thumb.findOne({ id, user });
     if (thumb) {
       await Thumb.remove({ id, user });
-      await Comment
-        .findById(id)
-        .update({ $inc: { likes: -1 } });
-      ctx.body = {
-        status: 200,
-        message: '已取消赞',
-      };
     } else {
       await Thumb.create({ id, user });
-      await Comment
-        .findById(id)
-        .update({ $inc: { likes: 1 } });
-      ctx.body = {
-        status: 200,
-      };
     }
+
+    await Comment
+      .findById(id)
+      .update({ $inc: { likes: thumb ? -1 : 1 } });
+
+    ctx.body = {
+      status: 200,
+      message: `已${thumb ? '取消赞' : '赞'}`,
+    };
   }
   async list(ctx) {
     const params = {
