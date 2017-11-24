@@ -20,6 +20,8 @@ class CommentController {
       console.log('id');
       console.log(id);
       await Comment.remove({ _id: id });
+      await Comment.remove({ id });
+      await Thumb.remove({ id });
       ctx.body = {
         status: 200,
       };
