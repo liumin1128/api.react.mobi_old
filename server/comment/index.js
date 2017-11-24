@@ -46,7 +46,7 @@ class CommentController {
       .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
-      .populate('replay')
+      .populate('replay.')
       .limit(pageSize)
       .sort(sort);
 
