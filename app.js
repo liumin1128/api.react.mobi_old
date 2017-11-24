@@ -62,6 +62,7 @@ router
   .post('/comment/create', Comment.create)
   .post('/comment/list', Comment.list)
   .post('/comment/detail', Comment.detail)
+  .post('/comment/thumb', Comment.thumb)
   .post('/say/create', Say.create)
   .post('/say/list', Say.list)
   .post('/say/detail', Say.detail)
