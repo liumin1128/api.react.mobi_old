@@ -44,6 +44,14 @@ class CommentController {
       .limit(pageSize)
       .sort(sort);
 
+    console.log('子查询开始');
+    await Promise.all(list, async ({ _id }) => {
+      const rrr = await Comment.find({ replyTo: _id });
+      console.log('rrr');
+      console.log(rrr);
+    });
+    console.log('子查询结束');
+
     ctx.body = {
       status: 200,
       count,
