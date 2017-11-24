@@ -11,7 +11,7 @@ class CommentController {
     const { content, id, replyTo } = ctx.request.body;
     let comment;
     if (replyTo) {
-      comment = await Comment.findById({ id: replyTo });
+      comment = await Comment.findById(replyTo);
       console.log('comment');
       console.log(comment);
     } else {
