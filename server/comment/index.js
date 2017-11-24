@@ -73,13 +73,12 @@ class CommentController {
     delete params.sort;
 
     const count = await Comment
-      .count(params)
-      .exists('replyTo', false);
+      .count(params);
+      // .exists('replyTo', false);
 
     const list = await Comment
       .find(params)
       .sort(sort)
-      .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .limit(pageSize)
       .populate('user', POPULATE_USER);
