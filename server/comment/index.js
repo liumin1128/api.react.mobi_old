@@ -19,7 +19,7 @@ class CommentController {
       const { id } = ctx.request.body;
       console.log('id');
       console.log(id);
-      await Comment.remove({ id });
+      await Comment.remove({ _id: id });
       ctx.body = {
         status: 200,
       };
