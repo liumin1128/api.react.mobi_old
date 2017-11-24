@@ -34,32 +34,25 @@ class CommentController {
       };
       return;
     }
-    let thumb;
-    thumb = await Thumb.findOne({ id, user });
-    console.log('thumb');
-    console.log(thumb);
-
+    const thumb = await Thumb.findOne({ id, user });
     if (thumb) {
-      console.log('已经点过赞啦');
+      await Thumb.remove({ id, user });
+      await Comment
+        .findById(id)
+        .update({ $inc: { likes: -1 } });
       ctx.body = {
-        status: 403,
-        message: '已经点过赞啦',
+        status: 200,
+        message: '已取消赞',
       };
-      return;
+    } else {
+      await Thumb.create({ id, user });
+      await Comment
+        .findById(id)
+        .update({ $inc: { likes: 1 } });
+      ctx.body = {
+        status: 200,
+      };
     }
-
-    thumb = await Thumb.create({ id, user });
-
-    console.log('thumb');
-    console.log(thumb);
-
-    await Comment
-      .findById(id)
-      .update({ $inc: { likes: 1 } });
-
-    ctx.body = {
-      status: 200,
-    };
   }
   async list(ctx) {
     const params = {
