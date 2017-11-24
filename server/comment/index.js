@@ -37,7 +37,7 @@ class CommentController {
     console.log(count);
 
     const list = await Comment.find(params)
-      .where('replyTo').ne('').ne(null)
+      .where('replyTo').ne('')
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
       .populate('replyTo')
