@@ -1,6 +1,3 @@
-// import jwt from 'jsonwebtoken';
-// import { SECRET } from '../../config';
-// import { User } from '../../mongo/modals';
 import { Comment } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
@@ -22,6 +19,25 @@ class CommentController {
         content, id, user: data,
       });
     }
+    ctx.body = {
+      status: 200,
+    };
+  }
+  async thumb(ctx) {
+    const { data } = ctx.state.user;
+    const { id } = ctx.request.body;
+    if (!id) {
+      ctx.body = {
+        status: 403,
+        message: '参数错误，无点赞对象',
+      };
+      return;
+    }
+
+    await Comment
+      .findById(id)
+      .update({ $push: { thumb: data } });
+
     ctx.body = {
       status: 200,
     };
