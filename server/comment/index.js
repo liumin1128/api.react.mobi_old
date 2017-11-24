@@ -9,28 +9,19 @@ class CommentController {
   async create(ctx) {
     const { data } = ctx.state.user;
     const { content, id, replyTo } = ctx.request.body;
-    let comment;
     if (replyTo) {
-      const reply = await Comment.create({
-        content, id, user: data, replyTo,
-      });
-      console.log('reply');
-      console.log(reply);
-
-      comment = await Comment
+      const reply = await Comment
+        .create({
+          content, id, user: data, replyTo,
+        });
+      await Comment
         .findById(replyTo)
-        .update({ $addToSet: { reply } });
-
-      console.log('comment');
-      console.log(comment);
+        .update({ $push: { reply } });
     } else {
-      comment = await Comment.create({
+      await Comment.create({
         content, id, user: data,
       });
-      console.log(comment);
     }
-
-
     ctx.body = {
       status: 200,
     };
@@ -48,14 +39,14 @@ class CommentController {
     delete params.pageSize;
     delete params.sort;
 
-    const count = await Comment.count(params);
-    // .exists('replyTo', false);
+    const count = await Comment.count(params)
+      .exists('replyTo', false);
 
     const list = await Comment.find(params)
-      // .exists('replyTo', false)
+      .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
-      // .populate('replyTo')
+      .populate('replay')
       .limit(pageSize)
       .sort(sort);
 
