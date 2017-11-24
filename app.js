@@ -60,6 +60,7 @@ router
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)
   .post('/comment/create', Comment.create)
+  .post('/comment/delete', Comment.delete)
   .post('/comment/list', Comment.list)
   .post('/comment/detail', Comment.detail)
   .post('/comment/thumb', Comment.thumb)

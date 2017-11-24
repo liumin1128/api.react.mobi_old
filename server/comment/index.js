@@ -14,6 +14,19 @@ class CommentController {
     };
   }
 
+  async delete(ctx) {
+    try {
+      const { id } = ctx.request.body;
+      await Comment.remove({ id });
+      ctx.body = {
+        status: 200,
+      };
+    } catch (error) {
+      console.log('error comment delete');
+      console.log(error);
+    }
+  }
+
   async reply(ctx) {
     const { data } = ctx.state.user;
     const { content, id } = ctx.request.body;
