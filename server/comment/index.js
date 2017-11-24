@@ -48,7 +48,7 @@ class CommentController {
       .exists('replyTo', false)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user', POPULATE_USER)
-      .populate({ path: 'reply', options: { limit: 2 } })
+      .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } })
       .limit(pageSize)
       .sort(sort);
 
