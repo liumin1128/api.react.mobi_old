@@ -24,7 +24,7 @@ class CommentController {
 
     await Comment
       .findById(id)
-      .update({ $inc: { likes: 1 } });
+      .update({ $inc: { reply: 1 } });
 
     ctx.body = {
       status: 200,
