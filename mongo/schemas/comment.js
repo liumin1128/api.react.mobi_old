@@ -14,4 +14,5 @@ export default {
     { type: ObjectId, ref: 'Comment' },
   ],
   likes: Number,
+  comments: Number,
 };

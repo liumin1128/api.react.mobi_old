@@ -5,20 +5,27 @@ class CommentController {
   // 用户注册
   async create(ctx) {
     const { data } = ctx.state.user;
-    const { content, id, replyTo } = ctx.request.body;
-    if (replyTo) {
-      const reply = await Comment
-        .create({
-          content, id, user: data, replyTo,
-        });
-      await Comment
-        .findById(replyTo)
-        .update({ $push: { reply } });
-    } else {
-      await Comment.create({
-        content, id, user: data,
-      });
-    }
+    const { content, id } = ctx.request.body;
+    await Comment.create({
+      content, id, user: data,
+    });
+    ctx.body = {
+      status: 200,
+    };
+  }
+
+  async reply(ctx) {
+    const { data } = ctx.state.user;
+    const { content, id } = ctx.request.body;
+
+    await Comment.create({
+      content, id, user: data,
+    });
+
+    await Comment
+      .findById(id)
+      .update({ $inc: { likes: 1 } });
+
     ctx.body = {
       status: 200,
     };
