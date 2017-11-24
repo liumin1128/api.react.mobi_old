@@ -11,9 +11,16 @@ class CommentController {
     const { content, id, replyTo } = ctx.request.body;
     let comment;
     if (replyTo) {
+      const reply = await Comment.create({
+        content, id, user: data, replyTo,
+      });
+      console.log('reply');
+      console.log(reply);
+
       comment = await Comment
         .findById(replyTo)
-        .update({ content: 'xxxxxxxxx' });
+        .update({ $addToSet: { reply } });
+
       console.log('comment');
       console.log(comment);
     } else {
