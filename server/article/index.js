@@ -5,13 +5,20 @@ import { Article } from '../../mongo/modals';
 
 class ArticleController {
   // 用户注册
-  async new(ctx) {
-    const { data } = ctx.state.user;
-    const article = await Article.create({
-      ...ctx.request.body,
-      user: data,
-    });
-    ctx.body = article;
+  async create(ctx) {
+    try {
+      const { data } = ctx.state.user;
+      const article = await Article.create({
+        ...ctx.request.body,
+        user: data,
+      });
+      ctx.body = {
+        status: 200,
+        article,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
   async list(ctx) {
     const params = {

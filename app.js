@@ -56,7 +56,7 @@ router
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
   .post('/test', User.register)
-  .post('/article/new', Article.new)
+  .post('/article/create', Article.create)
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)
   .post('/comment/create', Comment.create)
