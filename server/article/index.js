@@ -2,6 +2,7 @@
 // import { SECRET } from '../../config';
 // import { User } from '../../mongo/modals';
 import { Article } from '../../mongo/modals';
+import { POPULATE_USER } from '../../constants';
 
 class ArticleController {
   // 用户注册
@@ -26,20 +27,29 @@ class ArticleController {
     };
 
     const page = typeof params.page === 'number' ? params.page : 0;
-    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 5;
-    const sort = typeof params.sort === 'string' ? params.sort : '-created';
+    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
+    const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
 
     delete params.page;
     delete params.pageSize;
     delete params.sort;
 
-    const article = await Article.find(params)
-      .skip((page - 1) * pageSize)
+    const count = await Article.count(params);
+
+    console.log('--------count========================================================');
+    console.log(count);
+
+    const list = await Article.find(params)
+      .skip((page === 0 ? page : page - 1) * pageSize)
+      .populate('user', POPULATE_USER)
       .limit(pageSize)
       .sort(sort);
 
     ctx.body = {
-      data: article,
+      status: 200,
+      count,
+      isEnd: (page === 0 ? 1 : page) * pageSize > count,
+      data: list,
     };
   }
   async detail(ctx) {
