@@ -45,6 +45,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/user\/login/,
     /^\/user\/register/,
     /^\/common\/verifyPhone/,
+    /^\/common\/getQiniuToken/,
   ],
 }));
 // app.use(authVerify);
