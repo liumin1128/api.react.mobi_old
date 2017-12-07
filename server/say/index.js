@@ -46,8 +46,10 @@ class SayController {
     };
   }
   async detail(ctx) {
-    const say = await Say.findById(ctx.request.body.id)
+    const say = await Say
+      .findById(ctx.request.body.id)
       .populate('user', POPULATE_USER);
+
     ctx.body = {
       status: 200,
       data: say,

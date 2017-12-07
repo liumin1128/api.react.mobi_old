@@ -50,7 +50,7 @@ class Github {
       // 生成token（用户身份令牌）
       const token = await getUserToken(oauth.user);
       // 重定向页面到用户登录页，并返回token
-      ctx.redirect(`${DOMAIN}/login?token=${token}`);
+      ctx.redirect(`${DOMAIN}/oauth?token=${token}`);
     } catch (error) {
       console.log('error');
       console.log(error);
