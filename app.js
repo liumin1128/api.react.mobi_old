@@ -11,7 +11,8 @@ import Article from './server/article';
 import Say from './server/say';
 import Comment from './server/comment';
 import Common from './server/common';
-import oauth from './server/oauth';
+import Oauth from './server/oauth';
+import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
 
@@ -46,13 +47,15 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/user\/register/,
     /^\/common\/verifyPhone/,
     /^\/common\/getQiniuToken/,
+    /^\/im\/create/,
   ],
 }));
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
 router
-  .use('/oauth', oauth.routes())
+  .use('/oauth', Oauth.routes())
+  .post('/im/create', Im.create)
   .post('/user/login', User.login)
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)

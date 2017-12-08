@@ -37,6 +37,7 @@
     "mongoose": "^4.11.10",
     "node-fetch": "^1.7.3",
     "qiniu": "^7.1.0",
+    "query-string": "^5.0.1",
     "redis": "^2.8.0"
   }
 }
