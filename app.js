@@ -13,6 +13,7 @@ import Comment from './server/comment';
 import Common from './server/common';
 import Oauth from './server/oauth';
 import Im from './server/im';
+import Work from './server/work';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
 
@@ -49,15 +50,18 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/common\/getQiniuToken/,
     /^\/im\/create/,
     /^\/im\/update/,
+    /^\/work\/test/,
   ],
 }));
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
+
 router
   .use('/oauth', Oauth.routes())
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
+  .post('/work/test', Work.test)
   .post('/user/login', User.login)
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
