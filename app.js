@@ -48,6 +48,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/common\/verifyPhone/,
     /^\/common\/getQiniuToken/,
     /^\/im\/create/,
+    /^\/im\/update/,
   ],
 }));
 // app.use(authVerify);
@@ -56,6 +57,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', Oauth.routes())
   .post('/im/create', Im.create)
+  .post('/im/update', Im.update)
   .post('/user/login', User.login)
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)

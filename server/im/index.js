@@ -4,16 +4,18 @@ class Im {
   // 用户注册
   async create(ctx) {
     const url = 'https://api.netease.im/nimserver/user/create.action';
-    const params = { accid: '312143243242' };
-
+    const params = { accid: 'liumin' };
     const data = await request(url, params);
 
-    console.log('data');
-    console.log(data);
-    ctx.body = {
-      data,
-      params,
-    };
+    ctx.body = data;
+  }
+  async update(ctx) {
+    const url = 'https://api.netease.im/nimserver/user/update.action';
+    // 312143243242
+    const params = { accid: 'liumin', token: 'token' };
+    const data = await request(url, params);
+
+    ctx.body = data;
   }
 }
 
