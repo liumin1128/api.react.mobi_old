@@ -79,7 +79,7 @@ class Work {
   async pclogin(ctx) {
     console.log('移动端用户登录');
     // 重定向到认证接口,并配置参数
-    let path = 'https://open.work.weixin.qq.com/wwopen/sso/qrConnect?';
+    let path = 'https://open.work.weixin.qq.com/wwopen/sso/qrConnect';
     path += `?appid=${CORPID}`;
     path += '&agentid=1000008';
     path += '&redirect_uri=https://api.react.mobi/work/pccallback';
