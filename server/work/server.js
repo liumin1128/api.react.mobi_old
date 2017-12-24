@@ -57,28 +57,18 @@ class Work {
     // 重定向到认证接口,并配置参数
     let path = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     path += `?appid=${CORPID}`;
-    path += `&redirect_uri=${REDIRECT_URI}`;
+    path += '&redirect_uri=https://api.react.mobi/work/mcallback';
     path += '&response_type=code&scope=snsapi_userinfo&agentid=1000008&state=STATE#wechat_redirect';
     // 转发到授权服务器
     ctx.redirect(path);
   }
-  async callback(ctx) {
+  async mcallback(ctx) {
     const { code } = ctx.query;
     // await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const userInfo = await getUserInfo({ token, code });
     if (userInfo.errmsg === 'ok') {
       const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
-
-      console.log('callback code');
-      console.log(code);
-
-      console.log('callback userInfo2');
-      console.log(userInfo);
-
-      console.log('callback userDetail');
-      console.log(userDetail);
-
       ctx.body = JSON.stringify({
         code,
         userInfo,
@@ -86,6 +76,32 @@ class Work {
       });
     }
   }
+  async pclogin(ctx) {
+    console.log('移动端用户登录');
+    // 重定向到认证接口,并配置参数
+    let path = 'https://open.work.weixin.qq.com/wwopen/sso/qrConnect?';
+    path += `?appid=${CORPID}`;
+    path += '&agentid=1000008';
+    path += '&redirect_uri=https://api.react.mobi/work/pccallback';
+    path += '&state=web_login@gyoss9';
+    // 转发到授权服务器
+    ctx.redirect(path);
+  }
+  async pccallback(ctx) {
+    const { code } = ctx.query;
+    // await delAsync('wechatWorkAccessToken');
+    const token = await getAccessToken();
+    const userInfo = await getUserInfo({ token, code });
+    if (userInfo.errmsg === 'ok') {
+      const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
+      ctx.body = JSON.stringify({
+        code,
+        userInfo,
+        userDetail,
+      });
+    }
+  }
+
   async test(ctx) {
     try {
       const token = await getAccessToken();
