@@ -128,10 +128,17 @@ class Work {
         });
 
 
-        const signature = crypto
-          .createHash('sha1')
-          .update(temp)
-          .digest('hex');
+        const hash = crypto.createHash('sha1');
+        hash.update(temp);
+        const signature = hash.digest('hex');
+
+        // const signature = crypto
+        //   .createHash('sha1')
+        //   .update(temp)
+        //   .digest('hex');
+
+        console.log('temp');
+        console.log(temp);
 
         console.log('nonceStr');
         console.log(nonceStr);
