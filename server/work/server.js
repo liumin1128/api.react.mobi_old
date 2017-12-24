@@ -60,7 +60,7 @@ class Work {
     console.log('callback code');
     console.log(code);
 
-    console.log('callback data');
+    console.log('callback data2');
     console.log(data);
 
     ctx.body = JSON.stringify({
