@@ -54,6 +54,7 @@ class Work {
   }
   async callback(ctx) {
     const { code } = ctx.query;
+    await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const data = await getUserInfo({ token, code });
 
