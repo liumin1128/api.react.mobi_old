@@ -125,7 +125,7 @@ class Work {
       if (errmsg === 'ok') {
         const temp = stringify({
           noncestr: nonceStr, jsapi_ticket, timestamp, url,
-        });
+        }, { encode: false });
 
 
         const hash = crypto.createHash('sha1');
