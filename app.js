@@ -38,6 +38,7 @@ app.use(jwt({ secret: SECRET }).unless({
   path: [
     /^\/public/,
     /^\/oauth/,
+    /^\/work/,
     /^\/article\/list/,
     /^\/article\/detail/,
     /^\/say\/list/,
@@ -50,7 +51,6 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/common\/getQiniuToken/,
     /^\/im\/create/,
     /^\/im\/update/,
-    /^\/work\/test/,
   ],
 }));
 // app.use(authVerify);
@@ -59,9 +59,9 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
 router
   .use('/oauth', Oauth.routes())
+  .use('/work', Work.routes())
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
-  .post('/work/test', Work.test)
   .post('/user/login', User.login)
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
