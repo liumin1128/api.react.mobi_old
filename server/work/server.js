@@ -127,10 +127,22 @@ class Work {
           noncestr: nonceStr, jsapi_ticket, timestamp, url,
         });
 
+
         const signature = crypto
           .createHash('sha1')
           .update(temp)
           .digest('hex');
+
+        console.log('nonceStr');
+        console.log(nonceStr);
+        console.log('jsapi_ticket');
+        console.log(jsapi_ticket);
+        console.log('timestamp');
+        console.log(timestamp);
+        console.log('url');
+        console.log(url);
+        console.log('signature');
+        console.log(signature);
 
         ctx.body = JSON.stringify({
           appId: CORPID, // 必填，企业微信的corpID
