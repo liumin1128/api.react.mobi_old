@@ -54,9 +54,19 @@ class Work {
   }
   async callback(ctx) {
     const { code } = ctx.query;
+    const token = await getAccessToken();
+    const data = await getUserInfo({ token, code });
+
     console.log('callback code');
     console.log(code);
-    ctx.body = code;
+
+    console.log('callback data');
+    console.log(data);
+
+    ctx.body = JSON.stringify({
+      code,
+      data,
+    });
   }
   async test(ctx) {
     try {
