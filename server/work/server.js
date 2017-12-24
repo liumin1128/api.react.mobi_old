@@ -115,7 +115,7 @@ class Work {
   }
   async getJsSdkConfig(ctx) {
     try {
-      const { url, jsApiList } = ctx.request.body;
+      const { url } = ctx.request.body;
       const nonceStr = randomString();
       const timestamp = parseInt(moment().format('X'), 0);
       const token = await getAccessToken();
@@ -133,13 +133,10 @@ class Work {
           .digest('hex');
 
         ctx.body = JSON.stringify({
-          beta: true, // 必须这么写，否则在微信插件有些jsapi会有问题
-          debug: true, // 开启调试模式
           appId: CORPID, // 必填，企业微信的corpID
           timestamp, // 必填，生成签名的时间戳
           nonceStr, // 必填，生成签名的随机串
           signature, // 必填，签名，见[附录1](#11974)
-          jsApiList, // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
       }
     } catch (error) {
