@@ -41,6 +41,16 @@ async function getUserInfo({ token, code }) {
   }
 }
 
+async function getUserDetailInfo({ token, user_ticket }) {
+  try {
+    const url = `https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail?access_token=${token}`;
+    const params = { user_ticket };
+    return await request(url, params);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 class Work {
   async mlogin(ctx) {
     console.log('移动端用户登录');
@@ -54,20 +64,27 @@ class Work {
   }
   async callback(ctx) {
     const { code } = ctx.query;
-    await delAsync('wechatWorkAccessToken');
+    // await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
-    const data = await getUserInfo({ token, code });
+    const userInfo = await getUserInfo({ token, code });
+    if (userInfo.errmsg === 'ok') {
+      const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
 
-    console.log('callback code');
-    console.log(code);
+      console.log('callback code');
+      console.log(code);
 
-    console.log('callback data2');
-    console.log(data);
+      console.log('callback userInfo2');
+      console.log(userInfo);
 
-    ctx.body = JSON.stringify({
-      code,
-      data,
-    });
+      console.log('callback userDetail');
+      console.log(userDetail);
+
+      ctx.body = JSON.stringify({
+        code,
+        userInfo,
+        userDetail,
+      });
+    }
   }
   async test(ctx) {
     try {
