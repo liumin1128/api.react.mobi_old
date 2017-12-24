@@ -115,19 +115,17 @@ class Work {
   }
   async getJsSdkConfig(ctx) {
     try {
-      const { url } = ctx.request.body;
-      console.log('url');
-      console.log(url);
+      const { url, jsApiList } = ctx.request.body;
       const nonceStr = randomString();
       const timestamp = parseInt(moment().format('X'), 0);
       const token = await getAccessToken();
+      // todo jsapi_ticket 需要存缓
       const { errmsg, ticket: jsapi_ticket } = await getJsApiTicket({ token });
+
       if (errmsg === 'ok') {
         const temp = stringify({
           noncestr: nonceStr, jsapi_ticket, timestamp, url,
         });
-        console.log('temp');
-        console.log(temp);
 
         const signature = crypto
           .createHash('sha1')
@@ -141,7 +139,7 @@ class Work {
           timestamp, // 必填，生成签名的时间戳
           nonceStr, // 必填，生成签名的随机串
           signature, // 必填，签名，见[附录1](#11974)
-          jsApiList: ['getLocation'], // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          jsApiList, // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
       }
     } catch (error) {
