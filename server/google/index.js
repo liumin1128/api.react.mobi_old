@@ -13,6 +13,7 @@ export const getAddress = async ({ lat = 40.714224, lng = -73.961452 }) => {
 class Google {
   async address(ctx) {
     const data = await getAddress({});
+
     ctx.body = data;
   }
 }
