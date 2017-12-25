@@ -12,9 +12,13 @@ export const getAddress = async ({ lat = 40.714224, lng = -73.961452 }) => {
 
 class Google {
   async address(ctx) {
-    const data = await getAddress({});
-
-    ctx.body = data;
+    try {
+      const data = await getAddress({});
+      ctx.body = data;
+    } catch (error) {
+      console.log('Google address error: ');
+      console.log(error);
+    }
   }
 }
 
