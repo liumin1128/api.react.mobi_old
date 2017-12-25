@@ -12,8 +12,9 @@ import Say from './server/say';
 import Comment from './server/comment';
 import Common from './server/common';
 import Oauth from './server/oauth';
-import Im from './server/im';
+import Google from './server/google/route';
 import Work from './server/work';
+import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
 
@@ -38,6 +39,7 @@ app.use(jwt({ secret: SECRET }).unless({
   path: [
     /^\/public/,
     /^\/oauth/,
+    /^\/google/,
     /^\/work/,
     /^\/article\/list/,
     /^\/article\/detail/,
@@ -60,6 +62,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
+  .use('/google', Google.routes())
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
   .post('/user/login', User.login)
