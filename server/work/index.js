@@ -67,7 +67,8 @@ async function getJsApiTicket({ token }) {
 class Work {
   async daka(ctx) {
     try {
-      const { data: user } = ctx.state.user;
+      const { user } = ctx.state;
+      console.log(user);
 
       const {
         location, networkType, time, type, token, ...other
@@ -76,7 +77,7 @@ class Work {
       if (location && networkType && time && type) {
         const daka = await Daka.create({
           ...other,
-          user,
+          user: user.data,
           location,
           networkType,
           time,
@@ -160,7 +161,6 @@ class Work {
           noncestr: nonceStr, jsapi_ticket, timestamp, url,
         }, { encode: false });
 
-
         const hash = crypto.createHash('sha1');
         hash.update(temp);
         const signature = hash.digest('hex');
@@ -169,20 +169,6 @@ class Work {
         //   .createHash('sha1')
         //   .update(temp)
         //   .digest('hex');
-
-        console.log('temp');
-        console.log(temp);
-
-        console.log('nonceStr');
-        console.log(nonceStr);
-        console.log('jsapi_ticket');
-        console.log(jsapi_ticket);
-        console.log('timestamp');
-        console.log(timestamp);
-        console.log('url');
-        console.log(url);
-        console.log('signature');
-        console.log(signature);
 
         ctx.body = JSON.stringify({
           appId: CORPID, // 必填，企业微信的corpID
