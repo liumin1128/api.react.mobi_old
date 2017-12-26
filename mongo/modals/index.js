@@ -7,6 +7,7 @@ import {
   saySchema,
   commentSchema,
   thumbSchema,
+  configSchema,
   dakaSchema,
 } from '../schemas';
 
@@ -16,4 +17,5 @@ export const Oauth = modal('Oauth', oauthSchema);
 export const Article = modal('Article', articleSchema);
 export const Comment = modal('Comment', commentSchema);
 export const Thumb = modal('Thumb', thumbSchema);
+export const Config = modal('Thumb', configSchema);
 export const Daka = modal('Daka', dakaSchema);

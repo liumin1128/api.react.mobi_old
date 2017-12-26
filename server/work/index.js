@@ -1,7 +1,7 @@
 import moment from 'moment';
 import crypto from 'crypto';
 import { parse, stringify } from 'query-string';
-import { Daka } from '../../mongo/modals';
+import { Daka, Config } from '../../mongo/modals';
 import request from '../../utils/fetch';
 import { CORPID, CORPSECRET_HUARENHOUSE, REDIRECT_URI } from '../../config/work';
 import { getAsync, setAsync, delAsync } from '../../utils/redis';
@@ -84,6 +84,12 @@ class Work {
           time,
           type,
         });
+        const aaaaa = await Config.create({
+          data: {
+            test: 1,
+          },
+        });
+        console.log(aaaaa);
         ctx.body = {
           status: 200,
           data: daka,
