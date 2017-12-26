@@ -66,14 +66,17 @@ async function getJsApiTicket({ token }) {
 
 class Work {
   async daka(ctx) {
-    console.log(ctx.request.body);
     try {
+      const { data: user } = ctx.state.user;
+
       const {
         location, networkType, time, type, token, ...other
       } = ctx.request.body;
-      if (location && networkType && time && type && token) {
+
+      if (location && networkType && time && type) {
         const daka = await Daka.create({
           ...other,
+          user,
           location,
           networkType,
           time,
