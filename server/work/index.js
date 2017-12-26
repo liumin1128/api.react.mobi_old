@@ -1,7 +1,7 @@
 import moment from 'moment';
 import crypto from 'crypto';
 import { parse, stringify } from 'query-string';
-import { Daka, Config } from '../../mongo/modals';
+import { Daka } from '../../mongo/modals';
 import request from '../../utils/fetch';
 import { CORPID, CORPSECRET_HUARENHOUSE, REDIRECT_URI } from '../../config/work';
 import { getAsync, setAsync, delAsync } from '../../utils/redis';
@@ -65,6 +65,35 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
+  async getDakaData(ctx) {
+    const params = {
+      ...ctx.request.body,
+    };
+
+    const page = typeof params.page === 'number' ? params.page : 0;
+    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
+    const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
+
+    delete params.page;
+    delete params.pageSize;
+    delete params.sort;
+
+    const count = await Daka.count(params);
+
+    const list = await Daka
+      .find(params)
+      .skip((page === 0 ? page : page - 1) * pageSize)
+      // .populate('user', POPULATE_USER)
+      .limit(pageSize)
+      .sort(sort);
+
+    ctx.body = {
+      status: 200,
+      count,
+      isEnd: (page === 0 ? 1 : page) * pageSize > count,
+      data: list,
+    };
+  }
   async daka(ctx) {
     try {
       const { user = {} } = ctx.state;
@@ -84,12 +113,6 @@ class Work {
           time,
           type,
         });
-        const aaaaa = await Config.create({
-          data: {
-            test: 1,
-          },
-        });
-        console.log(aaaaa);
         ctx.body = {
           status: 200,
           data: daka,
