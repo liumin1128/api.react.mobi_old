@@ -6,7 +6,6 @@ import request from '../../utils/fetch';
 import { CORPID, CORPSECRET_HUARENHOUSE, REDIRECT_URI } from '../../config/work';
 import { getAsync, setAsync, delAsync } from '../../utils/redis';
 import { randomString } from '../../utils/common';
-import { isNumber } from 'util';
 
 async function getAccessToken() {
   try {
@@ -88,7 +87,7 @@ class Work {
       console.log('type');
       console.log(type);
 
-      if (location && networkType && time && !isNumber(type)) {
+      if (location && networkType && time && type !== undefined) {
         const daka = await Daka.create({
           ...other,
           user: user.data,
