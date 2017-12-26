@@ -13,7 +13,7 @@ import Comment from './server/comment';
 import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
-import Work from './server/work';
+import Work from './server/work/route';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
