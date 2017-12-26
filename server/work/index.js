@@ -68,11 +68,24 @@ class Work {
   async daka(ctx) {
     try {
       const { user } = ctx.state;
+      console.log('user');
       console.log(user);
 
       const {
         location, networkType, time, type, token, ...other
       } = ctx.request.body;
+
+      console.log('location');
+      console.log(location);
+
+      console.log('networkType');
+      console.log(networkType);
+
+      console.log('time');
+      console.log(time);
+
+      console.log('type');
+      console.log(type);
 
       if (location && networkType && time && type) {
         const daka = await Daka.create({
