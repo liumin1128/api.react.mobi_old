@@ -12,7 +12,7 @@ import Say from './server/say';
 import Comment from './server/comment';
 import Common from './server/common';
 import Oauth from './server/oauth';
-import Google from './server/google/route';
+import Maps from './server/map/route';
 import Work from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
@@ -39,7 +39,7 @@ app.use(jwt({ secret: SECRET }).unless({
   path: [
     /^\/public/,
     /^\/oauth/,
-    /^\/google/,
+    /^\/map/,
     /^\/work/,
     /^\/article\/list/,
     /^\/article\/detail/,
@@ -62,7 +62,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
-  .use('/google', Google.routes())
+  .use('/map', Maps.routes())
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
   .post('/user/login', User.login)
