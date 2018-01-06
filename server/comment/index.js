@@ -33,10 +33,12 @@ class CommentController {
 
   async reply(ctx) {
     const { data } = ctx.state.user;
-    const { content, id, replyTo } = ctx.request.body;
+    const {
+      content, id, replyTo, replyUser,
+    } = ctx.request.body;
 
     await Comment.create({
-      content, id, replyTo, user: data,
+      content, id, replyTo, user: data, replyUser,
     });
 
     await Comment
