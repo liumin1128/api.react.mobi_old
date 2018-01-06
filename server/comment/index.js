@@ -106,12 +106,13 @@ class CommentController {
       .limit(pageSize)
       .populate('user', POPULATE_USER);
 
-    list.map((i) => {
-      if (i.replies && i.replies > 0) {
-        console.log('aaaaa', id, i._id);
-        // Comment.find({ id, replyTo: i._id });
-      }
-    });
+    const test = list
+      .filter(i => i.replies && i.replies > 0)
+      .map(async (i) => { await Comment.find({ id, replyTo: i._id }); });
+
+    console.log('test');
+    console.log(test);
+
     // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
     // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
 
