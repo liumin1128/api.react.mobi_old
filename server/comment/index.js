@@ -112,10 +112,12 @@ class CommentController {
       .filter(i => i.replies && i.replies > 0)
       .map(async (i) => {
         const ttt = await Comment.find({ id, replyTo: i._id });
-        temp.find(t => t._id === i._id)._doc.replyList = ttt;
+        temp.find(t => t._id === i._id).replyList = ttt;
         console.log('temp');
         console.log(temp);
       });
+
+    console.log('查完了');
 
     // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
     // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
