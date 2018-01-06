@@ -108,7 +108,7 @@ class CommentController {
 
     const test = await list
       .filter(i => i.replies && i.replies > 0)
-      .map(async (i) => { await Comment.find({ id, replyTo: i._id }); });
+      .map(i => Comment.find({ id, replyTo: i._id }));
 
     console.log('test');
     console.log(test);
