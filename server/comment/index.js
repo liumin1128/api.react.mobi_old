@@ -106,12 +106,14 @@ class CommentController {
       .limit(pageSize)
       .populate('user', POPULATE_USER);
 
-
     await Promise.all(list
       .map(async (i) => {
         if (i.replies && i.replies > 0) {
-          const ttt = await Comment.find({ id, replyTo: i._id });
-          list.find(t => t._id === i._id)._doc.replyList = ttt;
+          const replyList = await Comment
+            .find({ id, replyTo: i._id })
+            .populate('user', POPULATE_USER);
+
+          list.find(t => t._id === i._id)._doc.replyList = replyList;
         }
       }));
 
