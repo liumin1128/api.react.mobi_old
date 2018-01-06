@@ -112,7 +112,7 @@ class CommentController {
       .filter(i => i.replies && i.replies > 0)
       .map(async (i) => {
         const ttt = await Comment.find({ id, replyTo: i._id });
-        temp.find(t => t._id === i._id).replyList = ttt;
+        temp._doc.find(t => t._id === i._id).replyList = ttt;
       });
 
     console.log('temp');
