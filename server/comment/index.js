@@ -106,15 +106,15 @@ class CommentController {
       .limit(pageSize)
       .populate('user', POPULATE_USER);
 
-    const test = await list
+    list
       .filter(i => i.replies && i.replies > 0)
       .map(async (i) => {
         const ttt = await Comment.find({ id, replyTo: i._id });
+        console.log('ttt');
+        console.log(ttt);
         return ttt;
       });
 
-    console.log('test');
-    console.log(test);
 
     // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
     // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
