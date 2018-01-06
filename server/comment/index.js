@@ -1,5 +1,6 @@
 import { Comment, Thumb } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
+import comment from '../../mongo/schemas/comment';
 
 class CommentController {
   // 用户注册
@@ -77,31 +78,42 @@ class CommentController {
   }
 
   async list(ctx) {
-    const params = {
-      ...ctx.request.body,
-    };
+    const {
+      id,
+      page = 0,
+      pageSize = 10,
+      sort = '-createdAt',
+      ...other
+    } = ctx.request.body;
 
-    const page = typeof params.page === 'number' ? params.page : 0;
-    const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
-    const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
+    // const page = typeof params.page === 'number' ? params.page : 0;
+    // const pageSize = typeof params.pageSize === 'number' ? params.pageSize : 10;
+    // const sort = typeof params.sort === 'string' ? params.sort : '-createdAt';
 
-    delete params.page;
-    delete params.pageSize;
-    delete params.sort;
+    // delete params.page;
+    // delete params.pageSize;
+    // delete params.sort;
 
     const count = await Comment
-      .count(params);
-      // .exists('replyTo', false);
+      .count({ id, ...other })
+      .exists('replyTo', false);
 
     const list = await Comment
-      .find(params)
+      .find({ id, ...other })
       .exists('replyTo', false)
       .sort(sort)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .limit(pageSize)
       .populate('user', POPULATE_USER);
-      // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
-      // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
+
+    list.map((i) => {
+      if (i.replies && i.replies > 0) {
+        console.log('aaaaa', id, i._id);
+        // Comment.find({ id, replyTo: i._id });
+      }
+    });
+    // .populate({ path: 'reply', options: { limit: 2, sort: '-createdAt' } });
+    // .aggregate([{ $group: { _id: '$by_user', num_tutorial: { $sum: 1 } } }]);
 
     ctx.body = {
       status: 200,
