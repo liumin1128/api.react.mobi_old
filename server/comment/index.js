@@ -109,12 +109,14 @@ class CommentController {
     const temp = list.map(i => i);
 
     await list
-      .filter(i => i.replies && i.replies > 0)
+      // .filter(i => i.replies && i.replies > 0)
       .map(async (i) => {
-        const ttt = await Comment.find({ id, replyTo: i._id });
-        temp.find(t => t._id === i._id).replyList = ttt;
-        console.log('temp');
-        console.log(temp);
+        if (i.replies && i.replies > 0) {
+          const ttt = await Comment.find({ id, replyTo: i._id });
+          temp.find(t => t._id === i._id).replyList = ttt;
+          console.log('temp');
+          console.log(temp);
+        }
       });
 
     console.log('查完了');
