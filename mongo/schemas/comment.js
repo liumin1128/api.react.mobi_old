@@ -8,4 +8,5 @@ export default {
   user: { type: ObjectId, ref: 'User' },
   likes: Number,
   replies: Number,
+  replyTo: { type: ObjectId, ref: 'Comment' },
 };

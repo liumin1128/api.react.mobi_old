@@ -32,14 +32,14 @@ class CommentController {
 
   async reply(ctx) {
     const { data } = ctx.state.user;
-    const { content, id } = ctx.request.body;
+    const { content, id, replyTo } = ctx.request.body;
 
     await Comment.create({
-      content, id, user: data,
+      content, id, replyTo, user: data,
     });
 
     await Comment
-      .findById(id)
+      .findById(replyTo)
       .update({ $inc: { replies: 1 } });
 
     ctx.body = {
@@ -95,6 +95,7 @@ class CommentController {
 
     const list = await Comment
       .find(params)
+      .exists('replyTo', false)
       .sort(sort)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .limit(pageSize)
