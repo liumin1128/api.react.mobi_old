@@ -108,8 +108,9 @@ class CommentController {
 
     const temp = list.map(i => i);
 
-    await list
-      // .filter(i => i.replies && i.replies > 0)
+
+    await Promise.all(list
+      .filter(i => i.replies && i.replies > 0)
       .map(async (i) => {
         if (i.replies && i.replies > 0) {
           const ttt = await Comment.find({ id, replyTo: i._id });
@@ -117,7 +118,7 @@ class CommentController {
           console.log('temp');
           console.log(temp);
         }
-      });
+      }));
 
     console.log('查完了');
 
