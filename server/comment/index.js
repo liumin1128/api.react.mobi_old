@@ -1,5 +1,5 @@
 import { Comment, Thumb } from '../../mongo/modals';
-import { POPULATE_USER } from '../../constants';
+import { POPULATE_USER, POPULATE_COMMENT } from '../../constants';
 import comment from '../../mongo/schemas/comment';
 
 class CommentController {
@@ -112,7 +112,7 @@ class CommentController {
           const replyList = await Comment
             .find({ id, replyTo: i._id })
             .populate('user', POPULATE_USER)
-            .populate('replyTo', POPULATE_USER);
+            .populate('replyTo', POPULATE_COMMENT);
 
           list.find(t => t._id === i._id)._doc.replyList = replyList;
         }
