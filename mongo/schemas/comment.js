@@ -9,4 +9,5 @@ export default {
   likes: Number,
   replies: Number,
   replyTo: { type: ObjectId, ref: 'Comment' },
+  replyUser: { type: ObjectId, ref: 'User' },
 };
