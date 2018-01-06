@@ -112,7 +112,8 @@ class CommentController {
           const replyList = await Comment
             .find({ id, replyTo: i._id })
             .populate('user', POPULATE_USER)
-            .populate('replyTo', POPULATE_COMMENT);
+            .populate('replyTo', POPULATE_COMMENT)
+            .populate('replyTo.user', POPULATE_USER);
 
           list.find(t => t._id === i._id)._doc.replyList = replyList;
         }
