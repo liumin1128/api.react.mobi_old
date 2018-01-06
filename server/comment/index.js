@@ -106,7 +106,7 @@ class CommentController {
       .limit(pageSize)
       .populate('user', POPULATE_USER);
 
-    const temp = { ...list };
+    const temp = list;
 
     list
       .filter(i => i.replies && i.replies > 0)
