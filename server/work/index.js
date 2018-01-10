@@ -155,6 +155,8 @@ class Work {
       if (userInfo.errmsg === 'ok') {
         const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
         const { name, avatar } = userDetail;
+        console.log('userDetail');
+        console.log(userDetail);
         console.log(avatar);
         // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(avatar);
