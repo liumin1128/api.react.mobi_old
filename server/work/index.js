@@ -201,10 +201,13 @@ class Work {
         //   .digest('hex');
 
         ctx.body = JSON.stringify({
-          appId: CORPID, // 必填，企业微信的corpID
-          timestamp, // 必填，生成签名的时间戳
-          nonceStr, // 必填，生成签名的随机串
-          signature, // 必填，签名，见[附录1](#11974)
+          status: 200,
+          data: {
+            appId: CORPID, // 必填，企业微信的corpID
+            timestamp, // 必填，生成签名的时间戳
+            nonceStr, // 必填，生成签名的随机串
+            signature, // 必填，签名，见[附录1](#11974)
+          },
         });
       }
     } catch (error) {
