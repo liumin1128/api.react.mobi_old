@@ -67,10 +67,14 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
-  async getTodayDakaData(ctx) {
+  async getMyDakaData(ctx) {
     const { user = {} } = ctx.state;
-    console.log('user');
-    console.log(user);
+
+    const {
+      starttime = moment().startOf('day').format('x'),
+      endtime = moment().format('x'),
+      // ...other
+    } = ctx.request.body;
 
     const params = { user: user.data };
 
@@ -78,6 +82,8 @@ class Work {
 
     const list = await Daka
       .find(params)
+      .gte('createdAt', starttime)
+      .lte('createdAt', endtime)
       .populate('user');
 
     ctx.body = {
