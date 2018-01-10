@@ -1,11 +1,13 @@
 import moment from 'moment';
 import crypto from 'crypto';
 import { parse, stringify } from 'query-string';
-import { Daka } from '../../mongo/modals';
+import { Daka, User, Oauth } from '../../mongo/modals';
 import request from '../../utils/fetch';
 import { CORPID, CORPSECRET_HUARENHOUSE, REDIRECT_URI } from '../../config/work';
 import { getAsync, setAsync, delAsync } from '../../utils/redis';
 import { randomString } from '../../utils/common';
+import { fetchToQiniu } from '../../utils/qiniu';
+import { getUserToken } from '../../utils/jwt';
 
 async function getAccessToken() {
   try {
@@ -141,16 +143,39 @@ class Work {
   async mcallback(ctx) {
     const { code } = ctx.query;
     // await delAsync('wechatWorkAccessToken');
-    const token = await getAccessToken();
-    const userInfo = await getUserInfo({ token, code });
-    if (userInfo.errmsg === 'ok') {
-      const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
-      ctx.body = JSON.stringify({
-        code,
-        userInfo,
-        userDetail,
-      });
+    const accesstoken = await getAccessToken();
+    const userInfo = await getUserInfo({ token: accesstoken, code });
+
+    // 从数据库查找对应用户第三方登录信息
+    let oauth = await Oauth.findOne({ from: 'work', userid: userInfo.userid });
+
+    // 如果不存在则创建新用户，并保存该用户的第三方登录信息
+    if (!oauth) {
+      // 获取用户信息
+      if (userInfo.errmsg === 'ok') {
+        const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
+        const { name, avatar } = userDetail;
+        // 将用户头像上传至七牛
+        const avatarUrl = await fetchToQiniu(avatar);
+        console.log(avatarUrl);
+        const user = await User.create({ avatarUrl, nickname: name });
+        oauth = await Oauth.create({ from: 'work', data: userDetail, user });
+      } else {
+        ctx.body = JSON.stringify({
+          code,
+          userInfo,
+        });
+      }
     }
+
+    // 生成token（用户身份令牌）
+    const token = await getUserToken(oauth.user);
+
+    ctx.body = JSON.stringify({
+      token,
+    });
+    // 重定向页面到用户登录页，并返回token
+    ctx.redirect(`http://192.168.123.49:8000/oauth?token=${token}`);
   }
   async pclogin(ctx) {
     console.log('移动端用户登录');
