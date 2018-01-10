@@ -144,7 +144,7 @@ class Work {
   }
   async mcallback(ctx) {
     const { code } = ctx.query;
-    // await delAsync('wechatWorkAccessToken');
+    await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
     const userInfo = await getUserInfo({ token: accesstoken, code });
 
@@ -195,7 +195,7 @@ class Work {
   }
   async pccallback(ctx) {
     const { code } = ctx.query;
-    await delAsync('wechatWorkAccessToken');
+    // await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const userInfo = await getUserInfo({ token, code });
     if (userInfo.errmsg === 'ok') {
