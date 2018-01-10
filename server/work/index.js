@@ -72,7 +72,7 @@ class Work {
     console.log('user');
     console.log(user);
 
-    const params = { user };
+    const params = { user: user.data };
 
     const count = await Daka.count(params);
 
