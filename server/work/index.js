@@ -171,7 +171,7 @@ class Work {
     const token = await getUserToken(oauth.user);
 
     // 重定向页面到用户登录页，并返回token
-    ctx.redirect(`http://192.168.123.49:8000/oauth?token=${token}`);
+    ctx.redirect(`http://192.168.123.49:8000/#/daka?token=${token}`);
   }
   async pclogin(ctx) {
     // 重定向到认证接口,并配置参数
