@@ -84,7 +84,8 @@ class Work {
       .find(params)
       .gte('createdAt', starttime)
       .lte('createdAt', endtime)
-      .populate('user');
+      .populate('user')
+      .sort('-createdAt');
 
     ctx.body = {
       status: 200,
