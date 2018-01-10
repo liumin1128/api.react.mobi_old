@@ -19,6 +19,8 @@ async function getAccessToken() {
       console.log('本地未发现Token');
       const url = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${CORPID}&corpsecret=${CORPSECRET_HUARENHOUSE}`;
       const data = await request(url);
+      console.log('data');
+      console.log(data);
       if (data.access_token) {
         await setAsync('wechatWorkAccessToken', data.access_token, 'EX', data.expires_in);
         return data.access_token;
@@ -193,7 +195,7 @@ class Work {
   }
   async pccallback(ctx) {
     const { code } = ctx.query;
-    // await delAsync('wechatWorkAccessToken');
+    await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const userInfo = await getUserInfo({ token, code });
     if (userInfo.errmsg === 'ok') {
