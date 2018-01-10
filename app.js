@@ -63,8 +63,8 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
-  .use('/wechat/daka', WorkConatiner.daka)
   .use('/map', Maps.routes())
+  .post('/wechat/daka', WorkConatiner.daka)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
   .post('/user/login', User.login)
