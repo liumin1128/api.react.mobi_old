@@ -146,6 +146,8 @@ class Work {
     const { code } = ctx.query;
     await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
+    console.log('accesstoken');
+    console.log(accesstoken);
     const userInfo = await getUserInfo({ token: accesstoken, code });
 
     // 从数据库查找对应用户第三方登录信息
@@ -155,7 +157,7 @@ class Work {
     if (!oauth) {
       // 获取用户信息
       if (userInfo.errmsg === 'ok') {
-        const userDetail = await getUserDetailInfo({ token, user_ticket: userInfo.user_ticket });
+        const userDetail = await getUserDetailInfo({ token: accesstoken, user_ticket: userInfo.user_ticket });
         const { name, avatar } = userDetail;
         console.log('userDetail');
         console.log(userDetail);
