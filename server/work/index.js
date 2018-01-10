@@ -19,8 +19,6 @@ async function getAccessToken() {
       console.log('本地未发现Token');
       const url = `https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=${CORPID}&corpsecret=${CORPSECRET_HUARENHOUSE}`;
       const data = await request(url);
-      console.log('data');
-      console.log(data);
       if (data.access_token) {
         await setAsync('wechatWorkAccessToken', data.access_token, 'EX', data.expires_in);
         return data.access_token;
@@ -146,8 +144,6 @@ class Work {
     const { code } = ctx.query;
     await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
-    console.log('accesstoken');
-    console.log(accesstoken);
     const userInfo = await getUserInfo({ token: accesstoken, code });
 
     // 从数据库查找对应用户第三方登录信息
@@ -159,12 +155,8 @@ class Work {
       if (userInfo.errmsg === 'ok') {
         const userDetail = await getUserDetailInfo({ token: accesstoken, user_ticket: userInfo.user_ticket });
         const { name, avatar } = userDetail;
-        console.log('userDetail');
-        console.log(userDetail);
-        console.log(avatar);
         // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(avatar);
-        console.log(avatarUrl);
         const user = await User.create({ avatarUrl, nickname: name });
         oauth = await Oauth.create({ from: 'work', data: userDetail, user });
       } else {
@@ -178,14 +170,10 @@ class Work {
     // 生成token（用户身份令牌）
     const token = await getUserToken(oauth.user);
 
-    ctx.body = JSON.stringify({
-      token,
-    });
     // 重定向页面到用户登录页，并返回token
     ctx.redirect(`http://192.168.123.49:8000/oauth?token=${token}`);
   }
   async pclogin(ctx) {
-    console.log('移动端用户登录');
     // 重定向到认证接口,并配置参数
     let path = 'https://open.work.weixin.qq.com/wwopen/sso/qrConnect';
     path += `?appid=${CORPID}`;
