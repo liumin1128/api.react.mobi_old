@@ -14,6 +14,7 @@ import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
 import Work from './server/work/route';
+import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
@@ -62,7 +63,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
-  .use('/wechat/daka', Work.daka)
+  .use('/wechat/daka', WorkConatiner.daka)
   .use('/map', Maps.routes())
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
