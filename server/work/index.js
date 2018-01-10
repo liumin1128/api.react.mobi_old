@@ -125,28 +125,22 @@ class Work {
   async clockin(ctx) {
     try {
       const { user = {} } = ctx.state;
-      const {
-        location, networkType, time, type, token, ...other
-      } = ctx.request.body;
-
-      if (location && networkType && time && type !== undefined) {
-        const daka = await Daka.create({
-          ...other,
-          user: user.data,
-          location,
-          networkType,
-          start: moment().format('x'),
-        });
-        ctx.body = {
-          status: 200,
-          data: daka,
-        };
+      const { end, id, ...other } = ctx.request.body;
+      let daka;
+      if (id && end) {
+        daka = await Daka
+          .findById({ _id: id })
+          .update({ end });
       } else {
-        ctx.body = {
-          status: 403,
-          message: '参数不全',
-        };
+        daka = await Daka.create({
+          user: user.data,
+          ...other,
+        });
       }
+      ctx.body = {
+        status: 200,
+        data: daka,
+      };
     } catch (error) {
       console.log('daka error');
       console.log(error);
