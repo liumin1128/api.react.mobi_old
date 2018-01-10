@@ -65,6 +65,7 @@ router
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
   .post('/wechat/daka', WorkConatiner.daka)
+  .post('/wechat/getTodayDakaData', WorkConatiner.getTodayDakaData)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
   .post('/user/login', User.login)

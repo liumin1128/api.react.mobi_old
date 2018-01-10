@@ -67,6 +67,25 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
+  async getTodayDakaData(ctx) {
+    const { user = {} } = ctx.state;
+    console.log('user');
+    console.log(user);
+
+    const params = { user };
+
+    const count = await Daka.count(params);
+
+    const list = await Daka
+      .find(params)
+      .populate('user');
+
+    ctx.body = {
+      status: 200,
+      count,
+      data: list,
+    };
+  }
   async getDakaData(ctx) {
     const params = {
       ...ctx.request.body,
