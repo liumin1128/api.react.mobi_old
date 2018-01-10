@@ -121,12 +121,9 @@ class Work {
       data: list,
     };
   }
-  async daka(ctx) {
+  async clockin(ctx) {
     try {
       const { user = {} } = ctx.state;
-      console.log('user');
-      console.log(user);
-
       const {
         location, networkType, time, type, token, ...other
       } = ctx.request.body;
@@ -137,8 +134,7 @@ class Work {
           user: user.data,
           location,
           networkType,
-          time,
-          type,
+          start: moment().format('x'),
         });
         ctx.body = {
           status: 200,

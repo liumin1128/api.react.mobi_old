@@ -64,7 +64,7 @@ router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
-  .post('/wechat/daka', WorkConatiner.daka)
+  .post('/wechat/clockin', WorkConatiner.clockin)
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
