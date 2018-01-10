@@ -85,7 +85,7 @@ class Work {
     const list = await Daka
       .find(params)
       .skip((page === 0 ? page : page - 1) * pageSize)
-      // .populate('user', POPULATE_USER)
+      .populate('user')
       .limit(pageSize)
       .sort(sort);
 
