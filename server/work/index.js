@@ -161,15 +161,24 @@ class Work {
     await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
     const userInfo = await getUserInfo({ token: accesstoken, code });
+    console.log('userInfo');
+    console.log(userInfo);
 
     // 从数据库查找对应用户第三方登录信息
     let oauth = await Oauth.findOne({ from: 'work', userid: userInfo.userid });
+
+    console.log('oauth');
+    console.log(oauth);
 
     // 如果不存在则创建新用户，并保存该用户的第三方登录信息
     if (!oauth) {
       // 获取用户信息
       if (userInfo.errmsg === 'ok') {
         const userDetail = await getUserDetailInfo({ token: accesstoken, user_ticket: userInfo.user_ticket });
+
+        console.log('userDetail');
+        console.log(userDetail);
+
         const { name, avatar } = userDetail;
         // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(avatar);
