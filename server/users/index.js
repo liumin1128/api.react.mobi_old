@@ -1,15 +1,18 @@
 import { User } from '../../mongo/modals';
 import { getUserToken } from '../../utils/jwt';
 import { getAsync } from '../../utils/redis';
-import joi, { phoneSchema, nicknameSchema, codeSchema } from '../../utils/joi';
+import joi, { phoneSchema, nicknameSchema, codeSchema, passwordSchema } from '../../utils/joi';
 
 class UserController {
   // 用户注册
-  async phoneLogin(ctx) {
+  async register(ctx) {
     try {
-      let { phone, nickname, code } = ctx.request.body;
+      let {
+        phone, nickname, password, code,
+      } = ctx.request.body;
       phone = await joi(phone, phoneSchema);
       nickname = await joi(nickname, nicknameSchema);
+      password = await joi(password, passwordSchema);
       code = await joi(code, codeSchema);
       const key = `p${phone}c${code}`;
 
@@ -34,7 +37,7 @@ class UserController {
       }
 
       // 创建用户
-      user = await User.create({ username: phone, nickname });
+      user = await User.create({ username: phone, nickname, password });
       const token = await getUserToken(user._id);
 
       // 返回用户信息及token
