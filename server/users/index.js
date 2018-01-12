@@ -27,7 +27,7 @@ class UserController {
       }
 
       // 根据提交的用户名查找用户
-      let user = await User.findOne({ phone });
+      let user = await User.findOne({ username: phone });
       if (user) {
         ctx.body = {
           status: 403,
@@ -37,7 +37,9 @@ class UserController {
       }
 
       // 创建用户
-      user = await User.create({ username: phone, nickname, password });
+      user = await User.create({
+        username: phone, phone, nickname, password,
+      });
       const token = await getUserToken(user._id);
 
       // 返回用户信息及token
