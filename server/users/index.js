@@ -5,7 +5,7 @@ import joi, { phoneSchema, nicknameSchema, codeSchema } from '../../utils/joi';
 
 class UserController {
   // 用户注册
-  async register(ctx) {
+  async phoneLogin(ctx) {
     try {
       let { phone, nickname, code } = ctx.request.body;
       phone = await joi(phone, phoneSchema);
@@ -45,7 +45,7 @@ class UserController {
         userInfo: user,
       };
     } catch (error) {
-      ctx.status = 403;
+      // ctx.status = 403;
       if (error.isJoi) {
         ctx.body = {
           status: 403,
