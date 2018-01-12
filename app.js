@@ -59,7 +59,6 @@ app.use(jwt({ secret: SECRET }).unless({
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
-
 router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
