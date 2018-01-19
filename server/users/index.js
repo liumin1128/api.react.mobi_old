@@ -117,8 +117,9 @@ class UserController {
     ctx.body = 'teresetpwdst';
   }
 
-  async test() {
+  async test(ctx) {
     console.log('xxxx');
+    ctx.body = 'test';
   }
 }
 
