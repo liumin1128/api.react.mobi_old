@@ -49,6 +49,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/say\/detail/,
     /^\/qiniu\/token/,
     /^\/test/,
+    /^\/user\/login/,
     /^\/user\/register/,
     /^\/common\/verifyPhone/,
     /^\/common\/getQiniuToken/,
