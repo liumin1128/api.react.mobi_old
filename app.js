@@ -49,6 +49,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/say\/detail/,
     /^\/qiniu\/token/,
     /^\/user\/login/,
+    /^\/user\/test/,
     /^\/user\/register/,
     /^\/common\/verifyPhone/,
     /^\/common\/getQiniuToken/,
@@ -70,7 +71,7 @@ router
   .post('/user/login', User.login)
   .post('/user/register', User.register)
   .post('/user/getUserInfo', User.getUserInfo)
-  .post('/test', User.register)
+  .post('/test', User.test)
   .post('/article/create', Article.create)
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)

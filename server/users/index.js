@@ -116,6 +116,10 @@ class UserController {
   async resetpwd(ctx) {
     ctx.body = 'teresetpwdst';
   }
+
+  async test() {
+    console.log('xxxx');
+  }
 }
 
 export default new UserController();
