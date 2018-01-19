@@ -121,6 +121,7 @@ class UserController {
   async test(ctx) {
     console.log('xxxx');
     await sleep(5);
+    console.log('xxxxxxxxxxxx');
     ctx.body = 'test';
   }
 }
