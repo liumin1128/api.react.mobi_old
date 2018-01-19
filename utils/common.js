@@ -16,3 +16,4 @@ export const randomString = (len = 32) => {
   }
   return pwd;
 };
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));

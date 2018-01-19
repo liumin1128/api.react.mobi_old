@@ -2,6 +2,7 @@ import { User } from '../../mongo/modals';
 import { getUserToken } from '../../utils/jwt';
 import { getAsync } from '../../utils/redis';
 import joi, { phoneSchema, nicknameSchema, codeSchema, passwordSchema } from '../../utils/joi';
+import { sleep } from '../../utils/common';
 
 class UserController {
   // 用户注册
@@ -119,6 +120,7 @@ class UserController {
 
   async test(ctx) {
     console.log('xxxx');
+    await sleep(5);
     ctx.body = 'test';
   }
 }
