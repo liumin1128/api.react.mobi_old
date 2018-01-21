@@ -125,12 +125,14 @@ class Work {
   async clockin(ctx) {
     try {
       const { user = {} } = ctx.state;
-      const { end, id, ...other } = ctx.request.body;
+      const {
+        end, id, checkOut, ...other
+      } = ctx.request.body;
       let daka;
       if (id && end) {
         daka = await Daka
           .findById({ _id: id })
-          .update({ end });
+          .update({ end, checkOut });
       } else {
         daka = await Daka.create({
           user: user.data,
