@@ -10,4 +10,6 @@ export default {
   start: Number,
   end: Number,
   type: String, // 打卡类型 0 上班 1 下班
+  checkIn: String, // 打卡类型 0 上班 1 下班
+  checkOut: String, // 打卡类型 0 上班 1 下班
 };
