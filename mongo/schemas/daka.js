@@ -9,5 +9,5 @@ export default {
   // time: Number,
   start: Number,
   end: Number,
-  // type: Number, // 打卡类型 0 上班 1 下班
+  type: String, // 打卡类型 0 上班 1 下班
 };
