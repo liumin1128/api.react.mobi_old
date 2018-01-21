@@ -126,13 +126,13 @@ class Work {
     try {
       const { user = {} } = ctx.state;
       const {
-        end, id, checkOut, ...other
+        end, id, outType, ...other
       } = ctx.request.body;
       let daka;
       if (id && end) {
         daka = await Daka
           .findById({ _id: id })
-          .update({ end, checkOut });
+          .update({ end, outType });
       } else {
         daka = await Daka.create({
           user: user.data,
