@@ -1,7 +1,7 @@
 import moment from 'moment';
 import crypto from 'crypto';
 import { parse, stringify } from 'query-string';
-import { Daka, User, Oauth } from '../../mongo/modals';
+import { Daka, User, Oauth, Rule } from '../../mongo/modals';
 import request from '../../utils/fetch';
 import { CORPID, CORPSECRET_HUARENHOUSE, REDIRECT_URI } from '../../config/work';
 import { getAsync, setAsync, delAsync } from '../../utils/redis';
@@ -68,6 +68,10 @@ async function getJsApiTicket({ token }) {
 
 class Work {
   async createRule(ctx) {
+    await Rule.create({
+      start: 123,
+      end: 456,
+    });
     ctx.body = 'createRule ok';
   }
   async getMyDakaData(ctx) {
