@@ -7,6 +7,7 @@ import user from './user';
 import say from './say';
 import config from './config';
 import daka from './daka';
+import rule from './rule';
 
 export const userSchema = { ...common, ...user };
 export const oauthSchema = { ...common, ...oauth };
@@ -16,3 +17,4 @@ export const thumbSchema = { ...common, ...thumb };
 export const saySchema = { ...common, ...say };
 export const configSchema = { ...common, ...config };
 export const dakaSchema = { ...common, ...daka };
+export const ruleSchema = { ...common, ...rule };
