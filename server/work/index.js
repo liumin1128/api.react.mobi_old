@@ -67,6 +67,9 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
+  async createRule(ctx) {
+    ctx.body = 'createRule ok';
+  }
   async getMyDakaData(ctx) {
     const { user = {} } = ctx.state;
 

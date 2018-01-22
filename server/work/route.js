@@ -7,6 +7,7 @@ export default router
   // .post('/daka', work.daka)
   .post('/getJsSdkConfig', work.getJsSdkConfig)
   .post('/getDakaData', work.getDakaData)
+  .post('/createRule', work.createRule)
   .get('/mlogin', work.mlogin)
   .get('/mcallback', work.mcallback)
   .get('/pclogin', work.pclogin)
