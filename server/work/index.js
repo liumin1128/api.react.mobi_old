@@ -67,11 +67,15 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
+  async getDakaRule(ctx) {
+    const data = await Rule.find();
+    ctx.body = { status: 200, data };
+  }
   async createRule(ctx) {
     await Rule.create({
-      name: '上午班打卡',
-      start: 1000 * 60 * 60 * (6 + 0.5),
-      end: 1000 * 60 * 60 * (12 + 0.5),
+      name: '下午班打卡规则',
+      start: 1000 * 60 * 60 * (13 + 0.5),
+      end: 1000 * 60 * 60 * (18 + 0.5),
     });
     ctx.body = 'createRule ok';
   }
