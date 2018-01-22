@@ -69,8 +69,9 @@ async function getJsApiTicket({ token }) {
 class Work {
   async createRule(ctx) {
     await Rule.create({
-      start: 123,
-      end: 456,
+      name: '上午班打卡',
+      start: 1000 * 60 * 60 * (6 + 0.5),
+      end: 1000 * 60 * 60 * (12 + 0.5),
     });
     ctx.body = 'createRule ok';
   }

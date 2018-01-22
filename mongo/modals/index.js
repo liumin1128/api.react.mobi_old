@@ -9,6 +9,7 @@ import {
   thumbSchema,
   configSchema,
   dakaSchema,
+  ruleSchema,
 } from '../schemas';
 
 export const Say = modal('Say', saySchema);
@@ -19,3 +20,4 @@ export const Comment = modal('Comment', commentSchema);
 export const Thumb = modal('Thumb', thumbSchema);
 export const Config = modal('Config', configSchema);
 export const Daka = modal('Daka', dakaSchema);
+export const Rule = modal('Daka', ruleSchema);
