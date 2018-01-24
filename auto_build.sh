@@ -12,5 +12,6 @@ git pull
 echo "安装依赖"
 yarn
 echo "restart nodeblog"
-pm2 restart api.react.mobi
+# pm2 restart api.react.mobi
+yarn pm2
 echo "finished----------"
