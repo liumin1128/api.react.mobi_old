@@ -57,6 +57,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/im\/update/,
   ],
 }));
+
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
