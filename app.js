@@ -6,7 +6,6 @@ import helmet from 'koa-helmet';
 import jwt from 'koa-jwt';
 import mongoose from 'mongoose';
 
-import User from './server/users';
 import Article from './server/article';
 import Say from './server/say';
 import Comment from './server/comment';
@@ -14,6 +13,7 @@ import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
 import Work from './server/work/route';
+import User from './server/users/route';
 import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
@@ -67,13 +67,11 @@ router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
+  .use('/user', Maps.routes())
   .post('/wechat/clockin', WorkConatiner.clockin)
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
-  .post('/user/login', User.login)
-  .post('/user/register', User.register)
-  .post('/user/getUserInfo', User.getUserInfo)
   .post('/test', User.test)
   .post('/article/create', Article.create)
   .post('/article/list', Article.list)
