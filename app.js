@@ -72,7 +72,6 @@ router
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update)
-  .post('/test', User.test)
   .post('/article/create', Article.create)
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)
