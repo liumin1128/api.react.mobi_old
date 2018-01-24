@@ -58,6 +58,8 @@ app.use(jwt({ secret: SECRET }).unless({
   ],
 }));
 
+console.log('666');
+
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
