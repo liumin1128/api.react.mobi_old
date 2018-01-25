@@ -41,7 +41,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/public/,
     /^\/oauth/,
     /^\/map/,
-    /^\/work/,
+    // /^\/work/,
     /^\/article\/list/,
     /^\/article\/detail/,
     /^\/say\/list/,
