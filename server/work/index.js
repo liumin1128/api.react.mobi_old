@@ -68,7 +68,25 @@ async function getJsApiTicket({ token }) {
 
 class Work {
   async getDakaRule(ctx) {
-    const data = await Rule.find();
+    const today = moment().startOf('days').format('x');
+    const now = moment().format('x');
+    // const cha = now - today;
+    const cha = 65600000;
+    const data = await Rule
+      .find()
+      .where('times[0]')
+      .gte(cha)
+      .where('times[1]')
+      .lte(cha);
+
+    // rules.map((i) => {
+    //   if (cha > i.times[0] && cha < i.times[1]) {
+    //     console.log(i.times);
+    //     console.log(i.name);
+    //     // const { status: status1, data: records } = yield requestWithToken('https://api.react.mobi/wechat/getMyDakaData');
+    //     return false;
+    //   }
+    // });
     ctx.body = { status: 200, data };
   }
   async createRule(ctx) {
