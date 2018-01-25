@@ -73,21 +73,12 @@ class Work {
     // const cha = now - today;
     const cha = 65600000;
     const data = await Rule
-      .find({
+      .findOne({
         'times.0': { $lte: cha },
         'times.1': { $gte: cha },
       });
       // .where(`times.0 < ${cha} && times.1 > ${cha}`);
 
-
-    // rules.map((i) => {
-    //   if (cha > i.times[0] && cha < i.times[1]) {
-    //     console.log(i.times);
-    //     console.log(i.name);
-    //     // const { status: status1, data: records } = yield requestWithToken('https://api.react.mobi/wechat/getMyDakaData');
-    //     return false;
-    //   }
-    // });
     ctx.body = { status: 200, data };
   }
   async createRule(ctx) {
