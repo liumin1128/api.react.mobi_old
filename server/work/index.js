@@ -168,6 +168,9 @@ class Work {
   async clockin(ctx) {
     try {
       const { user = {} } = ctx.state;
+      console.log('user');
+      console.log(user);
+      console.log(user);
       const {
         out, id, outType, ...other
       } = ctx.request.body;
