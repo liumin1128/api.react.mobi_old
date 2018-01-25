@@ -85,7 +85,7 @@ class Work {
       const endtime = moment().endOf('day').format('x');
 
       const data = await Daka
-        .find(params)
+        .findOne(params)
         .gte('createdAt', starttime)
         .lte('createdAt', endtime)
         .populate('user')
