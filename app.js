@@ -8,12 +8,12 @@ import mongoose from 'mongoose';
 
 import Article from './server/article';
 import Say from './server/say';
-import Comment from './server/comment';
 import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
 import Work from './server/work/route';
 import User from './server/users/route';
+import Comment from './server/comment/route';
 import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
@@ -58,7 +58,6 @@ app.use(jwt({ secret: SECRET }).unless({
   ],
 }));
 
-console.log('666');
 
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
@@ -67,7 +66,8 @@ router
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
-  .use('/user', Maps.routes())
+  .use('/user', User.routes())
+  .use('/comment', Comment.routes())
   .post('/wechat/clockin', WorkConatiner.clockin)
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
@@ -75,12 +75,6 @@ router
   .post('/article/create', Article.create)
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)
-  .post('/comment/create', Comment.create)
-  .post('/comment/delete', Comment.delete)
-  .post('/comment/list', Comment.list)
-  .post('/comment/detail', Comment.detail)
-  .post('/comment/thumb', Comment.thumb)
-  .post('/comment/reply', Comment.reply)
   .post('/say/create', Say.create)
   .post('/say/list', Say.list)
   .post('/say/detail', Say.detail)
