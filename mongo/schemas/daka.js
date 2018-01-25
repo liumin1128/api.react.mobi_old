@@ -8,5 +8,7 @@ export default {
   location: Object,
   networkType: String, // 网络类型，前端会要求为wifi
   in: Number,
+  inType: Number,
   out: Number,
+  outType: Number,
 };
