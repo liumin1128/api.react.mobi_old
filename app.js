@@ -6,14 +6,14 @@ import helmet from 'koa-helmet';
 import jwt from 'koa-jwt';
 import mongoose from 'mongoose';
 
-import Article from './server/article';
-import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
 import Work from './server/work/route';
 import User from './server/users/route';
 import Comment from './server/comment/route';
 import Say from './server/say/route';
+import Article from './server/article/route';
+import Common from './server/common/route';
 import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
@@ -69,16 +69,13 @@ router
   .use('/user', User.routes())
   .use('/comment', Comment.routes())
   .use('/say', Say.routes())
+  .use('/article', Article.routes())
+  .use('/common', Common.routes())
   .post('/wechat/clockin', WorkConatiner.clockin)
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
-  .post('/im/update', Im.update)
-  .post('/article/create', Article.create)
-  .post('/article/list', Article.list)
-  .post('/article/detail', Article.detail)
-  .post('/common/getQiniuToken', Common.token)
-  .post('/common/verifyPhone', Common.verifyPhone)
-  .post('/common/fetch', Common.fetch);
+  .post('/im/update', Im.update);
+
 
 app.use(router.routes());
 
