@@ -80,6 +80,9 @@ class Work {
 
     if (rule) {
       const { user = {} } = ctx.state;
+      console.log('user');
+      console.log(user);
+      console.log(user);
       const params = { user: user.data, rule: rule._id };
       const starttime = moment().startOf('day').format('x');
       const endtime = moment().endOf('day').format('x');
