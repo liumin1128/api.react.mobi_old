@@ -74,9 +74,9 @@ class Work {
     const cha = 65600000;
     const data = await Rule
       .find()
-      .where('times[0]')
+      .where('times.0')
       .gte(cha)
-      .where('times[1]')
+      .where('times.1')
       .lte(cha);
 
     // rules.map((i) => {
