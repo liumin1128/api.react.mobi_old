@@ -4,8 +4,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 export default {
   name: String, // 打卡规则名
-  start: Number,
-  end: Number,
+  times: [Number],
+  standard: [Number],
   user: { type: ObjectId, ref: 'User' },
   location: Object,
   networkType: String, // 网络类型，前端会要求为wifi
