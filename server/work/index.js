@@ -73,8 +73,11 @@ class Work {
     // const cha = now - today;
     const cha = 65600000;
     const data = await Rule
-      .find()
-      .where(`times.0 < ${cha} && times.1 > ${cha}`);
+      .find({
+        'times.0': { $lte: cha },
+        'times.1': { $gte: cha },
+      });
+      // .where(`times.0 < ${cha} && times.1 > ${cha}`);
 
 
     // rules.map((i) => {
