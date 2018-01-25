@@ -74,10 +74,8 @@ class Work {
     const cha = 65600000;
     const data = await Rule
       .find()
-      .where('times.0')
-      .gte(cha)
-      .where('times.1')
-      .lte(cha);
+      .$where(`this.times.0 < ${cha} && this.times.1 > ${cha}`);
+
 
     // rules.map((i) => {
     //   if (cha > i.times[0] && cha < i.times[1]) {
