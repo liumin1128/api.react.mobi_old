@@ -68,6 +68,7 @@ async function getJsApiTicket({ token }) {
 
 class Work {
   async getDakaRule(ctx) {
+    const { user = {} } = ctx.state;
     const today = moment().startOf('days').format('x');
     const now = moment().format('x');
     // const cha = now - today;
@@ -79,7 +80,6 @@ class Work {
       });
 
     if (rule) {
-      const { user = {} } = ctx.state;
       console.log('user');
       console.log(user);
       console.log(user);
