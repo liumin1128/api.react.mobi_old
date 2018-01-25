@@ -84,18 +84,21 @@ class Work {
       const starttime = moment().startOf('day').format('x');
       const endtime = moment().endOf('day').format('x');
 
-      const list = await Daka
+      const data = await Daka
         .find(params)
         .gte('createdAt', starttime)
         .lte('createdAt', endtime)
         .populate('user')
         .sort('-createdAt');
 
-      ctx.body = { status: 200, rule, list };
+      console.log('data');
+      console.log(data);
+
+      ctx.body = { status: 200, rule, data };
     }
     // .where(`times.0 < ${cha} && times.1 > ${cha}`);
 
-    ctx.body = { status: 200, rule };
+    ctx.body = { status: 200, message: '不可打卡' };
   }
   async createRule(ctx) {
     await Rule.create({
