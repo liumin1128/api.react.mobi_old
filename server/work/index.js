@@ -71,8 +71,8 @@ class Work {
     const { user = {} } = ctx.state;
     const today = moment().startOf('days').format('x');
     const now = moment().format('x');
-    // const cha = now - today;
-    const cha = 65600000;
+    const cha = now - today;
+    // const cha = 65600000;
     const rule = await Rule
       .findOne({
         'times.0': { $lte: cha },
