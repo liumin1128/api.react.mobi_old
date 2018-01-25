@@ -7,13 +7,13 @@ import jwt from 'koa-jwt';
 import mongoose from 'mongoose';
 
 import Article from './server/article';
-import Say from './server/say';
 import Common from './server/common';
 import Oauth from './server/oauth';
 import Maps from './server/map/route';
 import Work from './server/work/route';
 import User from './server/users/route';
 import Comment from './server/comment/route';
+import Say from './server/say/route';
 import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
@@ -45,8 +45,8 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/article\/list/,
     /^\/article\/detail/,
     /^\/say\/list/,
-    /^\/comment\/list/,
     /^\/say\/detail/,
+    /^\/comment\/list/,
     /^\/qiniu\/token/,
     /^\/test/,
     /^\/user\/login/,
@@ -68,6 +68,7 @@ router
   .use('/map', Maps.routes())
   .use('/user', User.routes())
   .use('/comment', Comment.routes())
+  .use('/say', Say.routes())
   .post('/wechat/clockin', WorkConatiner.clockin)
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
@@ -75,9 +76,6 @@ router
   .post('/article/create', Article.create)
   .post('/article/list', Article.list)
   .post('/article/detail', Article.detail)
-  .post('/say/create', Say.create)
-  .post('/say/list', Say.list)
-  .post('/say/detail', Say.detail)
   .post('/common/getQiniuToken', Common.token)
   .post('/common/verifyPhone', Common.verifyPhone)
   .post('/common/fetch', Common.fetch);
