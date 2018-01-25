@@ -72,14 +72,30 @@ class Work {
     const now = moment().format('x');
     // const cha = now - today;
     const cha = 65600000;
-    const data = await Rule
+    const rule = await Rule
       .findOne({
         'times.0': { $lte: cha },
         'times.1': { $gte: cha },
       });
-      // .where(`times.0 < ${cha} && times.1 > ${cha}`);
 
-    ctx.body = { status: 200, data };
+    if (rule) {
+      const { user = {} } = ctx.state;
+      const params = { user: user.data, rule: rule._id };
+      const starttime = moment().startOf('day').format('x');
+      const endtime = moment().endOf('day').format('x');
+
+      const list = await Daka
+        .find(params)
+        .gte('createdAt', starttime)
+        .lte('createdAt', endtime)
+        .populate('user')
+        .sort('-createdAt');
+
+      ctx.body = { status: 200, rule, list };
+    }
+    // .where(`times.0 < ${cha} && times.1 > ${cha}`);
+
+    ctx.body = { status: 200, rule };
   }
   async createRule(ctx) {
     await Rule.create({
