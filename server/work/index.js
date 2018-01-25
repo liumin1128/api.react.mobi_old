@@ -95,10 +95,9 @@ class Work {
       console.log(data);
 
       ctx.body = { status: 200, rule, data };
+    } else {
+      ctx.body = { status: 200, message: '不可打卡' };
     }
-    // .where(`times.0 < ${cha} && times.1 > ${cha}`);
-
-    ctx.body = { status: 200, message: '不可打卡' };
   }
   async createRule(ctx) {
     await Rule.create({
