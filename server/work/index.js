@@ -347,7 +347,7 @@ class Work {
   }
   // 获取微信自带打卡数据
   async getUser(ctx) {
-    // await delAsync('wechatWorkAccessToken');
+    await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const { userlist } = await getAllUser({ token });
     const useridlist = userlist.map(i => i.userid);
