@@ -349,7 +349,11 @@ class Work {
   async getUser(ctx) {
     await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
+    console.log('token');
+    console.log(token);
     const { userlist } = await getAllUser({ token });
+    console.log('userlist');
+    console.log(userlist);
     // const useridlist = userlist.map(i => i.userid);
     ctx.body = {
       status: 200,
