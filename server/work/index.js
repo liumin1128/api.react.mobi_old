@@ -351,21 +351,25 @@ class Work {
     const token = await getAccessToken();
     const { userlist } = await getAllUser({ token });
     const useridlist = userlist.map(i => i.userid);
-    const url = `https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata?access_token=${token}`;
-
-    const params = {
-      access_token: token,
-      opencheckindatatype: 3,
-      starttime: parseInt(moment().subtract(30, 'days').format('X'), 0),
-      endtime: parseInt(moment().format('X'), 0),
-      useridlist,
+    ctx.body = {
+      status: 200,
+      data: useridlist,
     };
 
-    console.log(params);
-    const data = await request(url, params);
-    console.log('data');
-    console.log(data);
-    ctx.body = data;
+    // const url = `https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata?access_token=${token}`;
+    // const params = {
+    //   access_token: token,
+    //   opencheckindatatype: 3,
+    //   starttime: parseInt(moment().subtract(30, 'days').format('X'), 0),
+    //   endtime: parseInt(moment().format('X'), 0),
+    //   useridlist,
+    // };
+
+    // console.log(params);
+    // const data = await request(url, params);
+    // console.log('data');
+    // console.log(data);
+    // ctx.body = data;
   }
 }
 
