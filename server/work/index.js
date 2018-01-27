@@ -67,6 +67,23 @@ async function getJsApiTicket({ token }) {
 }
 
 class Work {
+  async getDepartment(ctx) {
+    const accesstoken = await getAccessToken();
+    let url = 'https://qyapi.weixin.qq.com/cgi-bin/department/list';
+    url += `?access_token=${accesstoken}`;
+    const data = await request(url);
+    console.log(data);
+    console.log(data);
+    ctx.body = data;
+  }
+  async getTeamUser(ctx) {
+    // const accesstoken = await getAccessToken();
+
+    // let path = 'https://qyapi.weixin.qq.com/cgi-bin/user/simplelist';
+    // path += `?access_token=${accesstoken}`;
+    // path += '&department_id= ';
+    // path += '&response_type=code&scope=snsapi_userinfo&agentid=1000008&state=STATE#wechat_redirect';
+  }
   async getDakaRule(ctx) {
     const { user = {} } = ctx.state;
     const today = moment().startOf('days').format('x');
@@ -80,9 +97,6 @@ class Work {
       });
 
     if (rule) {
-      console.log('user');
-      console.log(user);
-      console.log(user);
       const params = { user: user.data, rule: rule._id };
       const starttime = moment().startOf('day').format('x');
       const endtime = moment().endOf('day').format('x');
@@ -93,9 +107,6 @@ class Work {
         .lte('createdAt', endtime)
         .populate('user')
         .sort('-createdAt');
-
-      console.log('data');
-      console.log(data);
 
       ctx.body = { status: 200, rule, data };
     } else {
@@ -207,7 +218,7 @@ class Work {
   }
   async mcallback(ctx) {
     const { code } = ctx.query;
-    await delAsync('wechatWorkAccessToken');
+    // await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
     const userInfo = await getUserInfo({ token: accesstoken, code });
     console.log('userInfo');
