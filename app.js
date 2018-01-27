@@ -44,7 +44,7 @@ app.use(jwt({ secret: SECRET }).unless({
     // /^\/work/,
     /^\/work\/mlogin/,
     /^\/work\/mcallback/,
-
+    /^\/work\/getDakaData/,
     /^\/article\/detail/,
     /^\/say\/list/,
     /^\/say\/detail/,
