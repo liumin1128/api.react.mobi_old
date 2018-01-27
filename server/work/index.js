@@ -68,6 +68,7 @@ async function getJsApiTicket({ token }) {
 
 class Work {
   async getDepartment(ctx) {
+    // 获取部门列表
     const accesstoken = await getAccessToken();
     let url = 'https://qyapi.weixin.qq.com/cgi-bin/department/list';
     url += `?access_token=${accesstoken}`;
@@ -345,7 +346,7 @@ class Work {
     }
   }
   // 获取微信自带打卡数据
-  async test2222(ctx) {
+  async getUser(ctx) {
     // await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const { userlist } = await getAllUser({ token });

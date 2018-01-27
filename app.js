@@ -42,10 +42,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/oauth/,
     /^\/map/,
     // /^\/work/,
-    /^\/work\/mlogin/,
-    /^\/work\/mcallback/,
-    /^\/work\/getDakaData/,
-    /^\/work\/getDepartment/,
+
     /^\/article\/detail/,
     /^\/say\/list/,
     /^\/say\/detail/,
@@ -58,6 +55,13 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/common\/getQiniuToken/,
     /^\/im\/create/,
     /^\/im\/update/,
+
+    /^\/work\/mlogin/,
+    /^\/work\/mcallback/,
+    /^\/work\/getDakaData/,
+    /^\/work\/getDepartment/,
+    /^\/work\/getUser/,
+
   ],
 }));
 
