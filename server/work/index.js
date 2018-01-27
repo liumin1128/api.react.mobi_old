@@ -350,10 +350,10 @@ class Work {
     await delAsync('wechatWorkAccessToken');
     const token = await getAccessToken();
     const { userlist } = await getAllUser({ token });
-    const useridlist = userlist.map(i => i.userid);
+    // const useridlist = userlist.map(i => i.userid);
     ctx.body = {
       status: 200,
-      data: useridlist,
+      data: userlist,
     };
 
     // const url = `https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata?access_token=${token}`;
