@@ -155,6 +155,7 @@ class Work {
       .find(params)
       .skip((page === 0 ? page : page - 1) * pageSize)
       .populate('user')
+      .populate('rule')
       .limit(pageSize)
       .sort(sort);
 
