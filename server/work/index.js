@@ -197,7 +197,7 @@ class Work {
           // 计算出工作时间
           const working = out - data.in;
           // 计算出旷工时间
-          const cha = (data.in - data.rule.standard[0]) + (out - data.rule.standard[1]);
+          const cha = (data.rule.standard[1] - data.rule.standard[0]) - (out - data.in);
           const absenteeism = cha > 0 ? cha : 0;
 
           console.log('cha');
