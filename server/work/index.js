@@ -279,7 +279,7 @@ class Work {
     console.log(userInfo);
 
     // 从数据库查找对应用户第三方登录信息
-    let oauth = await Oauth.findOne({ from: 'work', userid: userInfo.userid });
+    let oauth = await Oauth.findOne({ from: 'work', 'data.UserId': userInfo.UserId });
 
     console.log('oauth');
     console.log(oauth);
