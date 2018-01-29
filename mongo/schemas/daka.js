@@ -11,4 +11,6 @@ export default {
   inType: Number,
   out: Number,
   outType: Number,
+  photos: Array,
+  description: String,
 };
