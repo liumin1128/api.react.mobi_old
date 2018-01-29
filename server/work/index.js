@@ -274,6 +274,7 @@ class Work {
     // await delAsync('wechatWorkAccessToken');
     const accesstoken = await getAccessToken();
     const userInfo = await getUserInfo({ token: accesstoken, code });
+
     console.log('userInfo');
     console.log(userInfo);
 
