@@ -11,6 +11,9 @@ export default {
   inType: Number,
   out: Number,
   outType: Number,
+  working: Number, // 工作时间
+  leave: Number, // 请假时间
+  absenteeism: Number, // 旷工时间
   photos: Array,
   description: String,
 };
