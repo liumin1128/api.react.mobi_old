@@ -200,11 +200,6 @@ class Work {
           const cha = (data.rule.standard[1] - data.rule.standard[0]) - (out - data.in);
           const absenteeism = cha > 0 ? cha : 0;
 
-          console.log('cha');
-          console.log(cha);
-          console.log('absenteeism');
-          console.log(absenteeism);
-
           daka = await Daka
             .findById({ _id: id })
             .update({
@@ -217,6 +212,27 @@ class Work {
           ...other,
         });
       }
+      ctx.body = {
+        status: 200,
+        data: daka,
+      };
+    } catch (error) {
+      console.log('daka error');
+      console.log(error);
+    }
+  }
+  async approve(ctx) {
+    try {
+      const { id } = ctx.request.body;
+
+      const daka = await Daka
+        .findById({ _id: id });
+
+      daka.update({
+        absenteeism: 0,
+        leave: daka.absenteeism,
+      });
+
       ctx.body = {
         status: 200,
         data: daka,

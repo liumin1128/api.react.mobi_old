@@ -61,6 +61,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/work\/getDakaData/,
     /^\/work\/getDepartment/,
     /^\/work\/getUser/,
+    /^\/work\/approve/,
 
   ],
 }));
