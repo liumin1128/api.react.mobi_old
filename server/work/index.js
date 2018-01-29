@@ -91,11 +91,18 @@ class Work {
     const now = moment().format('x');
     const cha = now - today;
     // const cha = 65600000;
+    console.log(moment().format('llll'));
+    console.log(cha);
+
     const rule = await Rule
       .findOne({
         'times.0': { $lte: cha },
         'times.1': { $gte: cha },
       });
+
+    console.log('rule');
+    console.log(rule);
+
 
     if (rule) {
       const params = { user: user.data, rule: rule._id };
