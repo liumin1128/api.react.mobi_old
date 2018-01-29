@@ -181,17 +181,36 @@ class Work {
   async clockin(ctx) {
     try {
       const { user = {} } = ctx.state;
-      console.log('user');
-      console.log(user);
-      console.log(user);
+
       const {
         out, id, outType, ...other
       } = ctx.request.body;
+
       let daka;
+
       if (id && out) {
-        daka = await Daka
+        const data = await Daka
           .findById({ _id: id })
-          .update({ out, outType });
+          .populate('rule');
+
+        if (data) {
+          // 计算出工作时间
+          const working = out - data.in;
+          // 计算出旷工时间
+          const cha = (data.in - data.rule.standard[0]) + (out - data.rule.standard[1]);
+          const absenteeism = cha > 0 ? cha : 0;
+
+          console.log('cha');
+          console.log(cha);
+          console.log('absenteeism');
+          console.log(absenteeism);
+
+          daka = await Daka
+            .findById({ _id: id })
+            .update({
+              out, outType, working, absenteeism,
+            });
+        }
       } else {
         daka = await Daka.create({
           user: user.data,
