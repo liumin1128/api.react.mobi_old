@@ -225,11 +225,14 @@ class Work {
     try {
       const { id } = ctx.request.body;
 
+      const { absenteeism } = await Daka
+        .findById({ _id: id });
+
       const daka = await Daka
         .findById({ _id: id })
         .update({
           absenteeism: 0,
-          leave: this.absenteeism,
+          leave: absenteeism,
         });
 
       console.log('daka');
