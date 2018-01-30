@@ -258,7 +258,8 @@ class Work {
             user: user.data,
             rule: i,
             absenteeism: r.standard[1] - r.standard[0],
-            type: 0,
+            inType: 0,
+            outType: 0,
             description,
           });
         }));
