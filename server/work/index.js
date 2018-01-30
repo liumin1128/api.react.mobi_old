@@ -230,7 +230,7 @@ class Work {
 
       const leave = await Leave.create({
         ...ctx.request.body,
-        user,
+        user: user.data,
       });
 
       ctx.body = {
