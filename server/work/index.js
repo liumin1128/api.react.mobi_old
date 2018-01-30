@@ -227,48 +227,10 @@ class Work {
   async leave(ctx) {
     try {
       const { user = {} } = ctx.state;
-      const { date, description, ...other } = ctx.request.body;
-
-      // const params = { user: user.data };
-      // const starttime = moment(date).startOf('day').format('x');
-      // const endtime = moment(date).endOf('day').format('x');
-
-      // const data = await Daka
-      //   .find(params)
-      //   .where('rule').in(rule)
-      //   .gte('date', starttime)
-      //   .lte('date', endtime)
-      //   .populate('user')
-      //   .populate('rule')
-      //   .sort('-createdAt');
-
-      // if (data.length !== 0) {
-      //   ctx.body = {
-      //     status: 403,
-      //     message: '已存在打卡记录，无法请假',
-      //     data,
-      //   };
-      //   return;
-      // }
-
-      // await Promise.all(rule
-      //   .map(async (i) => {
-      //     const r = await Rule.findById(i);
-      //     await Daka.create({
-      //       user: user.data,
-      //       rule: i,
-      //       absenteeism: r.standard[1] - r.standard[0],
-      //       inType: 0,
-      //       outType: 0,
-      //       in: moment().format('x'),
-      //       out: moment().format('x'),
-      //       description,
-      //       date: new Date(date),
-      //     });
-      //   }));
 
       const leave = await Leave.create({
-        date, description, ...other,
+        ...ctx.request.body,
+        user,
       });
 
       ctx.body = {

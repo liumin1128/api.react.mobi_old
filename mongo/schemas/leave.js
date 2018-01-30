@@ -4,8 +4,10 @@ const { ObjectId } = mongoose.Schema.Types;
 
 export default {
   user: { type: ObjectId, ref: 'User' },
-  date: Date,
-  leave: Number, // 请假时间
+  hours: Number, // 请假时间
   photos: Array,
   description: String,
+  end: Date,
+  start: Date,
+  type: Number,
 };
