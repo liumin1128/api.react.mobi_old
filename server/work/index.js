@@ -229,7 +229,7 @@ class Work {
       const { user = {} } = ctx.state;
       const { rule, date, description } = ctx.request.body;
 
-      const params = { user: user.data, rule: rule._id };
+      const params = { user: user.data };
       const starttime = moment(date).startOf('day').format('x');
       const endtime = moment(date).endOf('day').format('x');
 
