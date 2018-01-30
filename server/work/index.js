@@ -235,7 +235,7 @@ class Work {
 
       const data = await Daka
         .find(params)
-        .where('likes').in(rule)
+        .where('rule').in(rule)
         .gte('createdAt', starttime)
         .lte('createdAt', endtime)
         .populate('user')
