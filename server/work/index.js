@@ -239,11 +239,31 @@ class Work {
         .gte('createdAt', starttime)
         .lte('createdAt', endtime)
         .populate('user')
+        .populate('rule')
         .sort('-createdAt');
+
+      if (data.length !== 0) {
+        ctx.body = {
+          status: 403,
+          message: '已存在打卡记录，无法请假',
+          data,
+        };
+        return;
+      }
+
+      await Promise.all(rule
+        .map(async (r) => {
+          await Daka.create({
+            user: user.data,
+            absenteeism: r.standard[1] - r.standard[0],
+            type: 0,
+            description,
+          });
+        }));
 
       ctx.body = {
         status: 200,
-        data,
+        message: '请假成功',
       };
     } catch (error) {
       console.log('daka error');
