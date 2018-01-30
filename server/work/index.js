@@ -102,8 +102,8 @@ class Work {
 
       const data = await Daka
         .findOne(params)
-        .gte('createdAt', starttime)
-        .lte('createdAt', endtime)
+        .gte('date', starttime)
+        .lte('date', endtime)
         .populate('user')
         .sort('-createdAt');
 
@@ -140,8 +140,8 @@ class Work {
 
     const list = await Daka
       .find(params)
-      .gte('createdAt', starttime)
-      .lte('createdAt', endtime)
+      .gte('date', starttime)
+      .lte('date', endtime)
       .populate('user')
       .sort('-createdAt');
 
@@ -236,8 +236,8 @@ class Work {
       const data = await Daka
         .find(params)
         .where('rule').in(rule)
-        .gte('createdAt', starttime)
-        .lte('createdAt', endtime)
+        .gte('date', starttime)
+        .lte('date', endtime)
         .populate('user')
         .populate('rule')
         .sort('-createdAt');
@@ -260,6 +260,8 @@ class Work {
             absenteeism: r.standard[1] - r.standard[0],
             inType: 0,
             outType: 0,
+            in: moment().format('x'),
+            out: moment().format('x'),
             description,
             date: new Date(date),
           });
