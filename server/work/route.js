@@ -12,6 +12,7 @@ export default router
   .post('/getDepartment', work.getDepartment)
   .post('/getUser', work.getUser)
   .post('/approve', work.approve)
+  .post('/leave', work.leave)
   .get('/mlogin', work.mlogin)
   .get('/mcallback', work.mcallback)
   .get('/pclogin', work.pclogin)

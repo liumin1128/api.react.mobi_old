@@ -62,6 +62,7 @@ app.use(jwt({ secret: SECRET }).unless({
     /^\/work\/getDepartment/,
     /^\/work\/getUser/,
     /^\/work\/approve/,
+    /^\/work\/leave/,
     /^\/work\/createRule/,
 
   ],

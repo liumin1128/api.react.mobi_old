@@ -224,6 +224,32 @@ class Work {
       console.log(error);
     }
   }
+  async leave(ctx) {
+    try {
+      const { user = {} } = ctx.state;
+      const { rule, date, description } = ctx.request.body;
+
+      const params = { user: user.data, rule: rule._id };
+      const starttime = moment(date).startOf('day').format('x');
+      const endtime = moment(date).endOf('day').format('x');
+
+      const data = await Daka
+        .find(params)
+        .where('likes').in(rule)
+        .gte('createdAt', starttime)
+        .lte('createdAt', endtime)
+        .populate('user')
+        .sort('-createdAt');
+
+      ctx.body = {
+        status: 200,
+        data,
+      };
+    } catch (error) {
+      console.log('daka error');
+      console.log(error);
+    }
+  }
   async approve(ctx) {
     try {
       const { id } = ctx.request.body;
