@@ -253,7 +253,7 @@ class Work {
 
       await Promise.all(rule
         .map(async (i) => {
-          const r = Rule.findById(i);
+          const r = await Rule.findById(i);
           await Daka.create({
             user: user.data,
             absenteeism: r.standard[1] - r.standard[0],
