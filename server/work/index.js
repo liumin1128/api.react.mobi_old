@@ -261,6 +261,7 @@ class Work {
             inType: 0,
             outType: 0,
             description,
+            date: new Date(date),
           });
         }));
 
