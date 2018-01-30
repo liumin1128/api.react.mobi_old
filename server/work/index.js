@@ -256,6 +256,7 @@ class Work {
           const r = await Rule.findById(i);
           await Daka.create({
             user: user.data,
+            rule: i,
             absenteeism: r.standard[1] - r.standard[0],
             type: 0,
             description,
