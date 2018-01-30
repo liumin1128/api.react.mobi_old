@@ -22,4 +22,4 @@ export const Thumb = modal('Thumb', thumbSchema);
 export const Config = modal('Config', configSchema);
 export const Daka = modal('Daka', dakaSchema);
 export const Rule = modal('Rule', ruleSchema);
-export const Leave = modal('Rule', leaveSchema);
+export const Leave = modal('Leave', leaveSchema);
