@@ -8,6 +8,7 @@ export default router
   .post('/getJsSdkConfig', work.getJsSdkConfig)
   .post('/getDakaData', work.getDakaData)
   .post('/getLeaveData', work.getLeaveData)
+  .post('/getMyLeaveData', work.getMyLeaveData)
   .post('/createRule', work.createRule)
   .post('/getDakaRule', work.getDakaRule)
   .post('/getDepartment', work.getDepartment)
