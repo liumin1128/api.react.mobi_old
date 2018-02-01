@@ -258,6 +258,23 @@ class Work {
       console.log(error);
     }
   }
+  async getMyLeaveData(ctx) {
+    try {
+      const { user = {} } = ctx.state;
+      const params = { user: user.data };
+      const leave = await Leave
+        .find(params)
+        .populate('user');
+
+      ctx.body = {
+        status: 200,
+        data: leave,
+      };
+    } catch (error) {
+      console.log('daka error');
+      console.log(error);
+    }
+  }
   async approve(ctx) {
     try {
       const { id } = ctx.request.body;
