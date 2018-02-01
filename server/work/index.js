@@ -243,6 +243,18 @@ class Work {
       console.log(error);
     }
   }
+  async getLeaveData(ctx) {
+    try {
+      const leave = await Leave.find();
+      ctx.body = {
+        status: 200,
+        data: leave,
+      };
+    } catch (error) {
+      console.log('daka error');
+      console.log(error);
+    }
+  }
   async approve(ctx) {
     try {
       const { id } = ctx.request.body;
