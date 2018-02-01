@@ -245,7 +245,10 @@ class Work {
   }
   async getLeaveData(ctx) {
     try {
-      const leave = await Leave.find();
+      const leave = await Leave
+        .find()
+        .populate('user');
+
       ctx.body = {
         status: 200,
         data: leave,
