@@ -1,4 +1,10 @@
 export default `
+  type Rule {
+    id: String
+    name: String
+    times: [Int]
+    networkType: String
+  }
   type Author {   # 作者的字段有：id，名字，还有 发表的帖子
     id: Int
     firstName: String
@@ -14,6 +20,7 @@ export default `
   }
   type Query {    # 定义查询内容
     author(firstName: String, lastName: String): Author # 查询作者信息
+    rule: Rule
     getFortuneCookie: String
   }
 `;

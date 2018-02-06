@@ -1,5 +1,11 @@
+import { Daka, User, Oauth, Rule, Leave } from '../../mongo/modals';
+
 export default {
   Query: {
+    rule: async (root, args) => {
+      const data = await Rule.find();
+      return data;
+    },
     author(root, args) { // args就是上面schema中author的入参
       return { id: 1, firstName: 'Hello', lastName: 'World' };
     },
