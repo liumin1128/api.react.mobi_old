@@ -20,7 +20,7 @@ export default `
   }
   type Query {    # 定义查询内容
     author(firstName: String, lastName: String): Author # 查询作者信息
-    rule: Rule
+    rule: [Rule]
     getFortuneCookie: String
   }
 `;
