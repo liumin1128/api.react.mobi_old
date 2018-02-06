@@ -18,6 +18,7 @@ import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
+import { graphql, graphiql } from './graphql';
 
 const app = new Koa();
 const router = new Router();
@@ -38,6 +39,8 @@ app.use(helmet());
 app.use(error);
 app.use(jwt({ secret: SECRET }).unless({
   path: [
+    /^\/graphql/,
+    /^\/graphiql/,
     /^\/public/,
     /^\/oauth/,
     /^\/map/,
@@ -74,6 +77,8 @@ app.use(jwt({ secret: SECRET }).unless({
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 
 router
+  .post('/graphql', graphql)
+  .get('/graphiql', graphiql)
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
