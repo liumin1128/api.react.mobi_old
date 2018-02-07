@@ -1,4 +1,5 @@
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
+import { POPULATE_USER } from '../../constants';
 
 export default {
   Query: {
@@ -7,7 +8,9 @@ export default {
       return data;
     },
     say: async (root, args) => {
-      const data = await Say.find({});
+      const data = await Say.find({})
+        .populate('user', POPULATE_USER);
+
       return data;
     },
     // user: async (root, args) => {
