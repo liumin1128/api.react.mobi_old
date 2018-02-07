@@ -1,19 +1,19 @@
 export default `
   type Rule {
-    id: String
+    _id: String
     name: String
     times: [Int]
     networkType: String
   }
   type Say {
-    id: String!
+    _id: String!
     content: String!
     photos: [String!]
     createdAt: String!
     user: User
   }
   type User {
-    id: String!
+    _id: String!
     nickname: String!
     avatarUrl: [String!]
   }
