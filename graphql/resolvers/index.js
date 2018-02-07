@@ -8,9 +8,16 @@ export default {
       return data;
     },
     say: async (root, args) => {
-      const data = await Say.find({})
-        .populate('user', POPULATE_USER);
-
+      const data = await Say.find({});
+      return data;
+    },
+    user: async (root, args) => {
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      const data = await User.findOne();
       return data;
     },
     // user: async (root, args) => {
