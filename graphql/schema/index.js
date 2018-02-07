@@ -15,7 +15,7 @@ export default `
   type User {
     _id: String!
     nickname: String!
-    avatarUrl: [String!]
+    avatarUrl: String!
   }
   type Author {   # 作者的字段有：id，名字，还有 发表的帖子
     id: Int
