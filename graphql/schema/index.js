@@ -5,6 +5,18 @@ export default `
     times: [Int]
     networkType: String
   }
+  type Say {
+    id: String!
+    content: String!
+    photos: [String!]
+    createdAt: String!
+    # user: User
+  }
+  type User {
+    id: String!
+    nickname: String!
+    avatarUrl: [String!]
+  }
   type Author {   # 作者的字段有：id，名字，还有 发表的帖子
     id: Int
     firstName: String
@@ -20,7 +32,9 @@ export default `
   }
   type Query {    # 定义查询内容
     author(firstName: String, lastName: String): Author # 查询作者信息
-    rule: [Rule]
+    rule: [Rule!]
+    say: [Say!]
+    user: [User!]
     getFortuneCookie: String
   }
 `;

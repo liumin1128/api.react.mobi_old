@@ -1,19 +1,19 @@
-import { Daka, User, Oauth, Rule, Leave } from '../../mongo/modals';
+import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 
 export default {
   Query: {
     rule: async (root, args) => {
       const data = await Rule.find({});
-      console.log('data');
-      console.log('data');
-      console.log('data');
-      console.log('data');
-      console.log('data');
-      console.log('data');
-      console.log('data');
-      console.log(data);
       return data;
     },
+    say: async (root, args) => {
+      const data = await Say.find({});
+      return data;
+    },
+    // user: async (root, args) => {
+    //   const data = await Say.find({});
+    //   return data;
+    // },
     author(root, args) { // args就是上面schema中author的入参
       return { id: 1, firstName: 'Hello', lastName: 'World' };
     },
