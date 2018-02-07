@@ -17,7 +17,7 @@ export default {
       console.log(args);
       console.log(args);
       console.log(args);
-      const data = await User.findOne();
+      const data = await User.findOne({});
       return data;
     },
     // user: async (root, args) => {
