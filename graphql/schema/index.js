@@ -35,7 +35,7 @@ export default `
     post: [Post]
     rule: [Rule!]
     say: [Say!]
-    user: User!
+    user: User
     getFortuneCookie: String
   }
 `;

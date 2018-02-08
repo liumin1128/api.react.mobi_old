@@ -28,6 +28,17 @@ export default {
       return { id: 1, firstName: 'Hello', lastName: 'World' };
     },
   },
+  Say: {
+    user: async (root, args) => {
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      console.log(args);
+      const data = await User.find({});
+      return data;
+    },
+  },
   Author: {
     // 定义author中的posts
     posts(author) {
