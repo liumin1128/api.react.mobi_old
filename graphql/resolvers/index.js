@@ -8,16 +8,9 @@ export default {
       return data;
     },
     say: async (root, args) => {
+      console.log('say args');
+      console.log(args);
       const data = await Say.find({});
-      return data;
-    },
-    user: async (root, args) => {
-      console.log(args);
-      console.log(args);
-      console.log(args);
-      console.log(args);
-      console.log(args);
-      const data = await User.find({});
       return data;
     },
     // user: async (root, args) => {
@@ -29,11 +22,8 @@ export default {
     },
   },
   Say: {
-    user: async (root, args) => {
-      console.log(args);
-      console.log(args);
-      console.log(args);
-      console.log(args);
+    user: async (args) => {
+      console.log('user args');
       console.log(args);
       const data = await User.findOne({});
       return data;
