@@ -7,9 +7,13 @@ export default {
       const data = await Rule.find({});
       return data;
     },
-    say: async (args) => {
+    say: async (args, args2, args3) => {
       console.log('say args');
       console.log(args);
+      console.log('say args2');
+      console.log(args2);
+      console.log('say args3');
+      console.log(args3);
       const data = await Say.find({});
       return data;
     },
