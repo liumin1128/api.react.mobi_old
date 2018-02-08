@@ -22,10 +22,8 @@ export default {
     },
   },
   Say: {
-    user: async (args) => {
-      console.log('user args');
-      console.log(args);
-      const data = await User.findOne({});
+    user: async ({ user }) => {
+      const data = await User.findById(user);
       return data;
     },
   },
