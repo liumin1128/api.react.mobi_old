@@ -8,6 +8,9 @@ export default {
       return data;
     },
     say: async (root, args) => {
+      console.log('root, args');
+      console.log(root, args);
+
       const { _id } = args;
       if (_id) {
         const data = await Say.findById(_id);
