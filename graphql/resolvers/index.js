@@ -7,7 +7,7 @@ export default {
       const data = await Rule.find({});
       return data;
     },
-    say: async (root, args) => {
+    say: async (args) => {
       console.log('say args');
       console.log(args);
       const data = await Say.find({});
