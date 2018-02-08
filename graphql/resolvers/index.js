@@ -7,16 +7,17 @@ export default {
       const data = await Rule.find({});
       return data;
     },
+    says: async (root, args) => {
+      console.log('root, args');
+      console.log(root, args);
+      const data = await Say.find({});
+      return data;
+    },
     say: async (root, args) => {
       console.log('root, args');
       console.log(root, args);
-
       const { _id } = args;
-      if (_id) {
-        const data = await Say.findById(_id);
-        return data;
-      }
-      const data = await Say.find({});
+      const data = await Say.findById(_id);
       return data;
     },
     author(root, args) { // args就是上面schema中author的入参
