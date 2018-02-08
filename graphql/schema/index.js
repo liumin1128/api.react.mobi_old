@@ -10,7 +10,7 @@ export default `
     content: String!
     photos: [String!]
     createdAt: String!
-    user: User
+    user: User!
   }
   type User {
     _id: String!
