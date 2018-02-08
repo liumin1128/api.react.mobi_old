@@ -35,7 +35,7 @@ export default `
     post: [Post]
     rule: [Rule!]
     say(_id: String): Say
-    says: [Say!]
+    saylist: [Say!]
     user: User
     getFortuneCookie: String
   }
