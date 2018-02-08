@@ -16,10 +16,6 @@ export default {
       const data = await Say.find({});
       return data;
     },
-    // user: async (root, args) => {
-    //   const data = await Say.find({});
-    //   return data;
-    // },
     author(root, args) { // args就是上面schema中author的入参
       return { id: 1, firstName: 'Hello', lastName: 'World' };
     },
