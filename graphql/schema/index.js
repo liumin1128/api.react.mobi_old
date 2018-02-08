@@ -34,7 +34,8 @@ export default `
     author(firstName: String, lastName: String): Author # 查询作者信息
     post: [Post]
     rule: [Rule!]
-    say(_id: String): Say!
+    say(_id: String): Say
+    says: [Say!]
     user: User
     getFortuneCookie: String
   }
