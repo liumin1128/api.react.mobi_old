@@ -35,7 +35,7 @@ export default {
       console.log(args);
       console.log(args);
       console.log(args);
-      const data = await User.find({});
+      const data = await User.findOne({});
       return data;
     },
   },
