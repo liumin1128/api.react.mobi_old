@@ -48,6 +48,14 @@ export default {
       return data;
     },
   },
+  Says: {
+    user: async (args) => {
+      console.log('user args');
+      console.log(args);
+      const data = await User.findById({});
+      return data;
+    },
+  },
   Author: {
     // 定义author中的posts
     posts(author) {
