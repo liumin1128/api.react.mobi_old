@@ -12,9 +12,6 @@ export default `
     createdAt: String!
     user: User
   }
-  type Says {
-    [Say!]
-  }
   type User {
     _id: String!
     nickname: String!
