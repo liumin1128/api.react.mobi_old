@@ -46,10 +46,13 @@ export default {
     },
   },
   Say: {
-    user: async (args) => {
-      console.log('user args');
-      console.log(args);
-      const data = await User.findById({});
+    user: async ({ user }) => {
+      if (user._id) {
+        console.log('已存在user字段');
+        return user;
+      }
+      console.log(`user字段为：${user}`);
+      const data = await User.findById(user);
       return data;
     },
   },
