@@ -23,6 +23,9 @@ export default {
         .limit(limit);
         // .sort(sort);
 
+      console.log('data');
+      console.log(data);
+
       return {
         count,
         data,
