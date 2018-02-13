@@ -10,8 +10,24 @@ export default {
     says: async (root, args) => {
       console.log('root, args');
       console.log(root, args);
-      const data = await Say.find({});
-      return data;
+      // const { first, offset } = args;
+      const { page = 1, limit = 10, ...other } = args;
+
+      const count = await Say.count({})
+        .skip((page === 0 ? page : page - 1) * limit)
+        .limit(limit);
+
+      const data = await Say.find({})
+        .skip((page === 0 ? page : page - 1) * limit)
+        .populate('user', POPULATE_USER)
+        .limit(limit);
+        // .sort(sort);
+
+      return {
+        count,
+        data,
+        isEnd: (page === 0 ? 1 : page) * limit > count,
+      };
     },
     say: async (root, args) => {
       console.log('root, args');
