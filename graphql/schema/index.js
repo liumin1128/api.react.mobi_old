@@ -12,6 +12,11 @@ export default `
     createdAt: String!
     user: User
   }
+  type Says {
+    count: Int
+    isEnd: Boolean
+    data: [Say]
+  }
   type User {
     _id: String!
     nickname: String!
@@ -35,11 +40,7 @@ export default `
     post: [Post]
     rule: [Rule!]
     say(_id: String): Say
-    says(page: Int, limit: Int): {
-      count: Int
-      isEnd: Boolean
-      data: [Say]
-    }
+    says(page: Int, limit: Int): Says
     user: User
     getFortuneCookie: String
   }
