@@ -22,17 +22,13 @@ export default {
         .populate('user', POPULATE_USER)
         .limit(limit);
         // .sort(sort);
+      // return data;
 
-      console.log('data');
-      console.log(data);
-
-      return data;
-
-      // return {
-      //   count,
-      //   data,
-      //   isEnd: (page === 0 ? 1 : page) * limit > count,
-      // };
+      return {
+        count,
+        data,
+        isEnd: (page === 0 ? 1 : page) * limit > count,
+      };
     },
     say: async (root, args) => {
       console.log('root, args');

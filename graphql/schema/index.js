@@ -35,7 +35,11 @@ export default `
     post: [Post]
     rule: [Rule!]
     say(_id: String): Say
-    says(page: Int, limit: Int): [Say]
+    says(page: Int, limit: Int): {
+      count: Int
+      isEnd: Boolean
+      data: [Say]
+    }
     user: User
     getFortuneCookie: String
   }
