@@ -26,11 +26,7 @@ export default {
       console.log('data');
       console.log(data);
 
-      return {
-        count,
-        data,
-        isEnd: (page === 0 ? 1 : page) * limit > count,
-      };
+      return data;
     },
     say: async (root, args) => {
       console.log('root, args');
