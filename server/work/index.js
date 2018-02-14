@@ -78,7 +78,7 @@ class Work {
     ctx.body = data;
   }
   async getRule(ctx) {
-    const data = Rule.find({});
+    const data = await Rule.find({});
     ctx.body = {
       status: 200,
       data,
