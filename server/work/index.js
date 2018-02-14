@@ -77,6 +77,13 @@ class Work {
     console.log(data);
     ctx.body = data;
   }
+  async getRule(ctx) {
+    const data = Rule.find({});
+    ctx.body = {
+      status: 200,
+      data,
+    };
+  }
   async getTeamUser(ctx) {
     // const accesstoken = await getAccessToken();
 
