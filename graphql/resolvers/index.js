@@ -8,27 +8,23 @@ export default {
       return data;
     },
     says: async (root, args) => {
-      console.log('root, args');
-      console.log(root, args);
-      // const { first, offset } = args;
-      const { page = 1, limit = 10, ...other } = args;
-
-      const count = await Say.count({})
-        .skip((page === 0 ? page : page - 1) * limit)
-        .limit(limit);
-
-      const data = await Say.find({})
-        .skip((page === 0 ? page : page - 1) * limit)
-        .populate('user', POPULATE_USER)
-        .limit(limit);
-        // .sort(sort);
-      // return data;
-
-      return {
-        count,
-        data,
-        isEnd: (page === 0 ? 1 : page) * limit > count,
-      };
+      try {
+        const { page = 1, limit = 10, ...other } = args;
+        const count = await Say.count({})
+          .skip((page === 0 ? page : page - 1) * limit)
+          .limit(limit);
+        const data = await Say.find({})
+          .skip((page === 0 ? page : page - 1) * limit)
+          .populate('user', POPULATE_USER)
+          .limit(limit);
+        return {
+          count,
+          data,
+          isEnd: (page === 0 ? 1 : page) * limit > count,
+        };
+      } catch (error) {
+        console.log(error);
+      }
     },
     say: async (root, args) => {
       console.log('root, args');
@@ -44,10 +40,10 @@ export default {
   Say: {
     user: async ({ user }) => {
       if (user._id) {
-        console.log('已存在user字段');
+        // console.log('已存在user字段');
         return user;
       }
-      console.log(`user字段为：${user}`);
+      // console.log(`user字段为：${user}`);
       const data = await User.findById(user);
       return data;
     },
