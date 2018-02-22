@@ -78,6 +78,15 @@ class Work {
     ctx.body = data;
   }
   async getRule(ctx) {
+    const { _id } = ctx.request.body;
+    if (_id) {
+      const data = await Rule.findById(_id);
+      ctx.body = {
+        status: 200,
+        data,
+      };
+      return;
+    }
     const data = await Rule.find({});
     ctx.body = {
       status: 200,
