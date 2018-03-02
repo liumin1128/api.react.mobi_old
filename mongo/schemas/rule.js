@@ -7,6 +7,10 @@ export default {
   times: [Number], // 规则适用时间段
   standard: [Number], // 标准时间段，若未打卡，则按标准时间计算
   // user: { type: ObjectId, ref: 'User' },
+  address: [String],
+  wifi: [String],
+  workday: [String],
+  description: String,
   location: Object,
   networkType: String, // 网络类型，前端会要求为wifi
 };
