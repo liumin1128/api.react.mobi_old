@@ -100,7 +100,7 @@ class Work {
       if (rule) {
         // 更新规则
         await rule.update(params);
-        ctx.body = { status: 200, message: '规则更新成功', rule };
+        ctx.body = { status: 200, data: rule };
       } else {
         // 规则不存在
         ctx.body = { status: 403, message: '规则不存在' };
@@ -108,7 +108,7 @@ class Work {
     } else {
       // 创建规则
       const rule = await Rule.create(params);
-      ctx.body = { status: 200, message: '规则创建成功', rule };
+      ctx.body = { status: 200, data: rule };
     }
   }
   async getTeamUser(ctx) {
