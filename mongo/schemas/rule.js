@@ -10,6 +10,7 @@ export default {
   address: [String],
   wifi: [String],
   workday: [String],
+  users: [String],
   description: String,
   location: Object,
   networkType: String, // 网络类型，前端会要求为wifi
