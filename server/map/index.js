@@ -18,7 +18,7 @@ class Map {
     try {
       const { lat, lng } = ctx.request.body;
       const data = await getAddress({ lat, lng });
-      ctx.body = data;
+      ctx.body = { status: 200, data };
     } catch (error) {
       console.log('Map address error: ');
       console.log(error);
