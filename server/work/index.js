@@ -93,6 +93,24 @@ class Work {
       data,
     };
   }
+  async updateRule(ctx) {
+    const { _id, ...params } = ctx.request.body;
+    if (_id) {
+      const rule = await Rule.findById(_id);
+      if (rule) {
+        // 更新规则
+        await rule.update(params);
+        ctx.body = { status: 200, message: '规则更新成功', rule };
+      } else {
+        // 规则不存在
+        ctx.body = { status: 403, message: '规则不存在' };
+      }
+    } else {
+      // 创建规则
+      const rule = await Rule.create(params);
+      ctx.body = { status: 200, message: '规则创建成功', rule };
+    }
+  }
   async getTeamUser(ctx) {
     // const accesstoken = await getAccessToken();
 
