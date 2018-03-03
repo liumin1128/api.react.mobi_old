@@ -237,10 +237,12 @@ class Work {
           const cha = (data.rule.standard[1] - data.rule.standard[0]) - (out - data.in);
           const absenteeism = cha > 0 ? cha : 0;
 
+          const { photos, description } = other;
+
           daka = await Daka
             .findById({ _id: id })
             .update({
-              out, outType, working, absenteeism,
+              out, outType, working, absenteeism, photos, description,
             });
         }
       } else {
