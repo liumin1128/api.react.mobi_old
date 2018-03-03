@@ -386,7 +386,8 @@ class Work {
     const token = await getUserToken(oauth.user);
 
     // 重定向页面到用户登录页，并返回token
-    ctx.redirect(`http://192.168.123.49:8000/#/daka/login?token=${token}`);
+    ctx.redirect(`http://10.130.24.88:8000/#/daka/login?token=${token}`);
+    // ctx.redirect(`http://192.168.123.49:8000/#/daka/login?token=${token}`);
     // ctx.redirect(`http://ha.react.mobi/#/daka/login?token=${token}`);
   }
   async pclogin(ctx) {
