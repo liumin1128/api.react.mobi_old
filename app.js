@@ -38,7 +38,7 @@ mongoose.Promise = global.Promise;
 app.use(cors());
 app.use(helmet());
 app.use(error);
-app.use(jwt({ secret: SECRET }).unless({
+app.post(jwt({ secret: SECRET }).unless({
   path: [
     /^\/graphql/,
     /^\/graphiql/,
