@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import BodyParser from 'koa-bodyparser';
+import KoaStatic from 'koa-static';
 import cors from 'koa2-cors';
 import helmet from 'koa-helmet';
 import jwt from 'koa-jwt';
@@ -77,6 +78,7 @@ app.use(jwt({ secret: SECRET }).unless({
 
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
+app.use(KoaStatic(`${__dirname}/public`));
 
 router
   .post('/graphql', graphql)
