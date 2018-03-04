@@ -311,6 +311,19 @@ class Work {
       console.log(error);
     }
   }
+  async getMysurplusHours(ctx) {
+    const { user = {} } = ctx.state;
+    const { start, end } = ctx.request.body;
+    const params = { user: user.data };
+    const leave = await Leave
+      .find(params)
+      .gte('start', start)
+      .lte('start', end)
+      .populate('user');
+
+    console.log('xxxxxxxxxxx leave');
+    console.log(leave);
+  }
   async approve(ctx) {
     try {
       const { id } = ctx.request.body;
