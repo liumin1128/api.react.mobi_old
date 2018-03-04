@@ -316,21 +316,21 @@ class Work {
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
     const list = await Leave
-      // .aggregate({
-      //   $group: {
-      //     user: user.data,
-      //     start: { $get: start, $lte: end },
-      //   },
-
-      // })
-      .find(params)
-      .gte('start', start)
-      .lte('start', end)
       .aggregate({
         $group: {
-          sss: { $sum: '$hours' },
+          user: user.data,
+          start: { $get: start, $lte: end },
         },
+        num_tutorial: { $sum: '$hours' },
       });
+      // .find(params)
+      // .gte('start', start)
+      // .lte('start', end)
+      // .aggregate({
+      //   $group: {
+      //     sss: { $sum: '$hours' },
+      //   },
+      // });
       // .populate('user');
 
     ctx.body = {
