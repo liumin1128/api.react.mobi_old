@@ -338,9 +338,7 @@ class Work {
 
     ctx.body = {
       status: 200,
-      data: {
-        [data[0]._id]: data[0].sum,
-      },
+      [data[0]._id]: data[0].sum,
     };
   }
   async approve(ctx) {
