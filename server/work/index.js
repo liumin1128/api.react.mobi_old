@@ -315,18 +315,19 @@ class Work {
     const { user = {} } = ctx.state;
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
-    const leave = await Leave
+    const list = await Leave
+      // .aggregate({
+
+      // })
       .find(params)
       .gte('start', start)
       .lte('start', end)
-      .populate('user');
-
-    console.log('xxxxxxxxxxx leave');
-    console.log(leave);
+      .aggregate({ sss: { $sum: '$hours' } });
+      // .populate('user');
 
     ctx.body = {
       status: 200,
-      data: leave,
+      data: list,
     };
   }
   async approve(ctx) {
