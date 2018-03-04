@@ -1,4 +1,5 @@
 import moment from 'moment';
+import mongoose from 'mongoose';
 import crypto from 'crypto';
 import { parse, stringify } from 'query-string';
 import { Daka, User, Oauth, Rule, Leave } from '../../mongo/modals';
@@ -8,6 +9,8 @@ import { getAsync, setAsync, delAsync } from '../../utils/redis';
 import { randomString } from '../../utils/common';
 import { fetchToQiniu } from '../../utils/qiniu';
 import { getUserToken } from '../../utils/jwt';
+
+const { ObjectId } = mongoose.Schema.Types;
 
 async function getAccessToken() {
   try {
@@ -317,16 +320,16 @@ class Work {
     const params = { user: user.data };
     const test = await Leave
       .find({
-        user: user.data,
-        start: { $gte: start, $lte: end },
+        user: ObjectId(user.data),
+        start: { $gte: new Date(start), $lte: new Date(end) },
       });
     console.log(test);
     const list = await Leave
       .aggregate([
         {
           $match: {
-            // user: user.data,
-            start: { $gte: start, $lte: end },
+            user: ObjectId(user.data),
+            start: { $gte: new Date(start), $lte: new Date(end) },
           },
         },
         { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
