@@ -320,8 +320,8 @@ class Work {
         $group: {
           user: user.data,
           start: { $get: start, $lte: end },
+          num_tutorial: { $sum: '$hours' },
         },
-        num_tutorial: { $sum: '$hours' },
       });
       // .find(params)
       // .gte('start', start)
