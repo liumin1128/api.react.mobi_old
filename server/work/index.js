@@ -320,6 +320,7 @@ class Work {
         user: user.data,
         start: { $gte: start, $lte: end },
       });
+    console.log(test);
     const list = await Leave
       .aggregate([
         {
