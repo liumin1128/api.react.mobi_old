@@ -317,7 +317,7 @@ class Work {
   async getMySurplusHours(ctx) {
     const { user = {} } = ctx.state;
     const { start, end } = ctx.request.body;
-    const params = { user: user.data };
+    // const params = { user: user.data };
     console.log(`_id:${user.data}`);
     // const test = await Leave
     //   .find({
@@ -325,7 +325,7 @@ class Work {
     //     start: { $gte: new Date(start), $lte: new Date(end) },
     //   });
     // console.log(test);
-    const list = await Leave
+    const data = await Leave
       .aggregate([
         {
           $match: {
@@ -339,7 +339,7 @@ class Work {
     ctx.body = {
       status: 200,
       data: {
-        [list[0]._id]: list[0].sum,
+        [data[0]._id]: data[0].sum,
       },
     };
   }
