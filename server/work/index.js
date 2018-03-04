@@ -319,8 +319,8 @@ class Work {
       .aggregate([
         {
           $match: {
-            user: user.data,
-            // start: { $gte: moment().startOf('month'), $lte: moment().endOf('month') },
+            // user: user.data,
+            start: { $gte: start, $lte: end },
           },
         },
         { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
