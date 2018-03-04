@@ -318,6 +318,7 @@ class Work {
     const { user = {} } = ctx.state;
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
+    console.log(`_id:${user.data}`);
     const test = await Leave
       .find({
         user: ObjectId(user.data),
