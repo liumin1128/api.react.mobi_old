@@ -320,6 +320,7 @@ class Work {
         $group: {
           // user: user.data,
           // start: { $get: start, $lte: end },
+          _id: 'user',
           num_tutorial: { $sum: '$hours' },
         },
       });
