@@ -317,9 +317,9 @@ class Work {
     const params = { user: user.data };
     const list = await Leave
       .aggregate({
+        user: user.data,
+        start: { $get: start, $lte: end },
         $group: {
-          // user: user.data,
-          // start: { $get: start, $lte: end },
           _id: 'user',
           num_tutorial: { $sum: '$hours' },
         },
