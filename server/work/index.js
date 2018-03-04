@@ -316,10 +316,10 @@ class Work {
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
     const list = await Leave
-      .aggregate([
-        { $match: { user: user.data, start: { $gte: start, $lte: end } } },
-        { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
-      ]);
+      .aggregate({
+        $match: { user: user.data, start: { $gte: start, $lte: end } },
+        $group: { _id: 'user', num_tutorial: { $sum: '$hours' } },
+      });
       // .find(params)
       // .gte('start', start)
       // .lte('start', end)
