@@ -320,7 +320,7 @@ class Work {
         {
           $match: {
             // user: user.data,
-            start: { $gte: start, $lte: end },
+            // start: { $gte: start, $lte: end },
           },
         },
         { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
