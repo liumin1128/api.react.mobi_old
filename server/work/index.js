@@ -317,7 +317,7 @@ class Work {
     const params = { user: user.data };
     const list = await Leave
       .aggregate([
-        { $match: { user: user.data, start: { $gt: start, $lte: end } } },
+        { $match: { user: user.data, start: { $gte: start, $lte: end } } },
         { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
       ]);
       // .find(params)
