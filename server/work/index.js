@@ -319,12 +319,12 @@ class Work {
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
     console.log(`_id:${user.data}`);
-    const test = await Leave
-      .find({
-        user: ObjectId(user.data),
-        start: { $gte: new Date(start), $lte: new Date(end) },
-      });
-    console.log(test);
+    // const test = await Leave
+    //   .find({
+    //     user: ObjectId(user.data),
+    //     start: { $gte: new Date(start), $lte: new Date(end) },
+    //   });
+    // console.log(test);
     const list = await Leave
       .aggregate([
         {
@@ -333,17 +333,8 @@ class Work {
             start: { $gte: new Date(start), $lte: new Date(end) },
           },
         },
-        { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
+        { $group: { _id: 'hours', sum: { $sum: '$hours' } } },
       ]);
-      // .find(params)
-      // .gte('start', start)
-      // .lte('start', end)
-      // .aggregate({
-      //   $group: {
-      //     sss: { $sum: '$hours' },
-      //   },
-      // });
-      // .populate('user');
 
     ctx.body = {
       status: 200,
