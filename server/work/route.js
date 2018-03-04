@@ -14,7 +14,7 @@ export default router
   .post('/getDepartment', work.getDepartment)
   .post('/getUser', work.getUser)
   .post('/rule/update', work.updateRule)
-  .post('/leave/surplus', work.getMysurplusHours)
+  .post('/leave/surplus', work.getMySurplusHours)
   .post('/getRule', work.getRule)
   .post('/approve', work.approve)
   .post('/leave', work.leave)

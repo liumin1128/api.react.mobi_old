@@ -311,7 +311,7 @@ class Work {
       console.log(error);
     }
   }
-  async getMysurplusHours(ctx) {
+  async getMySurplusHours(ctx) {
     const { user = {} } = ctx.state;
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
