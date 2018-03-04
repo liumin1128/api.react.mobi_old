@@ -323,6 +323,11 @@ class Work {
 
     console.log('xxxxxxxxxxx leave');
     console.log(leave);
+
+    ctx.body = {
+      status: 200,
+      data: leave,
+    };
   }
   async approve(ctx) {
     try {
