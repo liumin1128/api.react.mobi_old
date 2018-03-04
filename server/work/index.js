@@ -10,7 +10,7 @@ import { randomString } from '../../utils/common';
 import { fetchToQiniu } from '../../utils/qiniu';
 import { getUserToken } from '../../utils/jwt';
 
-const { ObjectId } = mongoose.Schema.Types;
+const { ObjectId } = mongoose.Types;
 
 async function getAccessToken() {
   try {
