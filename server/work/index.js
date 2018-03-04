@@ -317,12 +317,20 @@ class Work {
     const params = { user: user.data };
     const list = await Leave
       // .aggregate({
+      //   $group: {
+      //     user: user.data,
+      //     start: { $get: start, $lte: end },
+      //   },
 
       // })
       .find(params)
       .gte('start', start)
       .lte('start', end)
-      .aggregate({ sss: { $sum: '$hours' } });
+      .aggregate({
+        $group: {
+          sss: { $sum: '$hours' },
+        },
+      });
       // .populate('user');
 
     ctx.body = {
