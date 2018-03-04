@@ -315,12 +315,17 @@ class Work {
     const { user = {} } = ctx.state;
     const { start, end } = ctx.request.body;
     const params = { user: user.data };
+    const test = await Leave
+      .find({
+        user: user.data,
+        start: { $gte: start, $lte: end },
+      });
     const list = await Leave
       .aggregate([
         {
           $match: {
             // user: user.data,
-            start: { $gt: start, $lte: end },
+            start: { $gte: start, $lte: end },
           },
         },
         { $group: { _id: 'user', num_tutorial: { $sum: '$hours' } } },
