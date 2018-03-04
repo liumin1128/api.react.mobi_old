@@ -318,8 +318,8 @@ class Work {
     const list = await Leave
       .aggregate({
         $group: {
-          user: user.data,
-          start: { $get: start, $lte: end },
+          // user: user.data,
+          // start: { $get: start, $lte: end },
           num_tutorial: { $sum: '$hours' },
         },
       });
