@@ -17,7 +17,9 @@ export default {
     _saysMeta: async (root, args) => {
       try {
         const data = await Say.count({});
-        return data;
+        return {
+          count: data,
+        };
       } catch (error) {
         console.log(error);
       }
