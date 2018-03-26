@@ -3,7 +3,7 @@ import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
 
-const userLoader = new DataLoader(ids => User.find({ _id: { $in: ids } }));
+const userLoader = new DataLoader(ids => User.find({ where: { _id: { $in: ids } } }));
 
 export default {
   Query: {
