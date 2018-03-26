@@ -1,3 +1,4 @@
+import DataLoader from 'dataloader';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
