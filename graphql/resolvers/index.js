@@ -44,6 +44,7 @@ export default {
     user: async ({ user }) => {
       console.log('user');
       console.log(user);
+      console.log(userLoader.load(user._id));
       const data = await userLoader.load(user._id);
       console.log('data');
       console.log(data);
