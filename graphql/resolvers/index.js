@@ -42,17 +42,7 @@ export default {
     },
   },
   Say: {
-    user: async ({ user }) => {
-      try {
-        const data = await userLoader.load(user._id);
-        console.log('data');
-        console.log(data);
-        return data;
-      } catch (error) {
-        console.log('error');
-        console.log(error);
-      }
-    },
+    user: ({ user }) => userLoader.load(user._id),
   },
   Author: {
     // 定义author中的posts
