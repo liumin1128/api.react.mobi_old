@@ -19,9 +19,9 @@ export default {
     },
     _saysMeta: async (root, args) => {
       try {
-        const data = await Say.count();
+        // const data = await Say.count();
         return {
-          count: data,
+          count: 99,
         };
       } catch (error) {
         console.log(error);
@@ -40,13 +40,6 @@ export default {
   },
   Say: {
     user: ({ user }) => userLoader.load(user._id),
-    // user: async ({ user }) => {
-    //   if (user._id) {
-    //     return user;
-    //   }
-    //   const data = await User.findById(user);
-    //   return data;
-    // },
   },
   Author: {
     // 定义author中的posts
