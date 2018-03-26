@@ -42,13 +42,18 @@ export default {
   },
   Say: {
     user: async ({ user }) => {
-      console.log('user');
-      console.log(user);
-      console.log(userLoader.load(user._id));
-      const data = await userLoader.load(user._id);
-      console.log('data');
-      console.log(data);
-      return data;
+      try {
+        console.log('user');
+        console.log(user);
+        console.log(userLoader.load(user._id));
+        const data = await userLoader.load(user._id);
+        console.log('data');
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.log('error');
+        console.log(error);
+      }
     },
   },
   Author: {
