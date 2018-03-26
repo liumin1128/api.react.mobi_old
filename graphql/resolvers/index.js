@@ -2,6 +2,8 @@ import DataLoader from 'dataloader';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
+const userLoader = new DataLoader(_id => User.findById(_id));
+
 export default {
   Query: {
     says: async (root, args) => {
@@ -37,13 +39,14 @@ export default {
     },
   },
   Say: {
-    user: async ({ user }) => {
-      if (user._id) {
-        return user;
-      }
-      const data = await User.findById(user);
-      return data;
-    },
+    user: ({ user }) => userLoader.load(user._id),
+    // user: async ({ user }) => {
+    //   if (user._id) {
+    //     return user;
+    //   }
+    //   const data = await User.findById(user);
+    //   return data;
+    // },
   },
   Author: {
     // 定义author中的posts
