@@ -1,6 +1,8 @@
-import DataLoader from 'dataloader';
+// import DataLoader from 'dataloader';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
+
+const DataLoader = require('dataloader');
 
 const userLoader = new DataLoader(ids => User.find({ _id: { $in: ids } }));
 
@@ -9,7 +11,7 @@ export default {
     says: async (root, args) => {
       try {
         const { skip = 0, first = 10 } = args;
-        const data = await Say.find({})
+        const data = await Say.find()
           .skip(skip)
           .limit(first);
 
