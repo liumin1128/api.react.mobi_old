@@ -3,7 +3,11 @@ import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
 
-const userLoader = new DataLoader(ids => User.find({ _id: { $in: ids } }));
+const userLoader = new DataLoader(async (ids) => {
+  console.log(ids);
+  const data = await User.find({ _id: { $in: ids } });
+  return data;
+});
 
 export default {
   Query: {
@@ -45,10 +49,6 @@ export default {
     user: async ({ user }) => {
       console.log('userLoader');
       console.log(userLoader);
-      userLoader.load(user._id)
-        .then((i) => {
-          console.log(i);
-        });
       const data = await await userLoader.load(user._id);
       return data;
     },
