@@ -3,24 +3,22 @@ import { POPULATE_USER } from '../../constants';
 
 export default {
   Query: {
-    rule: async (root, args) => {
-      const data = await Rule.find({});
-      return data;
-    },
     says: async (root, args) => {
       try {
-        const { page = 1, limit = 10, ...other } = args;
+        const { skip = 0, first = 10 } = args;
+
         const count = await Say.count({})
-          .skip((page === 0 ? page : page - 1) * limit)
-          .limit(limit);
+          .skip(skip)
+          .limit(first);
+
         const data = await Say.find({})
-          .skip((page === 0 ? page : page - 1) * limit)
-          .populate('user', POPULATE_USER)
-          .limit(limit);
+          .skip(skip)
+          .limit(first);
+
         return {
           count,
           data,
-          isEnd: (page === 0 ? 1 : page) * limit > count,
+          isEnd: skip + first > count,
         };
       } catch (error) {
         console.log(error);
