@@ -1,12 +1,10 @@
-import DataLoader from 'dataloader';
+// import DataLoader from 'dataloader';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
-const userLoader = new DataLoader((_id) => {
-  console.log('_id');
-  console.log(_id);
-  return User.findById(_id);
-});
+const DataLoader = require('dataloader');
+
+const userLoader = new DataLoader(_id => User.findById(_id));
 
 export default {
   Query: {
@@ -46,12 +44,7 @@ export default {
     user: async ({ user }) => {
       console.log('user');
       console.log(user);
-      const data = await [
-        userLoader.load(user._id),
-        userLoader.load(user._id),
-        userLoader.load(user._id),
-        userLoader.load(user._id),
-      ];
+      const data = await userLoader.load(user._id);
       console.log('data');
       console.log(data);
       return data;
