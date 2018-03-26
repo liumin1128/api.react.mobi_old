@@ -4,7 +4,7 @@ import { POPULATE_USER } from '../../constants';
 
 const DataLoader = require('dataloader');
 
-const userLoader = new DataLoader(_id => User.findById(_id));
+const userLoader = new DataLoader(ids => User.find(ids));
 
 export default {
   Query: {
@@ -13,7 +13,8 @@ export default {
         const { skip = 0, first = 10 } = args;
         const data = await Say.find({})
           .skip(skip)
-          .limit(first);
+          .limit(first)
+          .populate('user');
         return data;
       } catch (error) {
         console.log(error);
