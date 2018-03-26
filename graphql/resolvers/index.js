@@ -43,6 +43,8 @@ export default {
   },
   Say: {
     user: async ({ user }) => {
+      console.log('userLoader');
+      console.log(userLoader);
       userLoader.load(user._id)
         .then((i) => {
           console.log(i);
