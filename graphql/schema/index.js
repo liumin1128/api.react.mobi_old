@@ -12,9 +12,6 @@ export default `
     createdAt: String!
     user: User
   }
-  type Says {
-    say: [Say]
-  }
   type User {
     _id: String!
     nickname: String!
@@ -38,7 +35,7 @@ export default `
     post: [Post]
     rule: [Rule!]
     say(_id: String): Say
-    says(first: Int, skip: Int): Says
+    says(first: Int, skip: Int): [Say!]
     user: User
     getFortuneCookie: String
   }
