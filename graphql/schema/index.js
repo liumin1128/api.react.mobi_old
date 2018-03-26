@@ -1,16 +1,13 @@
 export default `
-  type Rule {
-    _id: String
-    name: String
-    times: [Int]
-    networkType: String
-  }
   type Say {
     _id: String!
     content: String!
     photos: [String!]
     createdAt: String!
     user: User
+  }
+  type Meta {
+    count: Int!
   }
   type User {
     _id: String!
@@ -36,6 +33,7 @@ export default `
     rule: [Rule!]
     say(_id: String): Say
     says(first: Int, skip: Int): [Say!]
+    _saysMeta: Meta
     user: User
     getFortuneCookie: String
   }
