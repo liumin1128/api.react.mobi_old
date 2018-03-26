@@ -13,9 +13,7 @@ export default `
     user: User
   }
   type Says {
-    count: Int
-    isEnd: Boolean
-    data: [Say]
+    say: [Say]
   }
   type User {
     _id: String!

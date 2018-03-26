@@ -7,19 +7,11 @@ export default {
       try {
         const { skip = 0, first = 10 } = args;
 
-        const count = await Say.count({})
-          .skip(skip)
-          .limit(first);
-
         const data = await Say.find({})
           .skip(skip)
           .limit(first);
 
-        return {
-          count,
-          data,
-          isEnd: skip + first > count,
-        };
+        return data;
       } catch (error) {
         console.log(error);
       }
