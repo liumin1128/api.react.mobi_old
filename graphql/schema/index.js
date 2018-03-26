@@ -40,7 +40,7 @@ export default `
     post: [Post]
     rule: [Rule!]
     say(_id: String): Say
-    says(page: Int, limit: Int): Says
+    says(first: Int, skip: Int): Says
     user: User
     getFortuneCookie: String
   }
