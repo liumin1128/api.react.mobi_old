@@ -16,8 +16,8 @@ export default {
         const { skip = 0, first = 10 } = args;
         const data = await Say.find({})
           .skip(skip)
-          .limit(first);
-          // .populate('user');
+          .limit(first)
+          .populate('user');
 
         return data;
       } catch (error) {
