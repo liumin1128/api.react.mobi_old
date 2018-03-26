@@ -41,6 +41,8 @@ export default {
   Say: {
     user: async ({ user }) => {
       const data = await userLoader.load(user._id);
+      console.log('data');
+      console.log(data);
       return data;
     },
   },
