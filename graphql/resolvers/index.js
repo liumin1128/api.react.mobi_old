@@ -4,7 +4,6 @@ import { POPULATE_USER } from '../../constants';
 
 
 const userLoader = new DataLoader(async (ids) => {
-  console.log(ids);
   const data = await User.find({ _id: { $in: ids } });
   return data;
 });
@@ -14,10 +13,11 @@ export default {
     says: async (root, args) => {
       try {
         const { skip = 0, first = 10 } = args;
+        await User.find({});
         const data = await Say.find({})
           .skip(skip)
-          .limit(first)
-          .populate('user');
+          .limit(first);
+          // .populate('user');
 
         return data;
       } catch (error) {
