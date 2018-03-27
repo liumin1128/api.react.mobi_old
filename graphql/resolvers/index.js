@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import uniq from 'loadsh/uniq';
+import uniq from 'loadsh.uniq';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
