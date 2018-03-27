@@ -48,6 +48,8 @@ export default {
   },
   Say: {
     user: async (user) => {
+      console.log('user');
+      console.log(user);
       const data = await userLoader.load(user);
       return data;
     },
