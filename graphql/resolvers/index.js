@@ -1,9 +1,9 @@
 import DataLoader from 'dataloader';
+import uniq from 'loadsh/uniq';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
-
-const userLoader = new DataLoader(ids => User.find({ _id: { $in: ids } }));
+const userLoader = new DataLoader(ids => User.find({ _id: { $in: uniq(ids) } }));
 // const aaa = userLoader.load('59f83e9a0c14d24450c64603');
 // const bbb = userLoader.load('5a0013c91b977c5b76939cc1');
 

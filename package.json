@@ -38,6 +38,7 @@
     "koa-static": "^4.0.2",
     "koa-validate": "^1.0.7",
     "koa2-cors": "^2.0.3",
+    "lodash": "^4.17.5",
     "moment": "^2.18.1",
     "mongoose": "^4.11.10",
     "node-fetch": "^1.7.3",

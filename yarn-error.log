@@ -1,14 +1,14 @@
 Arguments: 
-  /Users/liumin/.nvm/versions/node/v8.9.0/bin/node /Users/liumin/.nvm/versions/node/v8.9.0/bin/yarn add crypto-js
+  /Users/liumin/.nvm/versions/node/v9.6.1/bin/node /Users/liumin/.nvm/versions/node/v9.6.1/bin/yarn add loadsh
 
 PATH: 
-  /Users/liumin/.nvm/versions/node/v8.9.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  /Users/liumin/.nvm/versions/node/v9.6.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
-  1.3.2
+  1.5.1
 
 Node version: 
-  8.9.0
+  9.6.1
 
 Platform: 
   darwin x64
@@ -36,9 +36,13 @@ npm manifest:
     },
     "dependencies": {
       "@alicloud/sms-sdk": "^1.0.2",
+      "apollo-server-koa": "^1.3.2",
       "bluebird": "^3.5.0",
       "cross-env": "^5.1.1",
+      "dataloader": "^1.4.0",
       "github-webhook-handler": "^0.6.0",
+      "graphql": "^0.12.3",
+      "graphql-tools": "^2.20.0",
       "hiredis": "^0.5.0",
       "joi": "^13.0.1",
       "jsonwebtoken": "^8.0.0",
@@ -47,12 +51,14 @@ npm manifest:
       "koa-helmet": "^3.2.0",
       "koa-jwt": "^3.2.2",
       "koa-router": "^7.2.1",
+      "koa-static": "^4.0.2",
       "koa-validate": "^1.0.7",
       "koa2-cors": "^2.0.3",
       "moment": "^2.18.1",
       "mongoose": "^4.11.10",
       "node-fetch": "^1.7.3",
       "qiniu": "^7.1.0",
+      "query-string": "^5.0.1",
       "redis": "^2.8.0"
     }
   }
@@ -102,6 +108,10 @@ Lockfile:
       "@alicloud/dybaseapi" "^1.0.0"
       "@alicloud/dysmsapi" "^1.0.0"
       "@alicloud/mns" "^1.0.0-beta4"
+  
+  "@types/zen-observable@0.5.3":
+    version "0.5.3"
+    resolved "http://registry.npm.taobao.org/@types/zen-observable/download/@types/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
   
   abbrev@1:
     version "1.1.0"
@@ -186,7 +196,7 @@ Lockfile:
     dependencies:
       color-convert "^1.9.0"
   
-  any-promise@^1.1.0, any-promise@^1.3.0:
+  any-promise@^1.0.0, any-promise@^1.1.0, any-promise@^1.3.0:
     version "1.3.0"
     resolved "http://registry.npm.taobao.org/any-promise/download/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
   
@@ -196,6 +206,49 @@ Lockfile:
     dependencies:
       micromatch "^2.1.5"
       normalize-path "^2.0.0"
+  
+  apollo-cache-control@^0.0.x:
+    version "0.0.9"
+    resolved "http://registry.npm.taobao.org/apollo-cache-control/download/apollo-cache-control-0.0.9.tgz#77100f456fb19526d33b7f595c8ab1a2980dcbb4"
+    dependencies:
+      graphql-extensions "^0.0.x"
+  
+  apollo-link@^1.0.0:
+    version "1.0.7"
+    resolved "http://registry.npm.taobao.org/apollo-link/download/apollo-link-1.0.7.tgz#42cd38a7378332fc3e41a214ff6a6e5e703a556f"
+    dependencies:
+      "@types/zen-observable" "0.5.3"
+      apollo-utilities "^1.0.0"
+      zen-observable "^0.6.0"
+  
+  apollo-server-core@^1.3.2:
+    version "1.3.2"
+    resolved "http://registry.npm.taobao.org/apollo-server-core/download/apollo-server-core-1.3.2.tgz#f36855a3ebdc2d77b8b9c454380bf1d706105ffc"
+    dependencies:
+      apollo-cache-control "^0.0.x"
+      apollo-tracing "^0.1.0"
+      graphql-extensions "^0.0.x"
+  
+  apollo-server-koa@^1.3.2:
+    version "1.3.2"
+    resolved "http://registry.npm.taobao.org/apollo-server-koa/download/apollo-server-koa-1.3.2.tgz#cb7b48c7568639acdddc626a99c2900023660ad4"
+    dependencies:
+      apollo-server-core "^1.3.2"
+      apollo-server-module-graphiql "^1.3.0"
+  
+  apollo-server-module-graphiql@^1.3.0:
+    version "1.3.2"
+    resolved "http://registry.npm.taobao.org/apollo-server-module-graphiql/download/apollo-server-module-graphiql-1.3.2.tgz#0a9e4c48dece3af904fee333f95f7b9817335ca7"
+  
+  apollo-tracing@^0.1.0:
+    version "0.1.3"
+    resolved "http://registry.npm.taobao.org/apollo-tracing/download/apollo-tracing-0.1.3.tgz#6820c066bf20f9d9a4eddfc023f7c83ee2601f0b"
+    dependencies:
+      graphql-extensions "^0.0.x"
+  
+  apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
+    version "1.0.6"
+    resolved "http://registry.npm.taobao.org/apollo-utilities/download/apollo-utilities-1.0.6.tgz#7bfd7a702b5225c9a4591fe28c5899d9b5f08889"
   
   aproba@^1.0.3:
     version "1.1.2"
@@ -1099,6 +1152,10 @@ Lockfile:
     version "2.5.1"
     resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
   
+  core-js@^2.5.3:
+    version "2.5.3"
+    resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
+  
   core-util-is@1.0.2, core-util-is@~1.0.0:
     version "1.0.2"
     resolved "http://registry.npm.taobao.org/core-util-is/download/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -1152,6 +1209,10 @@ Lockfile:
     version "0.2.2"
     resolved "http://registry.npm.taobao.org/dashify/download/dashify-0.2.2.tgz#6a07415a01c91faf4a32e38d9dfba71f61cb20fe"
   
+  dataloader@^1.4.0:
+    version "1.4.0"
+    resolved "http://registry.npm.taobao.org/dataloader/download/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
+  
   debug@*:
     version "3.0.1"
     resolved "http://registry.npm.taobao.org/debug/download/debug-3.0.1.tgz#0564c612b521dc92d9f2988f0549e34f9c98db64"
@@ -1169,6 +1230,10 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
     dependencies:
       ms "2.0.0"
+  
+  decode-uri-component@^0.2.0:
+    version "0.2.0"
+    resolved "http://registry.npm.taobao.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   
   deep-equal@~1.0.1:
     version "1.0.1"
@@ -1222,6 +1287,10 @@ Lockfile:
   depd@1.1.1, depd@^1.1.0, depd@~1.1.1:
     version "1.1.1"
     resolved "http://registry.npm.taobao.org/depd/download/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
+  
+  deprecated-decorator@^0.1.6:
+    version "0.1.6"
+    resolved "http://registry.npm.taobao.org/deprecated-decorator/download/deprecated-decorator-0.1.6.tgz#00966317b7a12fe92f3cc831f7583af329b86c37"
   
   destroy@^1.0.3, destroy@^1.0.4:
     version "1.0.4"
@@ -1766,6 +1835,28 @@ Lockfile:
     version "4.1.11"
     resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
   
+  graphql-extensions@^0.0.x:
+    version "0.0.7"
+    resolved "http://registry.npm.taobao.org/graphql-extensions/download/graphql-extensions-0.0.7.tgz#807e7c3493da45e8f8fd02c0da771a9b3f1f2d1a"
+    dependencies:
+      core-js "^2.5.3"
+      source-map-support "^0.5.1"
+  
+  graphql-tools@^2.20.0:
+    version "2.20.0"
+    resolved "http://registry.npm.taobao.org/graphql-tools/download/graphql-tools-2.20.0.tgz#4fa7b0c403115a0b636f685263c6faec5f219a24"
+    dependencies:
+      apollo-link "^1.0.0"
+      apollo-utilities "^1.0.1"
+      deprecated-decorator "^0.1.6"
+      uuid "^3.1.0"
+  
+  graphql@^0.12.3:
+    version "0.12.3"
+    resolved "http://registry.npm.taobao.org/graphql/download/graphql-0.12.3.tgz#11668458bbe28261c0dcb6e265f515ba79f6ce07"
+    dependencies:
+      iterall "1.1.3"
+  
   har-schema@^1.0.5:
     version "1.0.5"
     resolved "https://registry.npmjs.org/har-schema/-/har-schema-1.0.5.tgz#d263135f43307c02c602afc8fe95970c0151369e"
@@ -1882,7 +1973,7 @@ Lockfile:
       deep-equal "~1.0.1"
       http-errors "~1.6.1"
   
-  http-errors@1.6.2, http-errors@^1.2.8, http-errors@^1.3.1, http-errors@~1.6.1:
+  http-errors@1.6.2, http-errors@^1.2.8, http-errors@^1.3.1, http-errors@^1.6.1, http-errors@~1.6.1, http-errors@~1.6.2:
     version "1.6.2"
     resolved "http://registry.npm.taobao.org/http-errors/download/http-errors-1.6.2.tgz#0a002cc85707192a7e7946ceedc11155f60ec736"
     dependencies:
@@ -2175,6 +2266,10 @@ Lockfile:
     version "0.1.2"
     resolved "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   
+  iterall@1.1.3:
+    version "1.1.3"
+    resolved "http://registry.npm.taobao.org/iterall/download/iterall-1.1.3.tgz#1cbbff96204056dde6656e2ed2e2226d0e6d72c9"
+  
   joi@^13.0.1:
     version "13.0.1"
     resolved "http://registry.npm.taobao.org/joi/download/joi-13.0.1.tgz#97df285450e3ff5bc4db9eccf40a1cd5cf3ec189"
@@ -2387,6 +2482,22 @@ Lockfile:
       koa-compose "^3.0.0"
       methods "^1.0.1"
       path-to-regexp "^1.1.1"
+  
+  koa-send@^4.1.0:
+    version "4.1.3"
+    resolved "http://registry.npm.taobao.org/koa-send/download/koa-send-4.1.3.tgz#0822207bbf5253a414c8f1765ebc29fa41353cb6"
+    dependencies:
+      debug "^2.6.3"
+      http-errors "^1.6.1"
+      mz "^2.6.0"
+      resolve-path "^1.4.0"
+  
+  koa-static@^4.0.2:
+    version "4.0.2"
+    resolved "http://registry.npm.taobao.org/koa-static/download/koa-static-4.0.2.tgz#6cda92d88d771dcaad9f0d825cd94a631c861a1a"
+    dependencies:
+      debug "^2.6.8"
+      koa-send "^4.1.0"
   
   koa-unless@1.0.0:
     version "1.0.0"
@@ -2733,6 +2844,14 @@ Lockfile:
     version "0.0.7"
     resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
   
+  mz@^2.6.0:
+    version "2.7.0"
+    resolved "http://registry.npm.taobao.org/mz/download/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
+    dependencies:
+      any-promise "^1.0.0"
+      object-assign "^4.0.1"
+      thenify-all "^1.0.0"
+  
   nan@^2.3.0, nan@^2.3.4:
     version "2.7.0"
     resolved "http://registry.npm.taobao.org/nan/download/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
@@ -2969,7 +3088,7 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.npmjs.org/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
   
-  path-is-absolute@^1.0.0, path-is-absolute@^1.0.1:
+  path-is-absolute@1.0.1, path-is-absolute@^1.0.0, path-is-absolute@^1.0.1:
     version "1.0.1"
     resolved "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   
@@ -3096,6 +3215,14 @@ Lockfile:
   qs@~6.4.0:
     version "6.4.0"
     resolved "https://registry.npmjs.org/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+  
+  query-string@^5.0.1:
+    version "5.0.1"
+    resolved "http://registry.npm.taobao.org/query-string/download/query-string-5.0.1.tgz#6e2b86fe0e08aef682ecbe86e85834765402bd88"
+    dependencies:
+      decode-uri-component "^0.2.0"
+      object-assign "^4.1.0"
+      strict-uri-encode "^1.0.0"
   
   randomatic@^1.1.3:
     version "1.1.7"
@@ -3325,6 +3452,13 @@ Lockfile:
     version "2.0.0"
     resolved "http://registry.npm.taobao.org/resolve-from/download/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
   
+  resolve-path@^1.4.0:
+    version "1.4.0"
+    resolved "http://registry.npm.taobao.org/resolve-path/download/resolve-path-1.4.0.tgz#c4bda9f5efb2fce65247873ab36bb4d834fe16f7"
+    dependencies:
+      http-errors "~1.6.2"
+      path-is-absolute "1.0.1"
+  
   resolve@^1.2.0, resolve@~1.4.0:
     version "1.4.0"
     resolved "https://registry.npmjs.org/resolve/-/resolve-1.4.0.tgz#a75be01c53da25d934a98ebd0e4c4a7312f92a86"
@@ -3438,9 +3572,19 @@ Lockfile:
     dependencies:
       source-map "^0.5.6"
   
+  source-map-support@^0.5.1:
+    version "0.5.3"
+    resolved "http://registry.npm.taobao.org/source-map-support/download/source-map-support-0.5.3.tgz#2b3d5fff298cfa4d1afd7d4352d569e9a0158e76"
+    dependencies:
+      source-map "^0.6.0"
+  
   source-map@^0.5.6:
     version "0.5.7"
     resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
+  
+  source-map@^0.6.0:
+    version "0.6.1"
+    resolved "http://registry.npm.taobao.org/source-map/download/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   
   spdx-correct@~1.0.0:
     version "1.0.2"
@@ -3493,6 +3637,10 @@ Lockfile:
     resolved "https://registry.npmjs.org/stream-combiner/-/stream-combiner-0.0.4.tgz#4d5e433c185261dde623ca3f44c586bcf5c4ad14"
     dependencies:
       duplexer "~0.1.1"
+  
+  strict-uri-encode@^1.0.0:
+    version "1.1.0"
+    resolved "http://registry.npm.taobao.org/strict-uri-encode/download/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   
   string-width@^1.0.1, string-width@^1.0.2:
     version "1.0.2"
@@ -3624,6 +3772,18 @@ Lockfile:
   text-table@~0.2.0:
     version "0.2.0"
     resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
+  
+  thenify-all@^1.0.0:
+    version "1.6.0"
+    resolved "http://registry.npm.taobao.org/thenify-all/download/thenify-all-1.6.0.tgz#1a1918d402d8fc3f98fbf234db0bcc8cc10e9726"
+    dependencies:
+      thenify ">= 3.1.0 < 4"
+  
+  "thenify@>= 3.1.0 < 4":
+    version "3.3.0"
+    resolved "http://registry.npm.taobao.org/thenify/download/thenify-3.3.0.tgz#e69e38a1babe969b0108207978b9f62b88604839"
+    dependencies:
+      any-promise "^1.0.0"
   
   through@2, through@^2.3.6, through@~2.3, through@~2.3.1, through@~2.3.4, through@~2.3.8:
     version "2.3.8"
@@ -3778,6 +3938,10 @@ Lockfile:
     version "3.1.0"
     resolved "https://registry.npmjs.org/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
   
+  uuid@^3.1.0:
+    version "3.2.1"
+    resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
+  
   validate-npm-package-license@^3.0.1:
     version "3.0.1"
     resolved "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
@@ -3873,10 +4037,17 @@ Lockfile:
   yallist@^2.1.2:
     version "2.1.2"
     resolved "https://registry.npmjs.org/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+  
+  zen-observable@^0.6.0:
+    version "0.6.1"
+    resolved "http://registry.npm.taobao.org/zen-observable/download/zen-observable-0.6.1.tgz#01dbed3bc8d02cbe9ee1112c83e04c807f647244"
 
 Trace: 
-  Error: https://registry.npmjs.org/co-body/-/co-body-5.1.1.tgz: ETIMEDOUT
-      at Timeout._onTimeout (/Users/liumin/.nvm/versions/node/v8.9.0/lib/node_modules/yarn/lib/cli.js:123749:19)
-      at ontimeout (timers.js:475:11)
-      at tryOnTimeout (timers.js:310:5)
-      at Timer.listOnTimeout (timers.js:270:5)
+  Error: Couldn't find package "loadsh" on the "npm" registry.
+      at new MessageError (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:186:110)
+      at NpmResolver.<anonymous> (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:51625:15)
+      at Generator.next (<anonymous>)
+      at step (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:109:13
+      at <anonymous>
+      at process._tickCallback (internal/process/next_tick.js:160:7)
