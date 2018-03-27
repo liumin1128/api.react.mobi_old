@@ -47,7 +47,7 @@ export default {
     },
   },
   Say: {
-    user: ({ user }) => userLoader.load(user._id),
+    user: user => userLoader.load(user),
   },
   Author: {
     // 定义author中的posts
