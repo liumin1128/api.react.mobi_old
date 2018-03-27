@@ -13,11 +13,9 @@ export default {
     says: async (root, args) => {
       try {
         const { skip = 0, first = 10 } = args;
-        await User.find({});
         const data = await Say.find({})
           .skip(skip)
           .limit(first);
-          // .populate('user');
 
         return data;
       } catch (error) {
@@ -48,7 +46,7 @@ export default {
   Say: {
     user: async ({ user }) => {
       const data = await userLoader.load(user._id);
-      return data;
+      return userLoader.load(data);
     },
   },
   Author: {
