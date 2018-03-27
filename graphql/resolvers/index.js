@@ -41,10 +41,7 @@ export default {
     },
   },
   Say: {
-    user: async ({ user }) => {
-      const data = await userLoader.load(user._id);
-      return userLoader.load(data);
-    },
+    user: ({ user }) => userLoader.load(user._id),
   },
   Author: {
     // 定义author中的posts
