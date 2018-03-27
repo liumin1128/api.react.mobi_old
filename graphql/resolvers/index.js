@@ -47,7 +47,7 @@ export default {
     },
   },
   Say: {
-    user: async ({ user }) => userLoader.load(user),
+    user: ({ user }) => userLoader.load(user),
   },
   Author: {
     // 定义author中的posts
