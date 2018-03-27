@@ -48,7 +48,7 @@ export default {
   },
   Say: {
     user: async (user) => {
-      const data = userLoader.load(user);
+      const data = await userLoader.load(user);
       return data;
     },
   },
