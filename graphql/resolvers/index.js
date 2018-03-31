@@ -1,14 +1,17 @@
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
+import mongoose from 'mongoose';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
+
+const { ObjectId } = mongoose.Schema.Types;
 
 const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
   .then(data => ids.map((id) => {
     console.log('id');
     console.log(id);
-    const sss = data.find(i => `${i._id}` === id);
+    const sss = data.find(i => i._id === ObjectId(id));
     console.log('data');
     console.log(data);
     console.log('sss');
