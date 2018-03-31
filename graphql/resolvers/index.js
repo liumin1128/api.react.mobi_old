@@ -5,7 +5,7 @@ import { POPULATE_USER } from '../../constants';
 
 const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
-  .then(data => ids.map(id => data.find(i => `${i.id}` == id))));
+  .then(data => ids.map(id => data.find(i => `${i._id}` === id))));
 
 export default {
   Query: {
