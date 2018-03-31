@@ -7,6 +7,8 @@ const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
   .then(data => ids.map((id) => {
     const sss = data.find(i => i._id === id);
+    console.log('data');
+    console.log(data);
     console.log('sss');
     console.log(sss);
     return sss;
