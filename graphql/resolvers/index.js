@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
-const { ObjectId } = mongoose.Schema.Types;
+const { ObjectId } = mongoose.Types;
 
 const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
