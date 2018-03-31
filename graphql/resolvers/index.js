@@ -3,21 +3,9 @@ import uniq from 'lodash/uniq';
 import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
-const userLoader = new DataLoader(ids => async () => {
-  // const list = uniq(ids);
-  console.log('ids');
-  console.log(ids);
-  const data = await User.find({ _id: { $in: uniq(ids) } });
-  console.log('data');
-  console.log(data);
-  return data;
-});
-// const aaa = userLoader.load('59f83e9a0c14d24450c64603');
-// const bbb = userLoader.load('5a0013c91b977c5b76939cc1');
-
-// Promise.all([aaa, bbb]).then(([user1, user2]) => {
-//   console.log(user1, user2);
-// });
+const userLoader = new DataLoader(ids => User
+  .find({ _id: { $in: uniq(ids) } })
+  .then(data => ids.map(id => data.find(x => x.id === id))));
 
 export default {
   Query: {
@@ -35,7 +23,7 @@ export default {
     },
     _saysMeta: async (root, args) => {
       try {
-        // const data = await Say.count();
+        const data = await Say.count();
         return {
           count: 99,
         };
