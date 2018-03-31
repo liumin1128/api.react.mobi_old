@@ -5,7 +5,11 @@ import { POPULATE_USER } from '../../constants';
 
 const userLoader = new DataLoader(ids => async () => {
   // const list = uniq(ids);
+  console.log('ids');
+  console.log(ids);
   const data = await User.find({ _id: { $in: uniq(ids) } });
+  console.log('data');
+  console.log(data);
   return data;
 });
 // const aaa = userLoader.load('59f83e9a0c14d24450c64603');
