@@ -9,13 +9,15 @@ const { ObjectId } = mongoose.Schema.Types;
 const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
   .then(data => ids.map((id) => {
-    console.log('id');
-    console.log(id);
-    const sss = data.find(i => i._id === ObjectId(id));
-    console.log('data');
-    console.log(data);
-    console.log('sss');
-    console.log(sss);
+    const sss = data.find((i) => {
+      console.log('i');
+      console.log(i);
+      console.log('id');
+      console.log(id);
+      console.log('ObjectId(id)');
+      console.log(ObjectId(id));
+      return i._id === ObjectId(id);
+    });
     return sss;
   })));
 
