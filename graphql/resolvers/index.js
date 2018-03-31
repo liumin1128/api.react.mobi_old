@@ -16,6 +16,8 @@ const userLoader = new DataLoader(ids => User
       console.log(id);
       console.log('ObjectId(id)');
       console.log(ObjectId(id));
+      console.log('i._id === ObjectId(id)');
+      console.log(i._id === ObjectId(id));
       return i._id === ObjectId(id);
     });
     return sss;
