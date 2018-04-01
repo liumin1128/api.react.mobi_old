@@ -12,8 +12,9 @@ export default {
     test: async (...args) => {
       console.log('args');
       console.log(args);
-      const data = await Say.findById('59f83ebc0c14d24450c64605');
-      return data;
+      // const data = await Say.findById('59f83ebc0c14d24450c64605');
+      // return data;
+      return '操作成功';
     },
   },
   Query: {
