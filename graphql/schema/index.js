@@ -36,4 +36,7 @@ export default `
     user: User
     getFortuneCookie: String
   }
+  type Mutations {
+    test: String
+  }
 `;
