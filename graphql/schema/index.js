@@ -37,6 +37,6 @@ export default `
     getFortuneCookie: String
   }
   type Mutation {
-    test: String
+    test(id: String): String
   }
 `;
