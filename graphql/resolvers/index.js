@@ -15,7 +15,6 @@ export default {
         const data = await Say.find({})
           .skip(skip)
           .limit(first);
-
         return data;
       } catch (error) {
         console.log(error);
@@ -24,16 +23,12 @@ export default {
     _saysMeta: async (root, args) => {
       try {
         const data = await Say.count();
-        return {
-          count: 99,
-        };
+        return { count: data };
       } catch (error) {
         console.log(error);
       }
     },
     say: async (root, args) => {
-      console.log('root, args');
-      console.log(root, args);
       const { _id } = args;
       const data = await Say.findById(_id);
       return data;
@@ -44,24 +39,5 @@ export default {
   },
   Say: {
     user: ({ user }) => userLoader.load(user),
-  },
-  Author: {
-    // 定义author中的posts
-    posts(author) {
-      return [
-        {
-          id: 1, title: 'A post', text: 'Some text', views: 2,
-        },
-        {
-          id: 2, title: 'Another post', text: 'Some other text', views: 200,
-        },
-      ];
-    },
-  },
-  Post: {
-    // 定义Post里面的author
-    author(post) {
-      return { id: 1, firstName: 'Hello', lastName: 'World' };
-    },
   },
 };
