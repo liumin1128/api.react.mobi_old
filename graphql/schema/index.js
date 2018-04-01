@@ -36,7 +36,13 @@ export default `
     user: User
     getFortuneCookie: String
   }
+
+
+  input SayInput {
+    content: String!
+  }
   type Mutation {
     test(_id: String): String
+    createSay(input: SayInput): Say!
   }
 `;
