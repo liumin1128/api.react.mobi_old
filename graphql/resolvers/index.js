@@ -8,6 +8,12 @@ const userLoader = new DataLoader(ids => User
   .then(data => ids.map(id => data.find(i => `${i._id}` === `${id}`))));
 
 export default {
+  Mutation: {
+    test: async (...args) => {
+      console.log('args');
+      console.log(args);
+    },
+  },
   Query: {
     says: async (root, args) => {
       try {
