@@ -31,12 +31,15 @@ export default `
     author(firstName: String, lastName: String): Author # 查询作者信息
     post: [Post]
     say(_id: String): Say
-    says(first: Int, skip: Int): [Say!]
+    says(first: Int, skip: Int): {
+      type: [Say!]
+      description: '用于查询用户帖子',
+    }
     _saysMeta: Meta
     user: User
     getFortuneCookie: String
   }
-  type Mutations {
+  type Mutation {
     test: String
   }
 `;
