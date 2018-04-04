@@ -5,7 +5,6 @@ import { SECRET } from '../config';
 
 const router = new Router();
 
-
 export default router
   .use(jwt({ secret: SECRET }))
   .post('/', graphql);
