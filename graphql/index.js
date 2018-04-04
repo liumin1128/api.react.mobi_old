@@ -17,3 +17,4 @@ export const graphql = graphqlKoa({
 export const graphiql = graphiqlKoa({
   endpointURL: '/graphql',
 });
+

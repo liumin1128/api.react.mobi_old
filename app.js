@@ -20,6 +20,7 @@ import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
 import { graphql, graphiql } from './graphql';
+import graphqlJwt from './graphql/route';
 
 const app = new Koa();
 const router = new Router();
@@ -40,6 +41,7 @@ app.use(helmet());
 app.use(error);
 app.use(jwt({ secret: SECRET }).unless({
   path: [
+    /^\/jwtql/,
     /^\/graphql/,
     /^\/graphiql/,
     /^\/public/,
@@ -81,7 +83,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
 
 router
-  .post('/jwtql', graphql)
+  .post('/jwtql', graphqlJwt)
   .post('/graphql', graphql)
   .get('/graphiql', graphiql)
   .use('/oauth', Oauth.routes())
