@@ -81,6 +81,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
 
 router
+  .post('/jwtql', graphql)
   .post('/graphql', graphql)
   .get('/graphiql', graphiql)
   .use('/oauth', Oauth.routes())
