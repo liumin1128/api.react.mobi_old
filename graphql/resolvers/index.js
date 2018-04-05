@@ -9,9 +9,13 @@ const userLoader = new DataLoader(ids => User
 
 export default {
   Mutation: {
-    createSay: async (...args) => {
+    createSay: async (root, args, args2, args3) => {
       console.log('args');
       console.log(args);
+      console.log('args2');
+      console.log(args2);
+      console.log('args3');
+      console.log(args3);
       const data = await Say.findById('59f83ebc0c14d24450c64605');
       return data;
     },
