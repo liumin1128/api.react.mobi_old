@@ -9,15 +9,25 @@ const userLoader = new DataLoader(ids => User
 
 export default {
   Mutation: {
-    createSay: async (root, args, args2, args3) => {
+    createSay: async (root, args, ctx, op) => {
       console.log('args');
       console.log(args);
-      console.log('args2');
-      console.log(args2);
-      console.log('args3');
-      console.log(args3);
-      const data = await Say.findById('59f83ebc0c14d24450c64605');
-      return data;
+      console.log('ctx');
+      console.log(ctx);
+      const { user } = ctx;
+      if (!user) {
+        ctx.body = {
+          status: 401,
+          messge: '尚未登录',
+        };
+      }
+      const say = await Say.create({
+        ...ctx.request.body,
+        user,
+      });
+      return say;
+      // const data = await Say.findById('59f83ebc0c14d24450c64605');
+      // return data;
     },
     test: async (...args) => {
       console.log('args');
