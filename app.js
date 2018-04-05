@@ -19,7 +19,7 @@ import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
-import { graphql, graphiql } from './graphql';
+import { graphiql } from './graphql';
 import graphqlJwt from './graphql/route';
 
 const app = new Koa();
@@ -84,7 +84,7 @@ app.use(KoaStatic(`${__dirname}/public`));
 
 router
   .use('/jwtql', graphqlJwt.routes())
-  .post('/graphql', graphql)
+  // .post('/graphql', graphql)
   .get('/graphiql', graphiql)
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
