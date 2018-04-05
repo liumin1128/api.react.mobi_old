@@ -20,15 +20,13 @@ const router = new Router();
 // });
 
 export const graphql = graphqlKoa((ctx) => {
-  const { user = {} } = ctx.state;
-  console.log('user');
-  console.log(user);
+  // const { user = {} } = ctx.state;
+  // console.log('user');
+  // console.log(user);
+
   return {
     schema,
-    context: {
-      test: 'test123',
-      ctx,
-    },
+    ctx,
   };
 });
 
