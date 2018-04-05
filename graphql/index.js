@@ -14,7 +14,20 @@ const schema = makeExecutableSchema({
 
 const router = new Router();
 
-// export const graphql =
+// export const graphql = graphqlKoa({
+//   schema,
+//   // other options here
+// });
+
+export const graphql = graphqlKoa((ctx) => {
+  return {
+    schema,
+    context: {
+      test: 'test123',
+      ctx,
+    },
+  };
+});
 
 export const graphiql = graphiqlKoa({
   endpointURL: '/graphql',
@@ -23,14 +36,5 @@ export const graphiql = graphiqlKoa({
 
 export default router
   .use(jwt({ secret: SECRET, passthrough: true }))
-  .post('/', (ctx) => {
-    return graphqlKoa({
-      schema,
-      context: {
-        test: 'xxxx',
-        ctx,
-      },
-      // other options here
-    })(ctx);
-  });
+  .post('/', graphql);
 
