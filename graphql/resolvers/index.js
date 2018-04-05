@@ -33,10 +33,14 @@ export default {
   Query: {
     says: async (root, args) => {
       try {
-        const { skip = 0, first = 10 } = args;
-        const data = await Say.find({})
+        const { skip = 0, first = 10, sort = '-createdAt' } = args;
+
+        const data = await Say
+          .find({})
           .skip(skip)
-          .limit(first);
+          .limit(first)
+          .sort(sort);
+
         return data;
       } catch (error) {
         console.log(error);
