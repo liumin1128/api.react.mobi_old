@@ -19,7 +19,7 @@ import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
-import Graphql, { graphiql } from './graphql';
+import Graphql from './graphql';
 
 const app = new Koa();
 const router = new Router();
