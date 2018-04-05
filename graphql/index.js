@@ -25,7 +25,11 @@ export const graphql = graphqlKoa((ctx) => {
   console.log(user);
   return {
     schema,
-    context: ctx,
+    context: {
+      test: 'xxxxx',
+      user,
+      ...ctx,
+    },
   };
 });
 
