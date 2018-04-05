@@ -21,8 +21,9 @@ export default {
           messge: '尚未登录',
         };
       }
+      const { input } = args;
       const say = await Say.create({
-        ...ctx.request.body,
+        ...input,
         user,
       });
       return say;
