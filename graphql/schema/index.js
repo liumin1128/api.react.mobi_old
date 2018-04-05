@@ -28,6 +28,7 @@ export default `
     say(_id: String): Say
     says(first: Int, skip: Int): [Say!]
     _saysMeta: Meta
+    _articlesMeta: Meta
     user: User
   }
   input SayInput {

@@ -83,6 +83,14 @@ export default {
         console.log(error);
       }
     },
+    _articlesMeta: async (root, args) => {
+      try {
+        const data = await Article.count();
+        return { count: data };
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   Say: {
     user: ({ user }) => userLoader.load(user),
