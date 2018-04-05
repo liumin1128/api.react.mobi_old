@@ -26,7 +26,7 @@ export const graphql = graphqlKoa((ctx) => {
 
   return {
     schema,
-    ctx,
+    context: ctx,
   };
 });
 

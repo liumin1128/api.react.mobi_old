@@ -19,7 +19,7 @@ import WorkConatiner from './server/work';
 import Im from './server/im';
 import { PORT, DEV, LOCAL, SECRET } from './config';
 import error from './middlewares/error_back';
-import Graphql from './graphql';
+import { graphiql, graphql } from './graphql';
 
 const app = new Koa();
 const router = new Router();
@@ -41,6 +41,7 @@ app.use(error);
 app.use(jwt({ secret: SECRET }).unless({
   path: [
     /^\/graphql/,
+    /^\/graphiql/,
     /^\/public/,
     /^\/oauth/,
     /^\/map/,
@@ -80,7 +81,10 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
 
 router
-  .use('/graphql', Graphql.routes())
+  .post('/graphql', jwt({ secret: SECRET, passthrough: true }), graphql)
+  .get('/graphql', graphql)
+  .get('/graphiql', graphiql)
+  // .use('/graphql', Graphql.routes())
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
