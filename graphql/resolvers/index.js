@@ -22,12 +22,18 @@ export default {
       const say = await Say.create({ ...input, user });
       return say;
     },
-    test: async (...args) => {
-      console.log('args');
-      console.log(args);
-      // const data = await Say.findById('59f83ebc0c14d24450c64605');
-      // return data;
-      return '操作成功';
+    createArticle: async (root, args, ctx, op) => {
+      const { user } = ctx;
+      if (!user) {
+        ctx.body = {
+          status: 401,
+          messge: '尚未登录',
+        };
+        return;
+      }
+      const { input } = args;
+      const say = await Article.create({ ...input, user });
+      return say;
     },
   },
   Query: {

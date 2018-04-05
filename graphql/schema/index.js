@@ -4,13 +4,13 @@ export default `
     content: String!
     photos: [String!]
     createdAt: String!
-    user: User
+    user: User!
   }
   type Article {
     title: String!
     content: String!
-    cover: String!
-    user: User
+    cover: String
+    user: User!
     createdAt: String!
     _id: String!
   }
@@ -33,8 +33,13 @@ export default `
   input SayInput {
     content: String!
   }
+  input ArticleInput {
+    title: String!
+    content: String!
+    cover: String
+  }
   type Mutation {
-    test(_id: String): String
     createSay(input: SayInput): Say!
+    createArticle(input: ArticleInput): Article!
   }
 `;
