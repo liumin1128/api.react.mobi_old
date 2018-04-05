@@ -38,5 +38,6 @@ export const graphiql = graphiqlKoa({
 
 export default router
   .use(jwt({ secret: SECRET, passthrough: true }))
-  .post('/', graphql);
+  .post('/', graphql)
+  .get('/i', graphiql);
 

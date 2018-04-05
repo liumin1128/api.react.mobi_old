@@ -41,7 +41,6 @@ app.use(error);
 app.use(jwt({ secret: SECRET }).unless({
   path: [
     /^\/graphql/,
-    /^\/graphiql/,
     /^\/public/,
     /^\/oauth/,
     /^\/map/,
@@ -81,8 +80,7 @@ app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
 
 router
-  .post('/graphql', Graphql.routes())
-  .get('/graphiql', graphiql)
+  .use('/graphql', Graphql.routes())
   .use('/oauth', Oauth.routes())
   .use('/work', Work.routes())
   .use('/map', Maps.routes())
