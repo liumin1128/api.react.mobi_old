@@ -77,9 +77,6 @@ export default {
         console.log(error);
       }
     },
-    author(root, args) { // args就是上面schema中author的入参
-      return { id: 1, firstName: 'Hello', lastName: 'World' };
-    },
   },
   Say: {
     user: ({ user }) => userLoader.load(user),
