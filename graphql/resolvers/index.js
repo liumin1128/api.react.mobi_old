@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
-import { Daka, User, Say, Rule, Leave } from '../../mongo/modals';
+import { Daka, User, Say, Rule, Leave, Article } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
 
 const userLoader = new DataLoader(ids => User
@@ -31,6 +31,29 @@ export default {
     },
   },
   Query: {
+    article: async (root, args) => {
+      const { _id } = args;
+      const data = await Article.findById(_id);
+      return data;
+    },
+    articles: async (root, args) => {
+      try {
+        const { skip = 0, first = 10, sort = '-createdAt' } = args;
+        const data = await Article
+          .find({})
+          .skip(skip)
+          .limit(first)
+          .sort(sort);
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    say: async (root, args) => {
+      const { _id } = args;
+      const data = await Say.findById(_id);
+      return data;
+    },
     says: async (root, args) => {
       try {
         const { skip = 0, first = 10, sort = '-createdAt' } = args;
@@ -53,11 +76,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    say: async (root, args) => {
-      const { _id } = args;
-      const data = await Say.findById(_id);
-      return data;
     },
     author(root, args) { // args就是上面schema中author的入参
       return { id: 1, firstName: 'Hello', lastName: 'World' };
