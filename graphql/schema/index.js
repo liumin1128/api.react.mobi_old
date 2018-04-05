@@ -22,15 +22,6 @@ export default `
     nickname: String!
     avatarUrl: String!
   }
-  type Query {    # 定义查询内容
-    article(_id: String): Article!
-    articles(first: Int, skip: Int): [Article!]
-    say(_id: String): Say
-    says(first: Int, skip: Int): [Say!]
-    _saysMeta: Meta
-    _articlesMeta: Meta
-    user: User
-  }
   input SayInput {
     content: String!
   }
@@ -38,6 +29,15 @@ export default `
     title: String!
     content: String!
     cover: String
+  }
+  type Query {    # 定义查询内容
+    article(_id: String): Article!
+    articles(first: Int, skip: Int): [Article!]
+    say(_id: String): Say!
+    says(first: Int, skip: Int): [Say!]
+    _saysMeta: Meta!
+    _articlesMeta: Meta!
+    user: User!
   }
   type Mutation {
     createSay(input: SayInput): Say!
