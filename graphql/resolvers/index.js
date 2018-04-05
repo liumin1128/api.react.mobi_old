@@ -84,4 +84,7 @@ export default {
   Say: {
     user: ({ user }) => userLoader.load(user),
   },
+  Article: {
+    user: ({ user }) => userLoader.load(user),
+  },
 };
