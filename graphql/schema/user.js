@@ -4,7 +4,4 @@ export default `
     nickname: String!
     avatarUrl: String!
   }
-  type Query {    # 定义查询内容
-    user: User!
-  }
 `;

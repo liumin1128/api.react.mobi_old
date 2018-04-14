@@ -8,4 +8,31 @@ export default `
   ${user}
   ${article}
   ${wechat}
+  type Query {
+
+    # 用户
+    user: User!
+
+    # 文章
+    article(_id: String): Article!
+    articles(first: Int, skip: Int): [Article!]
+    _articlesMeta: ArticleMeta!
+
+    # 说说
+    say(_id: String): Say!
+    says(first: Int, skip: Int): [Say!]
+    _saysMeta: SayMeta!
+
+    # 微信公众号文章
+    wechat(first: Int, skip: Int): [Wechat!]
+
+  }
+  type Mutation {
+
+    # 创建文章
+    createArticle(input: ArticleInput): Article!
+
+    # 创建说说
+    createSay(input: SayInput): Say!
+  }
 `;

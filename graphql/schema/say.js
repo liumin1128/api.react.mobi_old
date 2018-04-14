@@ -12,12 +12,4 @@ export default `
   input SayInput {
     content: String!
   }
-  type Query {
-    say(_id: String): Say!
-    says(first: Int, skip: Int): [Say!]
-    _saysMeta: SayMeta!
-  }
-  type Mutation {
-    createSay(input: SayInput): Say!
-  }
 `;

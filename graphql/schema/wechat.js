@@ -5,7 +5,4 @@ export default `
     url: String!
     cover: String!
   }
-  type Query {
-    wechat(first: Int, skip: Int): [Wechat!]
-  }
 `;
