@@ -9,11 +9,12 @@ export const userLoader = new DataLoader(ids => User
 export const resolverCombine = (...args) => {
   let temp = {};
   args.map(({ Mutation, Query, ...other }) => {
-    temp = { ...temp, ...other };
+    temp = {
+      ...temp,
+      ...other,
+      Mutation: { ...temp.Mutation, ...Mutation },
+      Query: { ...temp.Query, ...Query },
+    };
   });
-  return {
-    ...temp,
-    Mutation: { ...args.map(({ Mutation }) => Mutation) },
-    Query: { ...args.map(({ Query }) => Query) },
-  };
+  return temp;
 };
