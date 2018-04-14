@@ -100,10 +100,10 @@ export async function getArticleDetail(url) {
   return content;
 }
 
-(async () => {
-  const url = await getUrlByName('人民日报');
-  const list = await getArticleList(url);
-})();
+// (async () => {
+//   const url = await getUrlByName('人民日报');
+//   const list = await getArticleList(url);
+// })();
 
 router.get('/', async (ctx) => {
   // ctx.body = 'Hello, I can get wechat article！';

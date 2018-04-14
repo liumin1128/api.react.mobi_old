@@ -1,9 +1,11 @@
-import { Say } from '../../mongo/modals';
+
+import { Article } from '../../mongo/modals';
 import { userLoader } from './utils';
+
 
 export default {
   Mutation: {
-    createSay: async (root, args, ctx, op) => {
+    createArticle: async (root, args, ctx, op) => {
       const { user } = ctx;
       if (!user) {
         ctx.body = {
@@ -13,42 +15,39 @@ export default {
         return;
       }
       const { input } = args;
-      const say = await Say.create({ ...input, user });
+      const say = await Article.create({ ...input, user });
       return say;
     },
   },
   Query: {
-    say: async (root, args) => {
+    article: async (root, args) => {
       const { _id } = args;
-      const data = await Say.findById(_id);
+      const data = await Article.findById(_id);
       return data;
     },
-    says: async (root, args) => {
-      console.log('xxxxxxxxxxxxx');
+    articles: async (root, args) => {
       try {
         const { skip = 0, first = 10, sort = '-createdAt' } = args;
-
-        const data = await Say
+        const data = await Article
           .find({})
           .skip(skip)
           .limit(first)
           .sort(sort);
-
         return data;
       } catch (error) {
         console.log(error);
       }
     },
-    _saysMeta: async (root, args) => {
+    _articlesMeta: async (root, args) => {
       try {
-        const data = await Say.count();
+        const data = await Article.count();
         return { count: data };
       } catch (error) {
         console.log(error);
       }
     },
   },
-  Say: {
+  Article: {
     user: ({ user }) => userLoader.load(user),
   },
 };
