@@ -29,9 +29,7 @@ const port = process.env.NODE_ENV === 'production' ? 3101 : PORT;
 console.log('LOCAL');
 console.log(LOCAL);
 
-mongoose.connect(LOCAL ? 'mongodb://localhost:27017/apiReactMobi' : 'mongodb://react:lol970568830@localhost:27000/react', {
-  useMongoClient: true,
-});
+mongoose.connect(LOCAL ? 'mongodb://localhost:27017/apiReactMobi' : 'mongodb://react:lol970568830@localhost:27000/react');
 mongoose.set('debug', true);
 mongoose.Promise = global.Promise;
 
