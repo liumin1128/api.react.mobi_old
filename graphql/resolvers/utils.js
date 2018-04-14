@@ -7,8 +7,12 @@ export const userLoader = new DataLoader(ids => User
   .then(data => ids.map(id => data.find(i => `${i._id}` === `${id}`))));
 
 export const resolverCombine = (...args) => {
+  let temp = {};
+  args.map(({ Mutation, Query, ...other }) => {
+    temp = { ...temp, ...other };
+  });
   return {
-    ...[...args.map(({ Mutation, Query, ...other }) => other)],
+    ...temp,
     Mutation: { ...args.map(({ Mutation }) => Mutation) },
     Query: { ...args.map(({ Query }) => Query) },
   };
