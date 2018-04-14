@@ -8,7 +8,7 @@ export const userLoader = new DataLoader(ids => User
 
 export const resolverCombine = (...args) => {
   return {
-    ...args.map(({ Mutation, Query, ...other }) => other),
+    ...[...args.map(({ Mutation, Query, ...other }) => other)],
     Mutation: { ...args.map(({ Mutation }) => Mutation) },
     Query: { ...args.map(({ Query }) => Query) },
   };
