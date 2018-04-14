@@ -4,7 +4,7 @@
 /node_modules
 /config
 /.dump.rdb
-/update.sh
+/updateConfig.sh
 # misc
 .DS_Store
 npm-debug.log*
