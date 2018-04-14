@@ -1,11 +1,6 @@
+import wechatArticle from './wechatArticle';
+
 export default `
-  type Say {
-    _id: String!
-    content: String!
-    photos: [String!]
-    createdAt: String!
-    user: User!
-  }
   type Article {
     title: String!
     content: String!
@@ -14,16 +9,10 @@ export default `
     createdAt: String!
     _id: String!
   }
-  type Meta {
-    count: Int!
-  }
   type User {
     _id: String!
     nickname: String!
     avatarUrl: String!
-  }
-  input SayInput {
-    content: String!
   }
   input ArticleInput {
     title: String!
@@ -39,9 +28,6 @@ export default `
       title: String!
       url: String!
     }]
-    say(_id: String): Say!
-    says(first: Int, skip: Int): [Say!]
-    _saysMeta: Meta!
     _articlesMeta: Meta!
     user: User!
   }
@@ -49,4 +35,5 @@ export default `
     createSay(input: SayInput): Say!
     createArticle(input: ArticleInput): Article!
   }
+  ${wechatArticle}
 `;
