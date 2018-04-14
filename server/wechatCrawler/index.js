@@ -20,7 +20,7 @@ export async function getUrlByName(str) {
   if (html.indexOf('<title>302 Found</title>') !== -1) console.log('302');
   if (html.indexOf('您的访问过于频繁') !== -1) {
     console.log('访问过于频繁');
-    await sleep(10000, 20000);
+    await sleep(30000, 50000);
     await getUrlByName(str);
     return;
   }
@@ -31,60 +31,77 @@ export async function getUrlByName(str) {
 }
 
 export async function getArticleList(url) {
-  console.log(`getArticleList${url}`);
-  const html = await fetch(url).then(res => res.text());
-  if (html.indexOf('为了保护你的网络安全，请输入验证码') !== -1) {
-  // 处理验证码
-    console.log('处理验证码');
-    const $ = cheerio.load(html);
-    let imgUrl = `http://mp.weixin.qq.com${$('#verify_img').attr('src')}`;
-    imgUrl = `http://mp.weixin.qq.com/mp/verifycode?cert=${(new Date()).getTime() + Math.random()}`;
-    const cert = imgUrl.split('=')[1];
-    console.log('cert');
-    console.log(cert);
+  try {
+    console.log(`getArticleList${url}`);
+    const html = await fetch(url).then(res => res.text());
+    if (html.indexOf('为了保护你的网络安全，请输入验证码') !== -1) {
+      // 处理验证码
+      console.log('处理验证码');
+      const $ = cheerio.load(html);
+      let imgUrl = `http://mp.weixin.qq.com${$('#verify_img').attr('src')}`;
+      imgUrl = `http://mp.weixin.qq.com/mp/verifycode?cert=${(new Date()).getTime() + Math.random()}`;
+      const cert = imgUrl.split('=')[1];
+      console.log('cert');
+      console.log(cert);
 
-    const j = request.jar();
-    const { cookie, base64 } = await new Promise(resolve => request
-      .get({ url: imgUrl, encoding: 'base64', jar: j }, (err, response, body) => {
-        resolve({ cookie: j.getCookieString(url), base64: body });
-      }));
+      const j = request.jar();
+      const { cookie, base64 } = await new Promise(resolve => request
+        .get({ url: imgUrl, encoding: 'base64', jar: j }, (err, response, body) => {
+          resolve({ cookie: j.getCookieString(url), base64: body });
+        }));
 
-    console.log('{ cookie, base64 }');
-    console.log({ cookie, base64 });
+      const verifycode = await getCodeValue(base64);
+      console.log('verifycode');
+      console.log(verifycode);
 
-    const data = await getCodeValue(base64);
-    console.log('data');
-    console.log(data);
+      const verifycodeUrl = `http://mp.weixin.qq.com/mp/verifycode?cert=${encodeURIComponent(cert)}&input=${encodeURIComponent(verifycode)}`;
+      const form = { input: encodeURIComponent(verifycode), cert: encodeURIComponent(cert) };
 
+      const options = {
+        // url: verifycodeUrl,
+        // json: true,
+        formData: form,
+        method: 'post',
+        headers: { Cookie: cookie },
+      };
 
-    // console.log('遇到验证码，重试');
-    // await sleep();
-    // await getArticleList(url);
-    return;
-  }
+      const data = await fetch(verifycodeUrl, options).then(res => res.json());
 
-  let msglist = (html.match(/var msgList = ({.+}}]});?/) || [])[1];
-  if (!msglist) {
-    console.log('没找到文章列表，只支持订阅号，服务号不支持');
-    console.log(html);
-    return html;
-  }
-  msglist = msglist.replace(/(&quot;)/g, '\\\"').replace(/(&nbsp;)/g, '');
-  msglist = JSON.parse(msglist);
-  const list = await msglist.list.map((i) => {
-    return {
+      console.log('data');
+      console.log(data);
+
+      // console.log('遇到验证码，重试');
+      await sleep();
+      await getArticleList(url);
+      return;
+    }
+
+    let msglist = (html.match(/var msgList = ({.+}}]});?/) || [])[1];
+    if (!msglist) {
+      console.log('没找到文章列表，只支持订阅号，服务号不支持');
+      console.log(html);
+      return html;
+    }
+    msglist = msglist.replace(/(&quot;)/g, '\\\"').replace(/(&nbsp;)/g, '');
+    msglist = JSON.parse(msglist);
+    const list = await msglist.list.map((i) => {
+      return {
       // ...i,
-      cover: i.comm_msg_info.cover,
-      createdAt: moment(i.comm_msg_info.datetime).format('llll'),
-      title: i.app_msg_ext_info.title,
-      url: `http://mp.weixin.qq.com${i.app_msg_ext_info.content_url.replace(/(amp;)|(\\)/g, '')}`,
+        cover: i.comm_msg_info.cover,
+        createdAt: moment(i.comm_msg_info.datetime).format('llll'),
+        title: i.app_msg_ext_info.title,
+        url: `http://mp.weixin.qq.com${i.app_msg_ext_info.content_url.replace(/(amp;)|(\\)/g, '')}`,
       // other: i.app_msg_ext_info.multi_app_msg_item_list.map(o => ({
       //   title: o.title,
       //   url: `http://mp.weixin.qq.com${o.content_url.replace(/(amp;)|(\\)/g, '')}`,
       // })),
-    };
-  });
-  return list;
+      };
+    });
+    return list;
+  } catch (error) {
+    console.log('getArticleList error');
+    console.log(error);
+  }
 }
 
 export async function getArticleDetail(url) {
