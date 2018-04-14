@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/liumin/.nvm/versions/node/v9.6.1/bin/node /Users/liumin/.nvm/versions/node/v9.6.1/bin/yarn add loadsh
+  /Users/liumin/.nvm/versions/node/v9.6.1/bin/node /Users/liumin/.nvm/versions/node/v9.6.1/bin/yarn add cheerio showapi-sdk
 
 PATH: 
   /Users/liumin/.nvm/versions/node/v9.6.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -54,6 +54,7 @@ npm manifest:
       "koa-static": "^4.0.2",
       "koa-validate": "^1.0.7",
       "koa2-cors": "^2.0.3",
+      "lodash": "^4.17.5",
       "moment": "^2.18.1",
       "mongoose": "^4.11.10",
       "node-fetch": "^1.7.3",
@@ -4043,11 +4044,7 @@ Lockfile:
     resolved "http://registry.npm.taobao.org/zen-observable/download/zen-observable-0.6.1.tgz#01dbed3bc8d02cbe9ee1112c83e04c807f647244"
 
 Trace: 
-  Error: Couldn't find package "loadsh" on the "npm" registry.
-      at new MessageError (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:186:110)
-      at NpmResolver.<anonymous> (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:51625:15)
-      at Generator.next (<anonymous>)
-      at step (/Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:98:30)
-      at /Users/liumin/.nvm/versions/node/v9.6.1/lib/node_modules/yarn/lib/cli.js:109:13
-      at <anonymous>
-      at process._tickCallback (internal/process/next_tick.js:160:7)
+  Error: connect ETIMEDOUT 151.101.228.162:443
+      at Object._errnoException (util.js:1003:13)
+      at _exceptionWithHostPort (util.js:1024:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1181:14)

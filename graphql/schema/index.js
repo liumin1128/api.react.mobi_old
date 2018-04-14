@@ -33,6 +33,12 @@ export default `
   type Query {    # 定义查询内容
     article(_id: String): Article!
     articles(first: Int, skip: Int): [Article!]
+    wechatArticles(first: Int, skip: Int): [{
+      cover: String!
+      createdAt: String!
+      title: String!
+      url: String!
+    }]
     say(_id: String): Say!
     says(first: Int, skip: Int): [Say!]
     _saysMeta: Meta!
