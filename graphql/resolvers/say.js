@@ -25,6 +25,7 @@ export default {
       return data;
     },
     says: async (root, args) => {
+      console.log('xxxxxxxxxxxxx');
       try {
         const { skip = 0, first = 10, sort = '-createdAt' } = args;
 
