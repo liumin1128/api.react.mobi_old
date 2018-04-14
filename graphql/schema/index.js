@@ -24,7 +24,7 @@ export default `
     _saysMeta: SayMeta!
 
     # 微信公众号文章
-    wechat(first: Int, skip: Int): [Wechat!]
+    wechat(name: String): [Wechat!]
 
   }
   type Mutation {
