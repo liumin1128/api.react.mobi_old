@@ -38,7 +38,7 @@ export default {
     },
   },
   Query: {
-    wechatArticles: async (root, args) => {
+    wechat: async (root, args) => {
       const url = await getUrlByName('人民日报');
       const list = await getArticleList(url);
       return list;
