@@ -1,5 +1,5 @@
 export default `
-  type Meta {
+  type SayMeta {
     count: Int!
   }
   type Say {
@@ -15,7 +15,7 @@ export default `
   type Query {
     say(_id: String): Say!
     says(first: Int, skip: Int): [Say!]
-    _saysMeta: Meta!
+    _saysMeta: SayMeta!
   }
   type Mutation {
     createSay(input: SayInput): Say!
