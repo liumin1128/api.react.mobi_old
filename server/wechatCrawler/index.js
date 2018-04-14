@@ -87,7 +87,7 @@ export async function getArticleList(url) {
     const list = await msglist.list.map((i) => {
       return {
       // ...i,
-        cover: i.comm_msg_info.cover,
+        cover: i.app_msg_ext_info.cover,
         createdAt: moment(i.comm_msg_info.datetime).format('llll'),
         title: i.app_msg_ext_info.title,
         url: `http://mp.weixin.qq.com${i.app_msg_ext_info.content_url.replace(/(amp;)|(\\)/g, '')}`,
