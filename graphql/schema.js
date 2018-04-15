@@ -32,7 +32,7 @@ export default `
     wechat(name: String): [Wechat!]
 
     # 妹子图
-    meizituList(page: String): [MeizituList!]
+    meizituList(page: Int): [MeizituList!]
     meizituPictures(url: String): MeizituPictures
 
     # 色气妹子图
