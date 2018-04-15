@@ -23,7 +23,7 @@ export async function getList(url) {
     const cover = {
       width: $(this).find('a img').attr('width'),
       height: $(this).find('a img').attr('height'),
-      src: `https://mzitu.react.mobi/${src.substring(21, src.length)}`,
+      src: `http://mzitu.react.mobi/${src.substring(21, src.length)}`,
     };
     const href = $(this).find('a').attr('href');
     const title = $(this).find('span a').text();
@@ -50,7 +50,7 @@ export async function getPictures(url) {
   const total = $('.pagenavi a').eq(-2).text();
   const pictures = [];
   for (let i = 1; i <= total; i += 1) {
-    pictures.push(`https://mzitu.react.mobi/${temp + (`0${i}`).slice(-2)}.jpg`);
+    pictures.push(`http://mzitu.react.mobi/${temp + (`0${i}`).slice(-2)}.jpg`);
   }
   return {
     title, meta, src, total, temp, pictures, _id: aesEncode(url),
