@@ -1,7 +1,6 @@
 
-import { Article } from '../../mongo/modals';
-import { userLoader } from './utils';
-
+import { Article } from '../../../mongo/modals';
+import { userLoader } from '../../utils';
 
 export default {
   Mutation: {

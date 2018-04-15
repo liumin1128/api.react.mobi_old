@@ -1,8 +1,8 @@
-import say from './say';
-import user from './user';
-import article from './article';
-import wechat from './wechat';
-import meizitu from '../models/meizitu/schema';
+import say from './models/say/schema';
+import user from './models/user/schema';
+import article from './models/article/schema';
+import wechat from './models/wechat/schema';
+import meizitu from './models/meizitu/schema';
 
 export default `
   ${say}

@@ -1,5 +1,5 @@
-import { Say } from '../../mongo/modals';
-import { userLoader } from './utils';
+import { Say } from '../../../mongo/modals';
+import { userLoader } from '../../utils';
 
 export default {
   Mutation: {
