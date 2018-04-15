@@ -1,10 +1,11 @@
 import Koa from 'koa';
 import Router from 'koa-router';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { sleep } from './utils';
+import { sleep } from './utils/common';
+import fetch from './utils/fetch';
 import { getCodeValue } from '../../utils/showapi';
 
 moment.locale('zh-cn');
