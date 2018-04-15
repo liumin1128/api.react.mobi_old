@@ -8,7 +8,6 @@ export async function getUrl({ str = '', page = 1 }) {
   return url;
 }
 
-
 export async function getList(url) {
   // 获取首页福利图列表
   await sleep();
