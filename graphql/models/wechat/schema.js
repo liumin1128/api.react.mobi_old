@@ -4,5 +4,6 @@ export default `
     createdAt: String
     url: String
     cover: String
+    digest: String
   }
 `;
