@@ -30,7 +30,7 @@ export default `
 
     # 微信公众号文章
     wechat(name: String): [Wechat!]
-    wechatDetail(name: String): WechatDetail
+    wechatDetail(_id: String): WechatDetail
 
     # 妹子图
     meizituList(page: Int): [MeizituList!]
