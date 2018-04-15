@@ -1,4 +1,5 @@
 import { getUrl, getList, getPictures } from '../../../server/crawler/mzitu';
+import { aesDecode } from '../../../utils/crypto';
 
 export default {
   Query: {
@@ -9,7 +10,8 @@ export default {
       return list;
     },
     mzituPictures: async (root, args) => {
-      const { url } = args;
+      const { _id } = args;
+      const url = aesDecode(_id);
       const data = await getPictures(url);
       return data;
     },
