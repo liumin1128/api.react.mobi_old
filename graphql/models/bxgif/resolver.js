@@ -6,6 +6,7 @@ export default {
       const { skip } = args;
       const url = await getUrl({ skip });
       const list = await getList(url);
+
       return list;
     },
     bxgifDetail: async (root, args) => {
