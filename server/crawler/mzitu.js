@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 // import proxy from 'koa2-proxy';
 import fetch from './utils/fetch';
-import { sleep } from './utils/common';
+// import { sleep } from './utils/common';
 import { aesEncode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
@@ -11,7 +11,7 @@ export async function getUrl({ str = '', page = 1 }) {
 
 export async function getList(url) {
   // 获取首页福利图列表
-  await sleep();
+  // await sleep();
   console.log(`getList: ${url}`);
   const html = await fetch(url).then(res => res.text());
   // console.log('html');
@@ -39,7 +39,7 @@ export async function getList(url) {
 
 export async function getPictures(url) {
   // 获取图片列表
-  await sleep();
+  // await sleep();
   console.log(`getPictures: ${url}`);
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html);

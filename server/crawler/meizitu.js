@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import iconv from 'iconv-lite';
 import fetch from './utils/fetch';
-import { sleep } from './utils/common';
+// import { sleep } from './utils/common';
 import { aesEncode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
@@ -11,7 +11,7 @@ export async function getUrl({ str = '', page = 1 }) {
 
 export async function getList(url) {
   // 获取首页福利图列表
-  await sleep();
+  // await sleep();
   console.log(`getList: ${url}`);
   const htmlBuffer = await fetch(url).then(res => res.buffer());
   const html = iconv.decode(htmlBuffer, 'gb2312');
@@ -36,7 +36,7 @@ export async function getList(url) {
 
 export async function getPictures(url) {
   // 获取图片列表
-  await sleep();
+  // await sleep();
   console.log(`getPictures: ${url}`);
   const htmlBuffer = await fetch(url).then(res => res.buffer());
   const html = iconv.decode(htmlBuffer, 'gb2312');
