@@ -1,5 +1,5 @@
 export default `
-  type Wechat {
+  type Meizitu {
     title: String
     thumbnail: String
     url: String

@@ -29,7 +29,7 @@ export default `
     wechat(name: String): [Wechat!]
 
     # 妹子图
-    meizitu(name: String): [meizitu!]
+    meizitu(name: String): [Meizitu!]
 
   }
   type Mutation {
