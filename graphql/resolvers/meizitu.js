@@ -3,7 +3,8 @@ import { getUrl, getList, getPictures } from '../../server/crawler/meizitu';
 export default {
   Query: {
     meizituList: async (root, args) => {
-      const url = await getUrl({});
+      const { page } = args;
+      const url = await getUrl({ page });
       const list = await getList(url);
       return list;
     },
