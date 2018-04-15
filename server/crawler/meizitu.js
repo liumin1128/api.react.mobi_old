@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import iconv from 'iconv-lite';
 import fetch from './utils/fetch';
 import { sleep } from './utils/common';
-import { md5Encode, md5Decode } from '../../utils/crypto';
+import { aesEncode, aesDecode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
   const url = `http://www.meizitu.com/a/more_${page}.html`;
@@ -23,14 +23,15 @@ export async function getList(url) {
     const itemUrl = $(this).find('h3.tit a').attr('href');
 
     console.log('加密');
-    console.log(md5Encode(itemUrl));
+    const test = aesEncode(itemUrl);
+    console.log(test);
     console.log('解密');
-    console.log(md5Decode(itemUrl));
+    console.log(aesDecode(test));
 
     list.push({
       thumbnail,
       cover,
-      _id: md5Encode(itemUrl),
+      _id: aesEncode(itemUrl),
       title: $(this).find('h3.tit a').text(),
       url: itemUrl,
     });
@@ -59,7 +60,7 @@ export async function getPictures(url) {
   }
   await $('.postContent #picture img').map(getVlue);
   return {
-    title, meta, pictures, _id: md5Encode(url),
+    title, meta, pictures, _id: aesEncode(url),
   };
 }
 
