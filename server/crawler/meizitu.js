@@ -26,6 +26,7 @@ export async function getList(url) {
     console.log(md5Encode(itemUrl));
     console.log('解密');
     console.log(md5Decode(itemUrl));
+
     list.push({
       thumbnail,
       cover,
