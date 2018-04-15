@@ -59,7 +59,7 @@ export async function getPictures(url) {
   }
   await $('.postContent #picture img').map(getVlue);
   return {
-    title, meta, pictures, _id: url,
+    title, meta, pictures, _id: md5Encode(url),
   };
 }
 
