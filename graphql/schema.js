@@ -3,6 +3,7 @@ import user from './models/user/schema';
 import article from './models/article/schema';
 import wechat from './models/wechat/schema';
 import meizitu from './models/meizitu/schema';
+import mzitu from './models/mzitu/schema';
 
 export default `
   ${say}
@@ -10,6 +11,8 @@ export default `
   ${article}
   ${wechat}
   ${meizitu}
+  ${mzitu}
+
   type Query {
 
     # 用户
