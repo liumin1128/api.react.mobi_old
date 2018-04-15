@@ -2,12 +2,14 @@ import say from './say';
 import user from './user';
 import article from './article';
 import wechat from './wechat';
+import meizitu from './meizitu';
 
 export default `
   ${say}
   ${user}
   ${article}
   ${wechat}
+  ${meizitu}
   type Query {
 
     # 用户
@@ -25,6 +27,9 @@ export default `
 
     # 微信公众号文章
     wechat(name: String): [Wechat!]
+
+    # 妹子图
+    meizitu(name: String): [meizitu!]
 
   }
   type Mutation {

@@ -5,6 +5,10 @@
 /config
 /.dump.rdb
 /updateConfig.sh
+
+/yarn.lock
+/yarn-error.log
+
 # misc
 .DS_Store
 npm-debug.log*

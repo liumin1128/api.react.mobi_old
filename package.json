@@ -25,6 +25,7 @@
     "dataloader": "^1.4.0",
     "graphql": "^0.13.2",
     "graphql-tools": "^2.24.0",
+    "iconv-lite": "^0.4.21",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.2.1",
     "koa": "^2.5.0",
