@@ -1,6 +1,7 @@
 import cheerio from 'cheerio';
-import fetch from './utils/fetch';
+import moment from 'moment';
 // import { sleep } from './utils/common';
+import fetch from './utils/fetch';
 
 export async function getUrl({ skip = 0 }) {
   const url = `http://tu.duowan.com/m/bxgif?offset=${skip}&order=created&math=0.7264223621601349`;
