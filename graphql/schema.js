@@ -4,6 +4,7 @@ import article from './models/article/schema';
 import wechat from './models/wechat/schema';
 import meizitu from './models/meizitu/schema';
 import mzitu from './models/mzitu/schema';
+import bxgif from './models/bxgif/schema';
 
 export default `
   ${say}
@@ -12,6 +13,7 @@ export default `
   ${wechat}
   ${meizitu}
   ${mzitu}
+  ${bxgif}
 
   type Query {
 
@@ -36,9 +38,13 @@ export default `
     meizituList(page: Int): [MeizituList!]
     meizituPictures(_id: String): MeizituPictures
 
-    # 色气妹子图
+    # 福利图
     mzituList(page: Int): [MzituList!]
     mzituPictures(_id: String): MzituPictures
+
+    # 福利图
+    bxgifList(skip: Int): [BxgifList!]
+    bxgifDetail(_id: String): BxgifDetail
   }
   type Mutation {
 
