@@ -2,7 +2,6 @@ import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
 import { Daka, User, Say, Rule, Leave, Article } from '../../mongo/modals';
 import { POPULATE_USER } from '../../constants';
-import { getUrlByName, getArticleList } from '../../server/wechatCrawler';
 
 const userLoader = new DataLoader(ids => User
   .find({ _id: { $in: uniq(ids) } })
@@ -38,11 +37,6 @@ export default {
     },
   },
   Query: {
-    wechat: async (root, args) => {
-      const url = await getUrlByName('人民日报');
-      const list = await getArticleList(url);
-      return list;
-    },
     article: async (root, args) => {
       const { _id } = args;
       const data = await Article.findById(_id);

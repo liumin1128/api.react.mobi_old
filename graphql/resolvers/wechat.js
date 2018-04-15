@@ -1,4 +1,4 @@
-import { getUrlByName, getArticleList } from '../../server/wechatCrawler';
+import { getUrlByName, getArticleList } from '../../server/crawler/wechat';
 
 export default {
   Query: {
