@@ -1,6 +1,6 @@
 import { getUrl, getList, getPictures } from '../../../server/crawler/meizitu';
-import { aesDecode } from '../../../utils/crypto'
-;
+import { aesDecode } from '../../../utils/crypto';
+
 export default {
   Query: {
     meizituList: async (root, args) => {

@@ -3,3 +3,4 @@ export const sleep = (a = 1000, b = 2000) => new Promise((resolve) => {
   console.log(`等待【${(timer / 1000).toFixed(2)}】秒...`);
   return setTimeout(resolve, timer);
 });
+

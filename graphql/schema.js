@@ -33,12 +33,11 @@ export default `
 
     # 妹子图
     meizituList(page: Int): [MeizituList!]
-    meizituPictures(url: String): MeizituPictures
+    meizituPictures(_id: String): MeizituPictures
 
     # 色气妹子图
     mzituList(page: String): [MzituList!]
-    mzituPictures(url: String): MzituPictures
-
+    mzituPictures(_id: String): MzituPictures
   }
   type Mutation {
 
