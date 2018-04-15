@@ -4,9 +4,10 @@ import Router from 'koa-router';
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
-import { sleep } from './utils/common';
 import fetch from './utils/fetch';
+import { sleep } from './utils/common';
 import { getCodeValue } from '../../utils/showapi';
+import { aesEncode } from '../../utils/crypto';
 
 moment.locale('zh-cn');
 
@@ -86,12 +87,14 @@ export async function getArticleList(url) {
     msglist = msglist.replace(/(&quot;)/g, '\\\"').replace(/(&nbsp;)/g, '');
     msglist = JSON.parse(msglist);
     const list = await msglist.list.map((i) => {
+      const itemUrl = `http://mp.weixin.qq.com${i.app_msg_ext_info.content_url.replace(/(amp;)|(\\)/g, '')}`;
       return {
       // ...i,
-        cover: i.app_msg_ext_info.cover,
+        url: itemUrl,
+        _id: aesEncode(itemUrl),
+        cover: `${i.app_msg_ext_info.cover}&tp=webp&wxfrom=5&wx_lazy=1`,
         createdAt: moment(i.comm_msg_info.datetime).format('llll'),
         title: i.app_msg_ext_info.title,
-        url: `http://mp.weixin.qq.com${i.app_msg_ext_info.content_url.replace(/(amp;)|(\\)/g, '')}`,
       // other: i.app_msg_ext_info.multi_app_msg_item_list.map(o => ({
       //   title: o.title,
       //   url: `http://mp.weixin.qq.com${o.content_url.replace(/(amp;)|(\\)/g, '')}`,
