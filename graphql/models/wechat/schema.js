@@ -1,5 +1,6 @@
 export default `
   type Wechat {
+    _id: String
     title: String
     createdAt: String
     url: String
