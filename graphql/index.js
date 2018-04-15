@@ -1,4 +1,3 @@
-import Router from 'koa-router';
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa';
 import { makeExecutableSchema } from 'graphql-tools';
 import typeDefs from './schema';
@@ -12,8 +11,8 @@ const schema = makeExecutableSchema({
 
 export const graphql = graphqlKoa((ctx) => {
   const { user = {} } = ctx.state;
-  console.log('user');
-  console.log(user);
+  // console.log('user');
+  // console.log(user);
   return {
     schema,
     context: {

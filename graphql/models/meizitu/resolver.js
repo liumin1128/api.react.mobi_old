@@ -1,4 +1,4 @@
-import { getUrl, getList, getPictures } from '../../server/crawler/meizitu';
+import { getUrl, getList, getPictures } from '../../../server/crawler/meizitu';
 
 export default {
   Query: {

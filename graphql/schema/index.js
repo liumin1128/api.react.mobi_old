@@ -2,7 +2,7 @@ import say from './say';
 import user from './user';
 import article from './article';
 import wechat from './wechat';
-import meizitu from './meizitu';
+import meizitu from '../models/meizitu/schema';
 
 export default `
   ${say}
