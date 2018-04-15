@@ -119,7 +119,7 @@ export async function getArticleDetail(url) {
     .replace(/<img [^>]*data-src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
       return match.replace(/data-src=['"]([^'"]+)/, `src="${capture}&tp=webp&wxfrom=5&wx_lazy=1"`);
     });
-  return content;
+  return { content };
 }
 
 // (async () => {

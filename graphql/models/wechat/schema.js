@@ -7,4 +7,8 @@ export default `
     cover: String
     digest: String
   }
+  type WechatDetail {
+    _id: String
+    content: String
+  }
 `;
