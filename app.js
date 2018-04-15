@@ -70,6 +70,7 @@ app.use(jwt({ secret: SECRET }).unless({
     // /^\/work\/leave/,
     /^\/work\/createRule/,
     /^\/WW_verify_OMMAeA9wfRu6qQeW.txt/,
+    /^\/favicon.ico/,
   ],
 }));
 
