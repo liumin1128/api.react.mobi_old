@@ -29,7 +29,8 @@ export default `
     wechat(name: String): [Wechat!]
 
     # 妹子图
-    meizitu(name: String): [Meizitu!]
+    meizituList(name: String): [MeizituList!]
+    meizituPictures(name: String): [MeizituPictures!]
 
   }
   type Mutation {

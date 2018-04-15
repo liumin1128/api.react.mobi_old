@@ -38,18 +38,19 @@ export async function getPictures(url) {
   const html = iconv.decode(htmlBuffer, 'gb2312');
   const $ = cheerio.load(html);
   const title = $('.postmeta h2 a').text();
-  const tips = $('.postmeta p').text();
+  const meta = $('.postmeta p').text();
 
   const pictures = [];
   function getVlue() {
-    pictures.push({
-      src: $(this).attr('src'),
-      url: $(this).attr('alt'),
-    });
+    // pictures.push({
+    //   src: $(this).attr('src'),
+    //   url: $(this).attr('alt'),
+    // });
+    pictures.push($(this).attr('src'));
   }
   await $('.postContent #picture img').map(getVlue);
   return {
-    title, tips, pictures,
+    title, meta, pictures,
   };
 }
 
