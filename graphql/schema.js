@@ -32,6 +32,10 @@ export default `
     meizituList(page: String): [MeizituList!]
     meizituPictures(url: String): MeizituPictures
 
+    # 色气妹子图
+    mzituList(page: String): [MzituList!]
+    mzituPictures(url: String): MzituPictures
+
   }
   type Mutation {
 
