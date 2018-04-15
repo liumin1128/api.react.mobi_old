@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 import iconv from 'iconv-lite';
 import fetch from './utils/fetch';
 import { sleep } from './utils/common';
+import { md5Encode, md5Decode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
   const url = `http://www.meizitu.com/a/more_${page}.html`;
@@ -19,11 +20,18 @@ export async function getList(url) {
   function getVlue() {
     const thumbnail = $(this).find('.pic img').attr('src');
     const cover = thumbnail.replace(/limg/, '01');
+    const itemUrl = $(this).find('h3.tit a').attr('href');
+
+    console.log('加密');
+    console.log(md5Encode(itemUrl));
+    console.log('解密');
+    console.log(md5Decode(itemUrl));
     list.push({
       thumbnail,
       cover,
+      _id: md5Encode(itemUrl),
       title: $(this).find('h3.tit a').text(),
-      url: $(this).find('h3.tit a').attr('href'),
+      url: itemUrl,
     });
   }
   await $('.wp-list').find('li.wp-item').map(getVlue);
@@ -50,7 +58,7 @@ export async function getPictures(url) {
   }
   await $('.postContent #picture img').map(getVlue);
   return {
-    title, meta, pictures,
+    title, meta, pictures, _id: url,
   };
 }
 
