@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 // import proxy from 'koa2-proxy';
 import fetch from './utils/fetch';
 import { sleep } from './utils/common';
+import { aesEncode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
   const url = `http://www.mzitu.com/page/${page}/`;
@@ -29,7 +30,7 @@ export async function getList(url) {
     const createdAt = $(this).find('.time').text();
     const view = $(this).find('.view').text();
     list.push({
-      url: href, title, createdAt, view, cover,
+      url: href, title, createdAt, view, cover, _id: aesEncode(href),
     });
   }
   await $('.postlist ul#pins').find('li').map(getVlue);
@@ -52,7 +53,7 @@ export async function getPictures(url) {
     pictures.push(`/mzitu/${temp + (`0${i}`).slice(-2)}.jpg`);
   }
   return {
-    title, meta, src, total, temp, pictures,
+    title, meta, src, total, temp, pictures, _id: aesEncode(url),
   };
 }
 

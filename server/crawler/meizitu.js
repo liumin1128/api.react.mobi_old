@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import iconv from 'iconv-lite';
 import fetch from './utils/fetch';
 import { sleep } from './utils/common';
-import { aesEncode, aesDecode } from '../../utils/crypto';
+import { aesEncode } from '../../utils/crypto';
 
 export async function getUrl({ str = '', page = 1 }) {
   const url = `http://www.meizitu.com/a/more_${page}.html`;
@@ -21,13 +21,6 @@ export async function getList(url) {
     const thumbnail = $(this).find('.pic img').attr('src');
     const cover = thumbnail.replace(/limg/, '01');
     const itemUrl = $(this).find('h3.tit a').attr('href');
-
-    console.log('加密');
-    const test = aesEncode(itemUrl);
-    console.log(test);
-    console.log('解密');
-    console.log(aesDecode(test));
-
 
     list.push({
       thumbnail,
@@ -53,10 +46,6 @@ export async function getPictures(url) {
 
   const pictures = [];
   function getVlue() {
-    // pictures.push({
-    //   src: $(this).attr('src'),
-    //   url: $(this).attr('alt'),
-    // });
     pictures.push($(this).attr('src'));
   }
   await $('.postContent #picture img').map(getVlue);
@@ -65,20 +54,3 @@ export async function getPictures(url) {
   };
 }
 
-// (async () => {
-//   const url = await getUrl({});
-//   console.log(url);
-//   const list = await getList(url);
-//   console.log(list);
-//   const pictures = await getPictures(list[0].url);
-//   console.log(pictures);
-//   // const list = await getArticleList(url);
-// })();
-
-// router.get('/', async (ctx) => {
-//   ctx.body = 'Hello, I can get wechat article！';
-// });
-
-// app.use(router.routes());
-
-// app.listen(3000);

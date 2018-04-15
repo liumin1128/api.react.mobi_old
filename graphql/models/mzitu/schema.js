@@ -5,6 +5,7 @@ export default `
     src: String
   }
   type MzituList {
+    _id: String
     title: String
     createdAt: String
     url: String
@@ -12,6 +13,7 @@ export default `
     cover: MzituCover
   }
   type MzituPictures {
+    _id: String
     title: String
     meta: String
     src: String
