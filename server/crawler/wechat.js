@@ -95,6 +95,7 @@ export async function getArticleList(url) {
         cover: `${i.app_msg_ext_info.cover}&tp=webp&wxfrom=5&wx_lazy=1`,
         createdAt: moment(i.comm_msg_info.datetime).format('llll'),
         title: i.app_msg_ext_info.title,
+        digest: i.app_msg_ext_info.digest,
       // other: i.app_msg_ext_info.multi_app_msg_item_list.map(o => ({
       //   title: o.title,
       //   url: `http://mp.weixin.qq.com${o.content_url.replace(/(amp;)|(\\)/g, '')}`,
