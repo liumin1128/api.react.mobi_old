@@ -36,7 +36,7 @@ export default `
     meizituPictures(_id: String): MeizituPictures
 
     # 色气妹子图
-    mzituList(page: String): [MzituList!]
+    mzituList(page: Int): [MzituList!]
     mzituPictures(_id: String): MzituPictures
   }
   type Mutation {
