@@ -75,7 +75,12 @@ export async function getTags() {
     const type = (types.reverse().find(i => idx <= i.index) || {}).title;
     // const cover = thumbnail.replace(/limg/, '01');
     list.push({
-      tag, title, count, cover, type, _id: tag,
+      tag,
+      title,
+      count,
+      cover: `http://mzitu.react.mobi/${src.substring(21, cover.length)}`,
+      type,
+      _id: tag,
     });
   }
   function getTypes() {
