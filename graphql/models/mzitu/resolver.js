@@ -1,8 +1,12 @@
-import { getUrl, getList, getPictures } from '../../../server/crawler/mzitu';
+import { getUrl, getList, getPictures, getTags } from '../../../server/crawler/mzitu';
 import { aesDecode } from '../../../utils/crypto';
 
 export default {
   Query: {
+    mzituTags: async () => {
+      const tags = await getTags();
+      return tags;
+    },
     mzituList: async (root, args) => {
       console.log('args');
       console.log(args);

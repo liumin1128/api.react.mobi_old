@@ -40,6 +40,7 @@ export default `
 
     # 福利图
     mzituList(page: Int, search: String, tag: String): [MzituList!]
+    mzituTags: [MzituTag!]
     mzituPictures(_id: String): MzituPictures
 
     # 爆笑gif

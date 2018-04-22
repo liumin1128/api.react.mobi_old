@@ -12,6 +12,14 @@ export default `
     view: String
     cover: MzituCover
   }
+  type MzituTag {
+    _id: String
+    title: String
+    tag: String
+    count: String
+    cover: String
+    type: String
+  }
   type MzituPictures {
     _id: String
     title: String

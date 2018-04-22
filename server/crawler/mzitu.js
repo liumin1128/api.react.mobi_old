@@ -60,6 +60,38 @@ export async function getPictures(url) {
   };
 }
 
+export async function getTags() {
+  const url = 'http://www.mzitu.com/zhuanti/';
+  const html = await fetch(url).then(res => res.text());
+  const $ = cheerio.load(html);
+  const list = [];
+  const types = [];
+  function getValue(idx) {
+    const tag = $(this).find('a').attr('href').slice(25, -1);
+    const title = $(this).find('a').text();
+    const count = $(this).find('i').text().slice(1, -2);
+    const cover = $(this).find('a img').attr('src');
+    const type = (types.find(i => i.index >= idx) || {}).title;
+    // const cover = thumbnail.replace(/limg/, '01');
+    list.push({
+      tag, title, count, cover, type,
+    });
+  }
+  function getTypes() {
+    types.push({
+      index: $(this).index(),
+      title: $(this).text(),
+    });
+  }
+
+  $('.postlist .tags').find('dt').map(getTypes);
+  $('.postlist .tags').find('dd').map(getValue);
+
+  // console.log('list');
+  // console.log(list);
+  return list;
+}
+
 // (async () => {
 //   const url = await getUrl({});
 //   console.log(url);
