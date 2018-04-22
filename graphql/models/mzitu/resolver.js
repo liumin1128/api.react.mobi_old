@@ -4,8 +4,11 @@ import { aesDecode } from '../../../utils/crypto';
 export default {
   Query: {
     mzituList: async (root, args) => {
-      const { page } = args;
-      const url = await getUrl({ page });
+      console.log('args');
+      console.log(args);
+      // const { page, search, tag } = args;
+
+      const url = await getUrl(args);
       const list = await getList(url);
       return list;
     },

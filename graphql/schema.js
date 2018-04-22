@@ -39,10 +39,10 @@ export default `
     meizituPictures(_id: String): MeizituPictures
 
     # 福利图
-    mzituList(page: Int): [MzituList!]
+    mzituList(page: Int, search: String, tag: String): [MzituList!]
     mzituPictures(_id: String): MzituPictures
 
-    # 福利图
+    # 爆笑gif
     bxgifList(skip: Int): [BxgifList!]
     bxgifDetail(_id: String): BxgifDetail
   }
