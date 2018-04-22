@@ -6,7 +6,7 @@ import { aesEncode } from '../../utils/crypto';
 
 export async function getUrl({ search = '', page = 1, tag = '' }) {
   let url = 'http://www.mzitu.com/';
-  if (search) url += `search/${search}/`;
+  if (search) url += `search/${encodeURIComponent(search)}/`;
   if (tag) url += `tag/${tag}/`;
   if (page) url += `page/${page}/`;
   return url;
