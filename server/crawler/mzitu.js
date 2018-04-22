@@ -71,7 +71,8 @@ export async function getTags() {
     const title = $(this).find('a').text();
     const count = $(this).find('i').text().slice(1, -2);
     const cover = $(this).find('a img').attr('src');
-    const type = (types[types.findIndex(i => i.index >= idx) - 1] || {}).title;
+    // const type = (types[types.findIndex(i => i.index >= idx) - 1] || {}).title;
+    const type = (types.reverse().find(i => i.index <= idx) || {}).title;
     // const cover = thumbnail.replace(/limg/, '01');
     list.push({
       tag, title, count, cover, type,
