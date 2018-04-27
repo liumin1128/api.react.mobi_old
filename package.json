@@ -2,7 +2,7 @@
   "scripts": {
     "nvm": "source ~/.nvm/nvm.sh && nvm use 8.4.0",
     "start": "nodemon index.js",
-    "pm2": "pm2 start ./process.json",
+    "pm2": "pm2 restart ./process.json",
     "local": "cross-env LOCAL=local yarn start"
   },
   "devDependencies": {
