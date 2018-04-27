@@ -50,7 +50,7 @@ export default `
   type Mutation {
 
     # 用户登录
-    userLogin(username: String!, password: String!): User!
+    userLogin(username: String!, password: String!): UserLogin!
 
     # 创建文章
     createArticle(input: ArticleInput): Article!
