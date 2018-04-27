@@ -49,6 +49,9 @@ export default `
   }
   type Mutation {
 
+    # 用户登录
+    userLogin(username: String!, password: String!): User!
+
     # 创建文章
     createArticle(input: ArticleInput): Article!
 
