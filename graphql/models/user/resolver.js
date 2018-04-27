@@ -1,23 +1,32 @@
+import { User } from '../../../mongo/modals';
+import { getUserToken } from '../../../utils/jwt';
+
 export default {
   Mutation: {
     userLogin: async (root, args, ctx, op) => {
-      const { username, password } = args;
-      // const { user } = ctx;
-      // if (!user) {
-      //   ctx.body = {
-      //     status: 401,
-      //     messge: '尚未登录',
-      //   };
-      //   return;
-      // }
-      // const { input } = args;
-      // const say = await Article.create({ ...input, user });
-      return {
-        _id: 'sssssss',
-        nickname: username,
-        avatarUrl: '2323232',
-        token: 'tooooooooo',
-      };
+      try {
+        const { password, ...other } = args;
+        const user = await User.findOne(other);
+        if (user && `${password}` === user.password) {
+          const token = await getUserToken(user._id);
+          return {
+            status: 200,
+            token,
+            userInfo: user,
+          };
+        } else {
+          return {
+            status: 403,
+            message: '用户名或密码不正确',
+          };
+        }
+      } catch (error) {
+        return {
+          status: 403,
+          message: '登录失败',
+          error,
+        };
+      }
     },
   },
 };

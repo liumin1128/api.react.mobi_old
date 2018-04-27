@@ -61,6 +61,7 @@ class UserController {
       // ctx.body = error;
     }
   }
+
   // 获取用户信息
   async getUserInfo(ctx) {
     const { data: id } = ctx.state.user;
