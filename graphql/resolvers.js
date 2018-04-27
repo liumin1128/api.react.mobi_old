@@ -1,3 +1,4 @@
+import user from './models/user/resolver';
 import say from './models/say/resolver';
 import article from './models/article/resolver';
 import wechat from './models/wechat/resolver';
@@ -7,4 +8,4 @@ import bxgif from './models/bxgif/resolver';
 
 import { resolverCombine } from './utils';
 
-export default resolverCombine(say, article, wechat, meizitu, mzitu, bxgif);
+export default resolverCombine(user, say, article, wechat, meizitu, mzitu, bxgif);
