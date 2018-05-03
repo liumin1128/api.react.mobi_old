@@ -5,6 +5,7 @@ import wechat from './models/wechat/schema';
 import meizitu from './models/meizitu/schema';
 import mzitu from './models/mzitu/schema';
 import bxgif from './models/bxgif/schema';
+import other from './models/other/schema';
 
 export default `
   ${say}
@@ -14,6 +15,7 @@ export default `
   ${meizitu}
   ${mzitu}
   ${bxgif}
+  ${other}
 
   type Query {
 
@@ -46,6 +48,9 @@ export default `
     # 爆笑gif
     bxgifList(skip: Int): [BxgifList!]
     bxgifDetail(_id: String): BxgifDetail
+
+    # 历史上的今天
+    todayInHistory(date: String): [TodayInHistory]
   }
   type Mutation {
 

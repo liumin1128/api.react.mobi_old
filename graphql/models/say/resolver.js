@@ -1,6 +1,5 @@
 import { Say } from '../../../mongo/modals';
 import { userLoader } from '../../utils';
-import { todayInHistory } from '../../../utils/showapi';
 
 export default {
   Mutation: {
@@ -26,10 +25,6 @@ export default {
     },
     says: async (root, args) => {
       try {
-        const ssss = await todayInHistory('1128');
-        console.log('ssss');
-        console.log(ssss);
-
         const { skip = 0, first = 10, sort = '-createdAt' } = args;
 
         const data = await Say

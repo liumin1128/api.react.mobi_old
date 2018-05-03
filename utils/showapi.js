@@ -23,7 +23,7 @@ showapiSdk.setting({
 });
 
 export const getCodeValue = base64 => new Promise((resolve, reject) => {
-  const request = showapiSdk.request();
+  const request = showapiSdk.request('http://route.showapi.com/184-5');
   request.appendText('img_base64', base64);
   request.appendText('typeId', '34');
   request.appendText('convert_to_jpg', '0');
