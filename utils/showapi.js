@@ -40,13 +40,13 @@ export const getCodeValue = base64 => new Promise((resolve, reject) => {
 export const todayInHistory = date => new Promise((resolve, reject) => {
   const request = showapiSdk.request();
   request.appendText('date', date);
-  request.post(({ showapi_res_body: body }) => {
+  request.post(({ showapi_res_body: body, ...other }) => {
     console.log('body');
     console.log(body);
     if (body.ret_code === 0) {
       resolve(body.list);
     } else {
-      reject();
+      reject(other);
     }
   });
 });
