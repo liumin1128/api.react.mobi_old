@@ -9,8 +9,6 @@ export default {
         const user = await User.findOne(other);
         if (user && `${password}` === user.password) {
           const token = await getUserToken(user._id);
-          console.log('token');
-          console.log(token);
           return {
             status: 200,
             message: '登录成功！',
