@@ -1,5 +1,6 @@
 
 import showapiSdk from 'showapi-sdk';
+import moment from 'moment';
 
 // 设置你测试用的appId和secret,img
 const appId = '43048';
@@ -39,10 +40,8 @@ export const getCodeValue = base64 => new Promise((resolve, reject) => {
 
 export const todayInHistory = date => new Promise((resolve, reject) => {
   const request = showapiSdk.request('http://route.showapi.com/119-42');
-  if (date) request.appendText('date', date);
+  request.appendText('date', date || moment().format('MMDD'));
   request.post(({ showapi_res_body: body, ...other }) => {
-    console.log('body');
-    console.log(body);
     if (body.ret_code === 0) {
       resolve(body.list);
     } else {
