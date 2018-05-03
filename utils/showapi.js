@@ -13,7 +13,7 @@ const secret = '6c5f90696de742bf8267a74d94805655';
 // }
 // 全局默认设置
 showapiSdk.setting({
-  url: 'http://route.showapi.com/184-5', // 你要调用的API对应接入点的地址,注意需要先订购了相关套餐才能调
+  // url: 'http://route.showapi.com/184-5', // 你要调用的API对应接入点的地址,注意需要先订购了相关套餐才能调
   appId, // 你的应用id
   secret, // 你的密钥
   timeout: 5000, // http超时设置
@@ -38,7 +38,7 @@ export const getCodeValue = base64 => new Promise((resolve, reject) => {
 });
 
 export const todayInHistory = date => new Promise((resolve, reject) => {
-  const request = showapiSdk.request();
+  const request = showapiSdk.request('http://route.showapi.com/119-42');
   request.appendText('date', date);
   request.post(({ showapi_res_body: body, ...other }) => {
     console.log('body');
