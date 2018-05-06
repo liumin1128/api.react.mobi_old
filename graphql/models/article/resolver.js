@@ -7,6 +7,7 @@ export default {
     createArticle: async (root, args, ctx, op) => {
       const { user } = ctx;
       if (!user) {
+        ctx.status = 401;
         ctx.body = {
           status: 401,
           messge: '尚未登录',
