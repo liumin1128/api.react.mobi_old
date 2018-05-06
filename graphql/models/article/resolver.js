@@ -12,7 +12,12 @@ export default {
           status: 401,
           messge: '尚未登录',
         };
-        return;
+        return {
+          error: {
+            status: 401,
+            messge: '尚未登录',
+          },
+        };
       }
       const { input } = args;
       const say = await Article.create({ ...input, user });
