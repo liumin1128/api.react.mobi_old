@@ -16,6 +16,6 @@ export default `
     cover: String
     rawData: String
     rawDataType: String
-    tags: [String]
+    tags: [String!]
   }
 `;
