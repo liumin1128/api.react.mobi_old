@@ -6,6 +6,7 @@ export default {
   Mutation: {
     createArticle: async (root, args, ctx, op) => {
       try {
+        console.log('createArticle');
         const { user } = ctx;
         if (!user) {
           ctx.status = 401;
@@ -21,6 +22,8 @@ export default {
           };
         }
         const { input } = args;
+        console.log('createArticle input');
+        console.log(input);
         const say = await Article.create({ ...input, user });
         return say;
       } catch (error) {
