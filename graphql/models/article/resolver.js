@@ -5,24 +5,30 @@ import { userLoader } from '../../utils';
 export default {
   Mutation: {
     createArticle: async (root, args, ctx, op) => {
-      const { user } = ctx;
-      if (!user) {
-        ctx.status = 401;
-        ctx.body = {
-          status: 401,
-          messge: '尚未登录',
-        };
-        return {
-          error: {
+      try {
+        const { user } = ctx;
+        if (!user) {
+          ctx.status = 401;
+          ctx.body = {
             status: 401,
             messge: '尚未登录',
-          },
-        };
+          };
+          return {
+            error: {
+              status: 401,
+              messge: '尚未登录',
+            },
+          };
+        }
+        const { input } = args;
+        const say = await Article.create({ ...input, user });
+        return say;
+      } catch (error) {
+        console.log('createArticle error');
+        console.log(error);
       }
-      const { input } = args;
-      const say = await Article.create({ ...input, user });
-      return say;
     },
+
   },
   Query: {
     article: async (root, args) => {
