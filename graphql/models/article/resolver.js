@@ -9,7 +9,7 @@ export default {
       // try {
       console.log('createArticle');
       const { user } = ctx;
-      throwError({ type: 'test', message: '用户不存在', data: { message: '用户不存在' } });
+      throwError();
       if (!user) {
         throwError();
       }
