@@ -1,7 +1,12 @@
 
+import { createError } from 'apollo-errors';
 import { Article } from '../../../mongo/modals';
 import { userLoader } from '../../utils';
 import throwError from '../../utils/error';
+
+export const FooError = createError('FooError', {
+  message: 'A foo error has occurred',
+});
 
 export default {
   Mutation: {
@@ -9,7 +14,14 @@ export default {
       // try {
       console.log('createArticle');
       const { user } = ctx;
-      throwError({ type: 'error', message: 'xxxxxx' });
+      throw new FooError({
+        data: {
+          something: 'important',
+        },
+        internalData: {
+          error: 'The SQL server died.',
+        },
+      });
       if (!user) {
         throwError();
       }
