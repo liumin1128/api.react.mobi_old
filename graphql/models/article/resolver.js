@@ -1,6 +1,7 @@
 
 import { Article } from '../../../mongo/modals';
 import { userLoader } from '../../utils';
+import newError from '../../utils/error';
 
 export default {
   Mutation: {
@@ -9,17 +10,7 @@ export default {
         console.log('createArticle');
         const { user } = ctx;
         if (!user) {
-          ctx.status = 401;
-          ctx.body = {
-            status: 401,
-            messge: '尚未登录',
-          };
-          return {
-            error: {
-              status: 401,
-              messge: '尚未登录',
-            },
-          };
+          newError();
         }
         const { input } = args;
         console.log('createArticle input');
