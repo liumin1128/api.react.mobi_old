@@ -9,7 +9,7 @@ export default {
       // try {
       console.log('createArticle');
       const { user } = ctx;
-      throwError();
+      throwError({ type: 'error', message: 'xxxxxx' });
       if (!user) {
         throwError();
       }
