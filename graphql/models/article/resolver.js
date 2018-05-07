@@ -7,22 +7,16 @@ import { throwError } from '../../utils/error';
 export default {
   Mutation: {
     createArticle: async (root, args, ctx, op) => {
-      // try {
       console.log('createArticle');
       const { user } = ctx;
-      throwError({ message: '用户不存在！' });
       if (!user) {
-        throwError({ message: '用户不存在！' });
+        throwError({ message: '尚未登录！', data: { status: 403 } });
       }
       const { input } = args;
       console.log('createArticle input');
       console.log(input);
       const say = await Article.create({ ...input, user });
       return say;
-      // } catch (error) {
-      //   console.log('createArticle error');
-      //   console.log(error);
-      // }
     },
 
   },
