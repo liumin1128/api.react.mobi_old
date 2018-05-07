@@ -27,8 +27,8 @@ const router = new Router();
 
 const port = process.env.NODE_ENV === 'production' ? 3101 : PORT;
 
-console.log('LOCAL');
-console.log(LOCAL);
+// console.log('LOCAL');
+// console.log(LOCAL);
 
 mongoose.connect(LOCAL ? 'mongodb://localhost:27017/apiReactMobi' : 'mongodb://react:lol970568830@localhost:27000/react');
 mongoose.set('debug', true);
@@ -75,7 +75,6 @@ app.use(jwt({ secret: SECRET }).unless({
   ],
 }));
 
-
 // app.use(authVerify);
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
@@ -97,7 +96,6 @@ router
   .post('/wechat/getMyDakaData', WorkConatiner.getMyDakaData)
   .post('/im/create', Im.create)
   .post('/im/update', Im.update);
-
 
 app.use(router.routes());
 
