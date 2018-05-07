@@ -9,6 +9,7 @@ export default {
       try {
         console.log('createArticle');
         const { user } = ctx;
+        newError();
         if (!user) {
           newError();
         }
