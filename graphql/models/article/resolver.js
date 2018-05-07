@@ -9,6 +9,7 @@ export default {
     createArticle: async (root, args, ctx, op) => {
       console.log('createArticle');
       const { user } = ctx;
+      throwError({ message: '尚未登录！', data: { status: 403 } });
       if (!user) {
         throwError({ message: '尚未登录！', data: { status: 403 } });
       }
