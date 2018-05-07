@@ -6,22 +6,22 @@ import throwError from '../../utils/error';
 export default {
   Mutation: {
     createArticle: async (root, args, ctx, op) => {
-      try {
-        console.log('createArticle');
-        const { user } = ctx;
+      // try {
+      console.log('createArticle');
+      const { user } = ctx;
+      throwError();
+      if (!user) {
         throwError();
-        if (!user) {
-          throwError();
-        }
-        const { input } = args;
-        console.log('createArticle input');
-        console.log(input);
-        const say = await Article.create({ ...input, user });
-        return say;
-      } catch (error) {
-        console.log('createArticle error');
-        console.log(error);
       }
+      const { input } = args;
+      console.log('createArticle input');
+      console.log(input);
+      const say = await Article.create({ ...input, user });
+      return say;
+      // } catch (error) {
+      //   console.log('createArticle error');
+      //   console.log(error);
+      // }
     },
 
   },
