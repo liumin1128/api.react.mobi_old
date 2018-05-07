@@ -10,9 +10,9 @@ export default {
       // try {
       console.log('createArticle');
       const { user } = ctx;
-      throwError();
+      throwError({ message: '用户不存在！' });
       if (!user) {
-        throwError();
+        throwError({ message: '用户不存在！' });
       }
       const { input } = args;
       console.log('createArticle input');
