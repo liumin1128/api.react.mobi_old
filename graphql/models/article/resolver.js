@@ -1,23 +1,8 @@
 
-import { createError } from 'apollo-errors';
 import { Article } from '../../../mongo/modals';
 import { userLoader } from '../../utils';
+import { throwError } from '../../utils/error';
 
-export const throwError = (options = {}) => {
-  const {
-    type = 'FooError',
-    message = 'A foo error has occurred',
-    data = { something: 'important' },
-  } = options;
-
-  const FooError = createError(type, { message });
-  throw new FooError({
-    data,
-    internalData: {
-      error: 'The SQL server died.',
-    },
-  });
-};
 
 export default {
   Mutation: {
