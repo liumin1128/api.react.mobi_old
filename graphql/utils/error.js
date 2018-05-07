@@ -1,7 +1,9 @@
 import { createError } from 'apollo-errors';
 
-export const NewError = ({ type = 'error', message = 'xxx error' }) => createError(type, { message });
+export const NewError = ({ type = 'error', message = 'xxx error' }) =>
+  createError(type, { message });
 
-export default ({ message = '一个未定义的错误', err }) => {
-  throw new NewError();
+export default (options = {}) => {
+  const { type, message } = options;
+  throw new NewError({ type, message });
 };

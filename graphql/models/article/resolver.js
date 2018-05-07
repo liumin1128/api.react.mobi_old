@@ -1,7 +1,7 @@
 
 import { Article } from '../../../mongo/modals';
 import { userLoader } from '../../utils';
-import newError from '../../utils/error';
+import throwError from '../../utils/error';
 
 export default {
   Mutation: {
@@ -9,9 +9,9 @@ export default {
       try {
         console.log('createArticle');
         const { user } = ctx;
-        newError();
+        throwError();
         if (!user) {
-          newError();
+          throwError();
         }
         const { input } = args;
         console.log('createArticle input');
