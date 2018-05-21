@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import fetch from './utils/fetch';
 
 export async function getUrl({ skip = 0 }) {
-  const page = Math.floor(skip / 20) + 1;
+  const page = Math.ceil(skip / 20) + 1;
   let url = 'http://www.doyo.cn/news/jiongtu?prop=10&';
   if (page) url += `p=${page}`;
   return url;
@@ -31,7 +31,7 @@ export async function getList(url) {
 }
 
 export async function getDetailUrl({ skip = 0, _id }) {
-  const page = Math.floor(skip / 5) + 1;
+  const page = Math.ceil(skip / 5) + 1;
   return `http://www.doyo.cn/article/${_id}?p=${page}`;
 }
 
