@@ -9,8 +9,9 @@ export default {
       return list;
     },
     doyogifDetail: async (root, args) => {
-      const { _id } = args;
-      const data = await getDetail(_id);
+      const { _id, skip } = args;
+      const url = await getDetailUrl({ _id, skip });
+      const data = await getDetail(url);
       return data;
     },
   },

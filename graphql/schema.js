@@ -53,7 +53,7 @@ export default `
 
     # 逗游gif
     doyogifList(skip: Int): [DoyogifList!]
-    doyogifDetail(_id: String): DoyogifDetail
+    doyogifDetail(_id: String): [DoyogifDetail!]
 
     # 历史上的今天
     todayInHistory(date: String): [TodayInHistory]

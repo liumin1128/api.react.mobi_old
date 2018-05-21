@@ -30,8 +30,9 @@ export async function getList(url) {
   return list;
 }
 
-export async function getDetailUrl({ page = 1, url }) {
-  return `${url}?p=${page}`;
+export async function getDetailUrl({ skip = 0, _id }) {
+  const page = Math.floor(skip / 5);
+  return `http://www.doyo.cn/article/${_id}?p=${page}`;
 }
 
 export async function getDetail(url) {
@@ -42,24 +43,22 @@ export async function getDetail(url) {
   // console.log('html');
   // console.log(html);
   const $ = cheerio.load(html);
-  const title = $('#article_title').text();
-  const createdAt = $('#article_title #pubtime_baidu').text();
+  // const title = $('#article_title').text();
+  // const createdAt = $('#article_title #pubtime_baidu').text();
   const pictures = [];
   function getValue() {
     const src = $(this).attr('src');
-    const alt = $(this).parent().next('p').text()
+    const title = $(this).parent().next('p').text()
       .replace('\n', '')
       .replace('\t', '')
       .replace('\n', '');
 
-    if (alt) {
+    if (title) {
       pictures.push({
-        src, alt,
+        src, title,
       });
     }
   }
   $('#article_content p img').map(getValue);
-  return {
-    title, pictures, createdAt,
-  };
+  return pictures;
 }

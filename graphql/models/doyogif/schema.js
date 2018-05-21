@@ -5,15 +5,8 @@ export default `
     url: String
     cover: String
   }
-  type DoyogifItem {
+  type DoyogifDetail {
     title: String
     url: String
-    width: String
-    height: String
-  }
-  type DoyogifDetail {
-    _id: String
-    title: String
-    list: [DoyogifItem]
   }
 `;
