@@ -5,6 +5,7 @@ import wechat from './models/wechat/schema';
 import meizitu from './models/meizitu/schema';
 import mzitu from './models/mzitu/schema';
 import bxgif from './models/bxgif/schema';
+import doyogif from './models/doyogif/schema';
 import other from './models/other/schema';
 
 export default `
@@ -15,6 +16,7 @@ export default `
   ${meizitu}
   ${mzitu}
   ${bxgif}
+  ${doyogif}
   ${other}
 
   type Query {
