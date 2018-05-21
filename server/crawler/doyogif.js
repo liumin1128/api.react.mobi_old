@@ -1,6 +1,4 @@
 import cheerio from 'cheerio';
-// import moment from 'moment';
-// import { sleep } from './utils/common';
 import fetch from './utils/fetch';
 
 export async function getUrl({ skip = 0 }) {
