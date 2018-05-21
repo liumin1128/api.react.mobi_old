@@ -29,7 +29,7 @@ export async function getList(url) {
     });
   }
   await $('#article_list .content').find('.item').map(getVlue);
-  return list.slice(0, 5);
+  return list;
 }
 
 export async function getDetailUrl({ skip = 0, _id }) {
@@ -62,5 +62,5 @@ export async function getDetail(url) {
     }
   }
   $('#article_content p img').map(getValue);
-  return pictures;
+  return pictures.slice(0, 5);
 }
