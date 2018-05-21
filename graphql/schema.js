@@ -51,6 +51,10 @@ export default `
     bxgifList(skip: Int): [BxgifList!]
     bxgifDetail(_id: String): BxgifDetail
 
+    # 逗游gif
+    doyogifList(skip: Int): [DoyogifList!]
+    doyogifDetail(_id: String): DoyogifDetail
+
     # 历史上的今天
     todayInHistory(date: String): [TodayInHistory]
   }
