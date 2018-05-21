@@ -7,6 +7,6 @@ export default `
   }
   type DoyogifDetail {
     title: String
-    url: String
+    src: String
   }
 `;
