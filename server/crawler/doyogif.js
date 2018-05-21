@@ -3,7 +3,8 @@ import cheerio from 'cheerio';
 // import { sleep } from './utils/common';
 import fetch from './utils/fetch';
 
-export async function getUrl({ page = 1 }) {
+export async function getUrl({ skip = 0 }) {
+  const page = Math.floor(skip / 20) + 1;
   let url = 'http://www.doyo.cn/news/jiongtu?prop=10&';
   if (page) url += `p=${page}`;
   return url;
@@ -16,6 +17,7 @@ export async function getList(url) {
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html);
   const list = [];
+
   function getVlue() {
     const href = `http://www.doyo.cn${$(this).find('a').attr('href')}`;
     const _id = $(this).find('a').attr('href').replace('/article/', '');
@@ -27,7 +29,7 @@ export async function getList(url) {
     });
   }
   await $('#article_list .content').find('.item').map(getVlue);
-  return list;
+  return list.slice(0, 5);
 }
 
 export async function getDetailUrl({ skip = 0, _id }) {
