@@ -1,6 +1,6 @@
-import Koa from 'koa';
-import Router from 'koa-router';
-// import fetch from 'node-fetch';
+// import Koa from 'koa';
+// import Router from 'koa-router';
+// // import fetch from 'node-fetch';
 import request from 'request';
 import cheerio from 'cheerio';
 import moment from 'moment';
@@ -11,8 +11,8 @@ import { aesEncode } from '../../utils/crypto';
 
 moment.locale('zh-cn');
 
-const app = new Koa();
-const router = new Router();
+// // const app = new Koa();
+// const router = new Router();
 
 
 export async function getUrlByName(str) {
@@ -127,16 +127,16 @@ export async function getArticleDetail(url) {
 //   const list = await getArticleList(url);
 // })();
 
-router.get('/', async (ctx) => {
-  // ctx.body = 'Hello, I can get wechat article！';
-  const url = await getUrlByName('人民日报');
-  const list = await getArticleList(url);
-  // console.log(list);
+// router.get('/', async (ctx) => {
+// ctx.body = 'Hello, I can get wechat article！';
+// const url = await getUrlByName('人民日报');
+// const list = await getArticleList(url);
+// console.log(list);
 
-  // const detail = await getArticleDetail(list[0].url);
-  ctx.body = list;
-});
+// const detail = await getArticleDetail(list[0].url);
+//   ctx.body = list;
+// });
 
-app.use(router.routes());
+// app.use(router.routes());
 
-app.listen(3000);
+// app.listen(3000);
