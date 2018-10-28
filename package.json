@@ -1,0 +1,52 @@
+{
+  "name": "api.react.mobi",
+  "version": "1.0.0",
+  "description": "npm i -d  npm i -s koa koa-router koa-bodyparser koa-helmet koa-jwt koa-static koa2-cors jsonwebtoken mongoose lodash node-fetch redis bluebird moment query-string apollo-server graphql cheerio showapi-sdk @alicloud/sms-sdk qiniu",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "pm2": "pm2 restart ./process.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "^1.18.5"
+  },
+  "dependencies": {
+    "@alicloud/sms-sdk": "^1.1.6",
+    "apollo-server": "^2.1.0",
+    "apollo-server-koa": "^2.1.0",
+    "bluebird": "^3.5.2",
+    "cheerio": "^1.0.0-rc.2",
+    "dataloader": "^1.4.0",
+    "graphql": "^14.0.2",
+    "jsonwebtoken": "^8.3.0",
+    "koa": "^2.6.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.0.0",
+    "koa-jwt": "^3.5.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.7",
+    "node-fetch": "^2.2.0",
+    "qiniu": "^7.2.1",
+    "query-string": "^6.2.0",
+    "redis": "^2.8.0",
+    "showapi-sdk": "^1.0.4"
+  }
+}
