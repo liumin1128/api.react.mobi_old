@@ -39,7 +39,7 @@ export default `
 
     # 文章
     article(_id: String): Article!
-    articles(first: Int, skip: Int): [Article!]
+    articles(first: Int, skip: Int): [Article]
     _articlesMeta: ArticleMeta!
 
     # 评论
@@ -61,11 +61,11 @@ export default `
     wechatDetail(_id: String): WechatDetail
 
     # 妹子图
-    meizituList(page: Int): [MeizituList!]
+    meizituList(page: Int): [MeizituList]
     meizituPictures(_id: String): MeizituPictures
 
     # 福利图
-    mzituList(page: Int, search: String, tag: String): [MzituList!]
+    mzituList(page: Int, search: String, tag: String): [Mzitu]
     mzituTags: [MzituTag!]
     mzituPictures(_id: String): MzituPictures
 

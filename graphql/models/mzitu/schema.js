@@ -4,7 +4,7 @@ export default `
     height: String
     src: String
   }
-  type MzituList {
+  type Mzitu {
     _id: String
     title: String
     createdAt: String
