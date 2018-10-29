@@ -5,5 +5,6 @@ import typeDefs from './schema';
 export default new ApolloServer({
   typeDefs,
   resolvers,
+  // introspection: true,
   context: ({ ctx }) => ctx,
 });
