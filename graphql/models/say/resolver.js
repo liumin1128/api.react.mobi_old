@@ -40,7 +40,7 @@ export default {
     },
     _saysMeta: async (root, args) => {
       try {
-        const data = await Say.count();
+        const data = await Say.countDocuments();
         return { count: data };
       } catch (error) {
         console.log(error);

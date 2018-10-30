@@ -128,7 +128,7 @@ export default {
       try {
         const { commentTo } = args;
 
-        const data = await Comment.count({ commentTo });
+        const data = await Comment.countDocuments({ commentTo });
         return { count: data };
       } catch (error) {
         console.log(error);

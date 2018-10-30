@@ -52,7 +52,7 @@ export default {
     _likesMeta: async (root, args) => {
       try {
         const { user, unlike } = args;
-        const data = await Like.count({ user, unlike });
+        const data = await Like.countDocuments({ user, unlike });
         return { count: data };
       } catch (error) {
         console.log(error);
