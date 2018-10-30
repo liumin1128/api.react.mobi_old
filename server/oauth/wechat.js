@@ -42,7 +42,7 @@ class WeChat {
 
       // 将用户头像上传至七牛
       const avatarUrl = await fetchToQiniu(headimgurl);
-      console.log(avatarUrl);
+      // console.log(avatarUrl);
 
       const user = await User.create({ avatarUrl, nickname });
       // await client.setAsync(user._id, user);
@@ -51,7 +51,7 @@ class WeChat {
     // 生成token（用户身份令牌）
     const token = await getUserToken(oauth.user);
     // 重定向页面到用户登录页，并返回token
-    ctx.redirect(`${DOMAIN}/oauth?token=${token}`);
+    ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
   }
 }
 
