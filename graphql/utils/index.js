@@ -17,7 +17,7 @@ export const commentCountLoader = new DataLoader(ids => Comment
     { $match: { commentTo: { $in: ids } } },
     { $group: { _id: '$commentTo', count: { $sum: 1 } } },
   ])
-  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).countDocuments))
+  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
   .catch((err) => { console.log(err); }));
 
 export const likeCountLoader = new DataLoader(ids => Like
@@ -25,10 +25,10 @@ export const likeCountLoader = new DataLoader(ids => Like
     { $match: { id: { $in: ids }, unlike: false } },
     { $group: { _id: '$id', count: { $sum: 1 } } },
   ])
-  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).countDocuments))
+  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
   .catch((err) => { console.log(err); }));
 
-// ids => Promise.all(ids.map(id => Comment.countDocuments({ commentTo: id }))),
+// ids => Promise.all(ids.map(id => Comment.count({ commentTo: id }))),
 // .then((data) => {
 //   console.log('data');
 //   console.log(data);
@@ -37,8 +37,8 @@ export const likeCountLoader = new DataLoader(ids => Like
 
 // export const commentCountLoader = new DataLoader(ids => Comment
 // .find({ commentTo: { $in: uniq(ids) } })
-// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).countDocuments())))
-// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).countDocuments())))
+// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).count())))
+// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).count())))
 // .then((data) => {
 //   console.log('data');
 //   console.log(data);

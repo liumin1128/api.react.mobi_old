@@ -115,7 +115,7 @@ export default {
     },
     _articlesMeta: async (root, args) => {
       try {
-        const data = await Article.countDocuments();
+        const data = await Article.count();
         return { count: data };
       } catch (error) {
         console.log(error);
