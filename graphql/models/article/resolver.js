@@ -1,6 +1,6 @@
 
 import { Article } from '@/mongo/modals';
-import { userLoader, commentCountLoader, likeCountLoader } from '../../utils';
+import { userLoader, commentCountLoader, likeCountLoader, isLikeLoader } from '../../utils';
 import { AuthenticationError } from 'apollo-server-koa';
 
 export default {
@@ -128,6 +128,7 @@ export default {
     // 管道查询的关键字commentTo为字符型
     commentCount: ({ _id }) => commentCountLoader.load(_id),
     likeCount: ({ _id }) => likeCountLoader.load(_id),
+    isLike: ({ _id, user }) => isLikeLoader.load({ _id, user }),
     // commentCount: ({ _id }) => commentCountLoader.load(_id.toString()),
   },
 };

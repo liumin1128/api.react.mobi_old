@@ -16,8 +16,10 @@ export default `
     json: String!
     cover: String
     user: User!
+    
     commentCount: Int
     likeCount: Int
+    isLike: Boolean
     description: String
   }
   input ArticleInput {

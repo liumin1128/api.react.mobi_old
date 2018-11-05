@@ -28,6 +28,11 @@ export const likeCountLoader = new DataLoader(ids => Like
   .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
   .catch((err) => { console.log(err); }));
 
+export const isLikeLoader = new DataLoader(params => Like
+  .find({ id: { $in: uniq(params.map(i => i._id)) } })
+  .then(data => params.map(({ _id, user }) => Boolean(data.find(i => `${i.id}` === `${_id}` && `${i.user}` === `${user}`))))
+  .catch((err) => { console.log(err); }));
+
 // ids => Promise.all(ids.map(id => Comment.count({ commentTo: id }))),
 // .then((data) => {
 //   console.log('data');
