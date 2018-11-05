@@ -19,7 +19,7 @@ export default `
     
     commentCount: Int
     likeCount: Int
-    isLike: Boolean
+    likeStatus: String
     description: String
   }
   input ArticleInput {
