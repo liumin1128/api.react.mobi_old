@@ -88,6 +88,7 @@ export default `
 
     # 用户登录
     userLogin(username: String!, password: String!): UserLogin
+    getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
 
     # 创建文章
     createArticle(input: ArticleInput): Result!
