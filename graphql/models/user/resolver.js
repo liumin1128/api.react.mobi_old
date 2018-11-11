@@ -36,8 +36,8 @@ export default {
       try {
         const { password, ...other } = args;
         const user = await User.findOne(other).lean();
-        const passMd5 = md5Encode(password);
-        if (user && `${passMd5}` === user.password) {
+        const pwMd5 = md5Encode(password);
+        if (user && `${pwMd5}` === user.password) {
           const token = await getUserToken(user._id);
           return {
             status: 200,
@@ -95,12 +95,12 @@ export default {
           };
         }
 
-        const passMd5 = md5Encode(password);
+        const pwMd5 = md5Encode(password);
 
         user = await User.create({
           ...params,
           phoneNumber: phone,
-          password: passMd5,
+          password: pwMd5,
           avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue',
         });
 
