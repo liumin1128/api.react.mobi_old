@@ -4,6 +4,7 @@ export default `
     countryCode: String!
     purePhoneNumber: String!
     code: String!
+    password: String!
   }
   type User {
     _id: String!

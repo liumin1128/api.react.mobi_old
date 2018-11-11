@@ -4,6 +4,7 @@ import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
+import { md5Encode } from '@/utils/crypto';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -11,8 +12,8 @@ function getKey(phone, code) {
 
 function getPhone(countryCode, purePhoneNumber) {
   switch (countryCode) {
-    case '+1': return countryCode + purePhoneNumber;
     case '+86': return purePhoneNumber;
+    default: return countryCode + purePhoneNumber;
   }
 }
 
@@ -62,18 +63,18 @@ export default {
       try {
         const { input } = args;
 
-        const { code, ...params } = input;
+        const { code, password, ...params } = input;
 
         // 校验手机验证码
         const phone = getPhone(params.countryCode, params.purePhoneNumber);
         const key = getKey(phone, code);
         const _code = await getAsync(key);
-        if (code !== _code) {
-          return {
-            status: 401,
-            message: '验证码错误',
-          };
-        }
+        // if (code !== _code) {
+        //   return {
+        //     status: 401,
+        //     message: '验证码不正确',
+        //   };
+        // }
 
         let user;
 
@@ -93,9 +94,12 @@ export default {
           };
         }
 
+        const passMd5 = md5Encode(password);
+
         user = await User.create({
           ...params,
           phoneNumber: phone,
+          password: passMd5,
           avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue',
         });
 
@@ -124,16 +128,17 @@ export default {
         if (!countryCode) {
           return {
             status: 401,
-            message: '参数错误，缺少国家',
+            message: '参数不正确，缺少国家',
           };
         }
 
         if (!phone) {
           return {
             status: 401,
-            message: '参数错误，缺少手机号',
+            message: '参数不正确，缺少手机号',
           };
         }
+
 
         const code = randomCode();
         const key = getKey(phone, code);

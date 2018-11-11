@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 
-export const md5Encode = str =>
-  crypto.createHash('md5').update(str, 'utf8').digest('hex');
+export const md5Encode = str => crypto.createHash('md5').update(str, 'utf8').digest('hex');
 
 export const aesEncode = (data, key = 'react.mobi') => {
   const cipher = crypto.createCipher('aes192', key);
