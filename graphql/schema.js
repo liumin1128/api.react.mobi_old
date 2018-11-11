@@ -88,6 +88,7 @@ export default `
 
     # 用户登录
     userLogin(username: String!, password: String!): UserLoginResult!
+    userLoginByPhonenumberCode(countryCode: String!, purePhoneNumber: String!, code: String!): UserLoginResult!
     userRegister(input: UserRegisterInput): UserRegisterResult!
     getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
 

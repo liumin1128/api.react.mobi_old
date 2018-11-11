@@ -60,6 +60,44 @@ export default {
       }
     },
 
+    userLoginByPhonenumberCode: async (root, args, ctx, op) => {
+      try {
+        const { code, countryCode, purePhoneNumber } = args;
+
+        // 校验手机验证码
+        const phone = getPhone(countryCode, purePhoneNumber);
+        const key = getKey(phone, code);
+        const _code = await getAsync(key);
+        if (code !== _code) {
+          return {
+            status: 401,
+            message: '验证码不正确',
+          };
+        }
+
+        const user = await User.findOne({ phoneNumber: phone });
+        if (user) {
+          const token = await getUserToken(user._id);
+          return {
+            status: 200,
+            message: '登录成功',
+            token,
+            userInfo: { ...user, _id: `${user._id}` },
+          };
+        }
+        return {
+          status: 401,
+          message: '该手机号尚未注册',
+        };
+      } catch (error) {
+        return {
+          status: 403,
+          message: '登录失败',
+          error,
+        };
+      }
+    },
+
     userRegister: async (root, args, ctx, op) => {
       try {
         const { input } = args;
