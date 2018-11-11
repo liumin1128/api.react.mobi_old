@@ -36,7 +36,8 @@ export default {
       try {
         const { password, ...other } = args;
         const user = await User.findOne(other).lean();
-        if (user && `${password}` === user.password) {
+        const passMd5 = md5Encode(password);
+        if (user && `${passMd5}` === user.password) {
           const token = await getUserToken(user._id);
           return {
             status: 200,
@@ -69,12 +70,12 @@ export default {
         const phone = getPhone(params.countryCode, params.purePhoneNumber);
         const key = getKey(phone, code);
         const _code = await getAsync(key);
-        // if (code !== _code) {
-        //   return {
-        //     status: 401,
-        //     message: '验证码不正确',
-        //   };
-        // }
+        if (code !== _code) {
+          return {
+            status: 401,
+            message: '验证码不正确',
+          };
+        }
 
         let user;
 
