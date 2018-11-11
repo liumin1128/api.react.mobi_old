@@ -87,7 +87,7 @@ export default `
   type Mutation {
 
     # 用户登录
-    userLogin(username: String!, password: String!): UserLogin
+    userLogin(username: String!, password: String!): UserLoginResult!
     userRegister(input: UserRegisterInput): UserRegisterResult!
     getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
 

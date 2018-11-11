@@ -11,7 +11,7 @@ export default `
     nickname: String!
     avatarUrl: String!
   }
-  type UserLogin {
+  type UserLoginResult {
     status: Int!
     token: String
     message: String
