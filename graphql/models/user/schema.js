@@ -1,4 +1,10 @@
 export default `
+  input UserRegisterInput {
+    nickname: String!
+    countryCode: String!
+    purePhoneNumber: String!
+    code: String!
+  }
   type User {
     _id: String!
     nickname: String!
@@ -10,4 +16,11 @@ export default `
     message: String
     userInfo: User
   }
+  type UserRegisterResult {
+    status: Int!
+    message: String
+    token: String
+    userInfo: User
+  }
+  
 `;

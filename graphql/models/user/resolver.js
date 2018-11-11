@@ -9,6 +9,13 @@ function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
 }
 
+function getPhone(countryCode, purePhoneNumber) {
+  switch (countryCode) {
+    case '+1': return countryCode + purePhoneNumber;
+    case '+86': return purePhoneNumber;
+  }
+}
+
 export default {
   Query: {
     userInfo: async (root, args, ctx) => {
@@ -51,6 +58,65 @@ export default {
       }
     },
 
+    userRegister: async (root, args, ctx, op) => {
+      try {
+        const { input } = args;
+
+        const { code, ...params } = input;
+
+        // 校验手机验证码
+        const phone = getPhone(params.countryCode, params.purePhoneNumber);
+        const key = getKey(phone, code);
+        const _code = await getAsync(key);
+        if (code !== _code) {
+          return {
+            status: 401,
+            message: '验证码错误',
+          };
+        }
+
+        let user;
+
+        user = await User.findOne({ nickname: params.nickname });
+        if (user) {
+          return {
+            status: 401,
+            message: '昵称已被使用',
+          };
+        }
+
+        user = await User.findOne({ phoneNumber: phone });
+        if (user) {
+          return {
+            status: 401,
+            message: '手机号已绑定',
+          };
+        }
+
+        user = await User.create({
+          ...params,
+          phoneNumber: phone,
+          avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue',
+        });
+
+        const token = await getUserToken(user._id);
+
+        return {
+          status: 200,
+          message: '注册成功',
+          token,
+          userInfo: user,
+        };
+      } catch (error) {
+        console.log('error');
+        console.log(error);
+        return {
+          status: 500,
+          message: '注册失败',
+        };
+      }
+    },
+
     getPhoneNumberCode: async (root, args, ctx, op) => {
       try {
         const { countryCode, purePhoneNumber: phone } = args;
@@ -70,14 +136,14 @@ export default {
         }
 
         const code = randomCode();
-        const key = getKey(phone, key);
+        const key = getKey(phone, code);
         const expire = 5 * 60;
         const data = await sentSMS(phone, code);
         if (data && data.Code === 'OK') {
           await setAsync(key, code, 'EX', expire);
           return {
             status: 200,
-            message: '发送验证码成功',
+            message: `验证码已发送到：${phone}, 5分钟内有效`,
           };
         } else {
           return {
