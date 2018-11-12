@@ -137,6 +137,7 @@ export default {
 
         user = await User.create({
           ...params,
+          username: phone,
           phoneNumber: phone,
           password: pwMd5,
           avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue',
