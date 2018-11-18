@@ -9,6 +9,8 @@ import graphql from '@/graphql';
 import router from './router';
 import '@/utils/mongoose';
 import '@/utils/redis';
+import '@/server/recognition/tencent';
+
 
 const app = new Koa();
 
