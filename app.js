@@ -11,6 +11,7 @@ import '@/utils/mongoose';
 import '@/utils/redis';
 // import '@/server/recognition/tencent';
 // import '@/server/crawler/other/company';
+// import '@/server/crawler/other/excel';
 
 const app = new Koa();
 
