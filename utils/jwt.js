@@ -16,5 +16,6 @@ export default koaJwt({ secret: JWT_SECRET })
     path: [
       /^\/graphql/,
       /^\/oauth/,
+      /^\/recognition/,
     ],
   });
