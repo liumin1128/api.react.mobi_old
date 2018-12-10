@@ -35,34 +35,37 @@ class Weibo {
       au += `&redirect_uri=${weibo.redirect_uri}`;
 
 
-      const data = await fetch(au);
+      const { access_token, uid } = await fetch(au);
+      if (!access_token) {
+        ctx.redirect(DOMAIN);
+      }
 
-      console.log('data');
-      console.log(data);
-
-      ctx.body = data;
 
       // // 从数据库查找对应用户第三方登录信息
-      // let oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
+      // const oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
 
       // // 如果不存在则创建新用户，并保存该用户的第三方登录信息
       // if (!oauth) {
-      //   // 获取用户信息
-      //   const userinfo = await fetch(`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`);
-      //   const { nickname, headimgurl } = userinfo;
+      // 获取用户信息
+      const userinfo = await fetch(`https://api.weibo.com/oauth2/get_token_info?access_token=${access_token}`);
+      console.log('userinfo');
+      console.log(userinfo);
+      ctx.redirect(DOMAIN);
 
-      //   // 将用户头像上传至七牛
-      //   const avatarUrl = await fetchToQiniu(headimgurl);
-      //   // console.log(avatarUrl);
+      // const { nickname, headimgurl } = userinfo;
 
-    //   const user = await User.create({ avatarUrl, nickname });
-    //   // await client.setAsync(user._id, user);
-    //   oauth = await Oauth.create({ from: 'weibo', data: userinfo, user });
-    // }
-    // // 生成token（用户身份令牌）
-    // const token = await getUserToken(oauth.user);
-    // // 重定向页面到用户登录页，并返回token
-    // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+      // // 将用户头像上传至七牛
+      // const avatarUrl = await fetchToQiniu(headimgurl);
+      // // console.log(avatarUrl);
+
+      // const user = await User.create({ avatarUrl, nickname });
+      // // await client.setAsync(user._id, user);
+      // oauth = await Oauth.create({ from: 'weibo', data: userinfo, user });
+      // }
+      // 生成token（用户身份令牌）
+      // const token = await getUserToken(oauth.user);
+      // 重定向页面到用户登录页，并返回token
+      // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
       console.log('error');
       console.log(error);
