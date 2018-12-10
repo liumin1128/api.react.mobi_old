@@ -22,6 +22,9 @@ class Weibo {
 
   async callback(ctx) {
     const { code } = ctx.query;
+
+    console.log('code');
+    console.log(code);
     // 用token换取access_token
     let au = 'https://api.weibo.com/oauth2/access_token';
     au += `?client_id=${weibo.App_Key}`;
