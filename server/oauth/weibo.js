@@ -25,8 +25,8 @@ class Weibo {
     try {
       const { code } = ctx.query;
 
-      console.log('code');
-      console.log(code);
+      // console.log('code');
+      // console.log(code);
       // 用token换取access_token
       let au = 'https://api.weibo.com/oauth2/access_token';
       au += `?client_id=${weibo.App_Key}`;
@@ -34,7 +34,6 @@ class Weibo {
       au += `&code=${code}`;
       au += '&grant_type=authorization_code';
       au += `&redirect_uri=${weibo.redirect_uri}`;
-
 
       const { access_token, uid } = await request(au);
       if (!access_token) {
@@ -53,8 +52,8 @@ class Weibo {
 
         const { name: nickname, profile_image_url } = userinfo;
 
-        console.log('profile_image_url');
-        console.log(profile_image_url);
+        // console.log('profile_image_url');
+        // console.log(profile_image_url);
         // // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(profile_image_url);
         // console.log(avatarUrl);
