@@ -33,12 +33,12 @@ class Weibo {
       au += `&code=${code}`;
       au += '&grant_type=authorization_code';
 
-      const { access_token, uid } = await fetch(au);
+      const data = await fetch(au);
 
-      console.log('access_token');
-      console.log(access_token);
+      console.log('data');
+      console.log(data);
 
-      ctx.body = access_token;
+      ctx.body = data;
 
       // // 从数据库查找对应用户第三方登录信息
       // let oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
