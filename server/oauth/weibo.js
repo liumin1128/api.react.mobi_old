@@ -21,33 +21,37 @@ class Weibo {
   }
 
   async callback(ctx) {
-    const { code } = ctx.query;
+    try {
+      const { code } = ctx.query;
 
-    console.log('code');
-    console.log(code);
-    // 用token换取access_token
-    let au = 'https://api.weibo.com/oauth2/access_token';
-    au += `?client_id=${weibo.App_Key}`;
-    au += `&client_secret=${weibo.App_Secret}`;
-    au += `&code=${code}`;
-    au += '&grant_type=authorization_code';
+      console.log('code');
+      console.log(code);
+      // 用token换取access_token
+      let au = 'https://api.weibo.com/oauth2/access_token';
+      au += `?client_id=${weibo.App_Key}`;
+      au += `&client_secret=${weibo.App_Secret}`;
+      au += `&code=${code}`;
+      au += '&grant_type=authorization_code';
 
-    const { access_token, uid } = await fetch(au);
+      const { access_token, uid } = await fetch(au);
 
-    ctx.body = access_token;
+      console.log('access_token');
+      console.log(access_token);
 
-    // // 从数据库查找对应用户第三方登录信息
-    // let oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
+      ctx.body = access_token;
 
-    // // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-    // if (!oauth) {
-    //   // 获取用户信息
-    //   const userinfo = await fetch(`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`);
-    //   const { nickname, headimgurl } = userinfo;
+      // // 从数据库查找对应用户第三方登录信息
+      // let oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
 
-    //   // 将用户头像上传至七牛
-    //   const avatarUrl = await fetchToQiniu(headimgurl);
-    //   // console.log(avatarUrl);
+      // // 如果不存在则创建新用户，并保存该用户的第三方登录信息
+      // if (!oauth) {
+      //   // 获取用户信息
+      //   const userinfo = await fetch(`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`);
+      //   const { nickname, headimgurl } = userinfo;
+
+      //   // 将用户头像上传至七牛
+      //   const avatarUrl = await fetchToQiniu(headimgurl);
+      //   // console.log(avatarUrl);
 
     //   const user = await User.create({ avatarUrl, nickname });
     //   // await client.setAsync(user._id, user);
@@ -57,6 +61,10 @@ class Weibo {
     // const token = await getUserToken(oauth.user);
     // // 重定向页面到用户登录页，并返回token
     // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+    }
   }
 }
 
