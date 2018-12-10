@@ -48,10 +48,13 @@ class Weibo {
         // 获取用户信息
         const userinfo = await fetch(`https://api.weibo.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, { method: 'GET' })
           .then((res) => {
-            return res.text();
+            return res.json();
           });
 
         const { name: nickname, profile_image_url } = userinfo;
+
+        console.log('profile_image_url');
+        console.log(profile_image_url);
         // // 将用户头像上传至七牛
         const avatarUrl = await fetchToQiniu(profile_image_url);
         // console.log(avatarUrl);
