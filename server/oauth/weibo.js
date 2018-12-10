@@ -32,6 +32,8 @@ class Weibo {
       au += `&client_secret=${weibo.App_Secret}`;
       au += `&code=${code}`;
       au += '&grant_type=authorization_code';
+      au += `&redirect_uri=${weibo.redirect_uri}`;
+
 
       const data = await fetch(au);
 
