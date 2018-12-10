@@ -1,7 +1,8 @@
 import { User, Oauth } from '@/mongo/modals';
+import fetch from 'node-fetch';
 import weibo from '@/config/weibo';
 import { DOMAIN } from '@/config/base';
-import fetch from '@/utils/fetch';
+import request from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
 
@@ -35,7 +36,7 @@ class Weibo {
       au += `&redirect_uri=${weibo.redirect_uri}`;
 
 
-      const { access_token, uid } = await fetch(au);
+      const { access_token, uid } = await request(au);
       if (!access_token) {
         ctx.redirect(DOMAIN);
       }
@@ -47,7 +48,10 @@ class Weibo {
       // // 如果不存在则创建新用户，并保存该用户的第三方登录信息
       // if (!oauth) {
       // 获取用户信息
-      const userinfo = await fetch(`https://api.weibo.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, {}, { method: 'GET' });
+      const userinfo = await fetch(`https://api.weibo.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, { method: 'GET' })
+        .then((res) => {
+          return res.text();
+        });
       // const userinfo = await fetch(`https://api.weibo.com/oauth2/get_token_info?access_token=${access_token}`);
 
       console.log('userinfo------');
