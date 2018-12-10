@@ -48,7 +48,7 @@ class Weibo {
       // if (!oauth) {
       // 获取用户信息
       const userinfo = await fetch(`https://api.weibo.com/oauth2/get_token_info?access_token=${access_token}`);
-      console.log('userinfo');
+      console.log('userinfo------');
       console.log(userinfo);
       ctx.redirect(DOMAIN);
 
