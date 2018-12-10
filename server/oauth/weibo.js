@@ -40,38 +40,29 @@ class Weibo {
       if (!access_token) {
         ctx.redirect(DOMAIN);
       }
+      // 从数据库查找对应用户第三方登录信息
+      let oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
 
+      // 如果不存在则创建新用户，并保存该用户的第三方登录信息
+      if (!oauth) {
+        // 获取用户信息
+        const userinfo = await fetch(`https://api.weibo.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, { method: 'GET' })
+          .then((res) => {
+            return res.text();
+          });
 
-      // // 从数据库查找对应用户第三方登录信息
-      // const oauth = await Oauth.findOne({ from: 'weibo', 'data.uid': uid });
-
-      // // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-      // if (!oauth) {
-      // 获取用户信息
-      const userinfo = await fetch(`https://api.weibo.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, { method: 'GET' })
-        .then((res) => {
-          return res.text();
-        });
-      // const userinfo = await fetch(`https://api.weibo.com/oauth2/get_token_info?access_token=${access_token}`);
-
-      console.log('userinfo------');
-      console.log(userinfo);
-      ctx.redirect(DOMAIN);
-
-      // const { nickname, headimgurl } = userinfo;
-
-      // // 将用户头像上传至七牛
-      // const avatarUrl = await fetchToQiniu(headimgurl);
-      // // console.log(avatarUrl);
-
-      // const user = await User.create({ avatarUrl, nickname });
-      // // await client.setAsync(user._id, user);
-      // oauth = await Oauth.create({ from: 'weibo', data: userinfo, user });
-      // }
+        const { name: nickname, profile_image_url } = userinfo;
+        // // 将用户头像上传至七牛
+        const avatarUrl = await fetchToQiniu(profile_image_url);
+        // console.log(avatarUrl);
+        const user = await User.create({ avatarUrl, nickname });
+        // await client.setAsync(user._id, user);
+        oauth = await Oauth.create({ from: 'weibo', data: { ...userinfo, access_token, uid }, user });
+      }
       // 生成token（用户身份令牌）
-      // const token = await getUserToken(oauth.user);
+      const token = await getUserToken(oauth.user);
       // 重定向页面到用户登录页，并返回token
-      // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+      ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
       console.log('error');
       console.log(error);
