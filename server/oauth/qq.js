@@ -3,7 +3,6 @@ import { parse } from 'query-string';
 import fetch from 'node-fetch';
 import qq from '@/config/qq';
 import { DOMAIN, API_DOMAIN } from '@/config/base';
-import request from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
 
@@ -100,7 +99,6 @@ async function getUserInfo(access_token, openid) {
     console.log(error);
   }
 }
-
 
 class Qq {
   // 用户注册
