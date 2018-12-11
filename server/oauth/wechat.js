@@ -1,52 +1,107 @@
 import { User, Oauth } from '@/mongo/modals';
 import wechat from '@/config/wechat';
-import { DOMAIN } from '@/config/base';
+import { DOMAIN, API_DOMAIN } from '@/config/base';
 import fetch from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
 
+
+function getOauthUrl() {
+  let url = 'https://open.weixin.qq.com/connect/qrconnect';
+  url += `?appid=${wechat.appid}`;
+  url += `&redirect_uri=${API_DOMAIN}/oauth/wechat/callback`;
+  url += '&response_type=code&scope=snsapi_login&state=123#wechat_redirect ';
+  return url;
+}
+
+async function getAccessToken(code) {
+  try {
+    // 文档地址
+    // https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
+
+    let url = 'https://api.weixin.qq.com/sns/oauth2/access_token';
+    url += `?appid=${wechat.appid}`;
+    url += `&secret=${wechat.secret}`;
+    url += `&code=${code}`;
+    url += '&grant_type=authorization_code';
+
+    const data = await fetch(url);
+
+    return data;
+    // 返回值示例
+    //     { "access_token":"ACCESS_TOKEN",
+    // "expires_in":7200,
+    // "refresh_token":"REFRESH_TOKEN",
+    // "openid":"OPENID",
+    // "scope":"SCOPE" }
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+}
+
+async function getUserInfo(access_token, openid) {
+  try {
+    // 文档地址
+    // http://wiki.connect.qq.com/get_user_info
+
+    let url = 'https://api.weixin.qq.com/sns/userinfo';
+    url += `?access_token=${access_token}`;
+    url += `&openid=${openid}`;
+    url += '&lang=zh_CN';
+
+    const data = await fetch(url);
+    return data;
+    // 返回值示例
+    //     {    "openid":" OPENID",
+    // " nickname": NICKNAME,
+    // "sex":"1",
+    // "province":"PROVINCE"
+    // "city":"CITY",
+    // "country":"COUNTRY",
+    // "headimgurl":    "http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46",
+    // "privilege":[ "PRIVILEGE1" "PRIVILEGE2"     ],
+    // "unionid": "o6_bmasdasdsad6_2sgVt7hMZOPfL"
+    // }
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+}
+
 class WeChat {
   // 用户注册
   async login(ctx) {
-    console.log('新用户登录');
-    // const dataStr = (new Date()).valueOf();
-    // 重定向到认证接口,并配置参数
-
-    let path = 'https://open.weixin.qq.com/connect/qrconnect';
-    path += `?appid=${wechat.appid}`;
-    path += `&redirect_uri=${wechat.redirect_uri}`;
-    path += '&response_type=code&scope=snsapi_login&state=123#wechat_redirect ';
-    // 转发到授权服务器
-    ctx.redirect(path);
+    console.log('微信账号登录');
+    ctx.redirect(getOauthUrl());
   }
 
   async callback(ctx) {
     const { code } = ctx.query;
-    // 用token换取access_token
-    let au = 'https://api.weixin.qq.com/sns/oauth2/access_token';
-    au += `?appid=${wechat.appid}`;
-    au += `&secret=${wechat.secret}`;
-    au += `&code=${code}`;
-    au += '&grant_type=authorization_code';
 
-    const { access_token, openid, unionid } = await fetch(au);
+    const data = await getAccessToken(code);
+    const { access_token, openid, unionid } = data;
+    if (!access_token) {
+      console.log('微信获取access_token失败');
+      ctx.redirect(DOMAIN);
+    }
 
     // 从数据库查找对应用户第三方登录信息
     let oauth = await Oauth.findOne({ from: 'wechat', 'data.unionid': unionid });
 
-    // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-    if (!oauth) {
-      // 获取用户信息
-      const userinfo = await fetch(`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`);
-      const { nickname, headimgurl } = userinfo;
-
-      // 将用户头像上传至七牛
+    if (oauth) {
+      // 更新三方登录信息
+      oauth.update({ data });
+    } else {
+      // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
+      const userInfo = await getUserInfo(access_token, openid);
+      const { nickname, headimgurl } = userInfo;
+      // 将用户头像上传至七牛，避免头像过期或无法访问
       const avatarUrl = await fetchToQiniu(headimgurl);
-      // console.log(avatarUrl);
-
+      // 创建该用户
       const user = await User.create({ avatarUrl, nickname });
-      // await client.setAsync(user._id, user);
-      oauth = await Oauth.create({ from: 'wechat', data: userinfo, user });
+      // 创建三方登录信息
+      oauth = await Oauth.create({ from: 'wechat', data, userInfo, user });
     }
     // 生成token（用户身份令牌）
     const token = await getUserToken(oauth.user);

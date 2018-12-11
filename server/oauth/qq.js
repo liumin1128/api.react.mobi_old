@@ -103,7 +103,7 @@ async function getUserInfo(access_token, openid) {
 class Qq {
   // 用户注册
   async login(ctx) {
-    console.log('新用户通过qq账号登录');
+    console.log('qq账号登录');
     ctx.redirect(getOauthUrl());
   }
 
@@ -135,7 +135,7 @@ class Qq {
         // 更新三方登录信息
         oauth.update({ data });
       } else {
-      // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
+        // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
         const userInfo = await getUserInfo(access_token, openid);
         const { nickname, figureurl_qq_1, figureurl_qq_2 } = userInfo;
         // 将用户头像上传至七牛，避免头像过期或无法访问
