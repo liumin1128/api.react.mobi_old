@@ -109,7 +109,8 @@ class Github {
         await oauth.update({ data, userInfo });
       } else {
         // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-        const { avatar_url, name: nickname } = userInfo;
+        const { avatar_url, name, login } = userInfo;
+        const nickname = name || login;
         const avatarUrl = await fetchToQiniu(avatar_url);
         const user = await User.create({ avatarUrl, nickname });
         oauth = await Oauth.create({ from: 'github', data, userInfo, user });
