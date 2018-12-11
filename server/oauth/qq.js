@@ -45,12 +45,10 @@ async function getOpenid(access_token) {
       `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`,
       { method: 'GET' },
     ).then((res) => {
-      console.log('res');
-      console.log(res);
-      console.log('res.text()');
-      console.log(res.text());
-      return res.json();
+      return res.text();
     });
+    console.log('data');
+    console.log(data);
     return data;
   } catch (error) {
     console.log('error');
