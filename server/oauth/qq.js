@@ -66,6 +66,8 @@ async function getUserInfo(access_token, openid) {
     url += `&oauth_consumer_key=${qq.App_Key}`;
     url += `&openid=${openid}`;
 
+    console.log('url');
+    console.log(url);
     const data = await fetch(url, { method: 'GET' })
       .then(res => res.json());
 
