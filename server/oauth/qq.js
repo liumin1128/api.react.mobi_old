@@ -1,7 +1,7 @@
 import { User, Oauth } from '@/mongo/modals';
 import fetch from 'node-fetch';
 import qq from '@/config/qq';
-import { DOMAIN } from '@/config/base';
+import { DOMAIN, API_DOMAIN } from '@/config/base';
 import request from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
@@ -9,7 +9,7 @@ import { getUserToken } from '@/utils/jwt';
 function getOauthUrl() {
   let url = 'https://graph.qq.com/oauth2.0/authorize';
   url += `?client_id=${qq.App_Id}`;
-  url += `&redirect_uri=${DOMAIN}/oauth/qq/callback`;
+  url += `&redirect_uri=${API_DOMAIN}/oauth/qq/callback`;
   url += '&state=state123';
   url += '&scope=get_user_info';
   url += '&response_type=code';
@@ -23,7 +23,7 @@ async function getAccessToken(code) {
     url += `&client_secret=${qq.App_Key}`;
     url += `&code=${code}`;
     url += '&grant_type=authorization_code';
-    url += `&redirect_uri=${DOMAIN}/oauth/qq/callback`;
+    url += `&redirect_uri=${API_DOMAIN}/oauth/qq/callback`;
     const data = await request(url);
     return data;
   } catch (error) {
