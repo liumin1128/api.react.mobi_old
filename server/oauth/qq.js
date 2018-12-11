@@ -1,8 +1,8 @@
 import { User, Oauth } from '@/mongo/modals';
 import { parse } from 'query-string';
 import fetch from 'node-fetch';
-import qq from '@/config/qq';
 import { DOMAIN, API_DOMAIN } from '@/config/base';
+import qq from '@/config/qq';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
 
@@ -111,7 +111,9 @@ class Qq {
     try {
       const { code } = ctx.query;
 
-      const { access_token } = await getAccessToken(code);
+      const data = await getAccessToken(code);
+      const { access_token } = data;
+
       if (!access_token) {
         console.log('qq获取access_token失败');
         ctx.redirect(DOMAIN);
@@ -123,20 +125,25 @@ class Qq {
         ctx.redirect(DOMAIN);
       }
 
+      // qq比较特殊，openid居然还要再单独获取一次
+      data.openid = openid;
+
       // 从数据库查找对应用户第三方登录信息
       let oauth = await Oauth.findOne({ from: 'qq', 'data.openid': openid });
 
-      // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-      if (!oauth) {
-        // 获取用户信息
-        const userinfo = await getUserInfo(access_token, openid);
-        const { nickname, figureurl_qq_1, figureurl_qq_2 } = userinfo;
+      if (oauth) {
+        // 更新三方登录信息
+        oauth.update({ data });
+      } else {
+      // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
+        const userInfo = await getUserInfo(access_token, openid);
+        const { nickname, figureurl_qq_1, figureurl_qq_2 } = userInfo;
         // 将用户头像上传至七牛，避免头像过期或无法访问
         const avatarUrl = await fetchToQiniu(figureurl_qq_2 || figureurl_qq_1);
         // 创建该用户
         const user = await User.create({ avatarUrl, nickname });
         // 创建三方登录信息
-        oauth = await Oauth.create({ from: 'qq', data: { ...userinfo, access_token, openid }, user });
+        oauth = await Oauth.create({ from: 'qq', data, userInfo, user });
       }
 
       // 生成token（用户身份令牌）

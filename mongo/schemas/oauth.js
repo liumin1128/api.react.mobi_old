@@ -6,4 +6,5 @@ export default {
   from: String,
   user: { type: ObjectId, ref: 'User' },
   data: Object,
+  userInfo: Object,
 };
