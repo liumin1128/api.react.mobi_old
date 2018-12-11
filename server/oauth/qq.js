@@ -41,18 +41,52 @@ async function getAccessToken(code) {
 async function getOpenid(access_token) {
   try {
     // http://wiki.connect.qq.com/%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7openid_oauth2-0
-    const data = await fetch(
-      `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`,
-      { method: 'GET' },
-    ).then(res => res.text())
+
+    const url = `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`;
+    const data = await fetch(url, { method: 'GET' })
+      .then(res => res.text())
       .then((res) => {
         let str = res.replace('callback( ', '');
         str = str.replace(' );', '');
         return JSON.parse(str);
       });
-    console.log('data');
-    console.log(data);
+    // {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"}
     return data;
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+}
+
+async function getUserInfo(access_token, openid) {
+  try {
+    // http://wiki.connect.qq.com/get_user_info
+    let url = 'https://graph.qq.com/user/get_user_info';
+    url += `?access_token=${access_token}`;
+    url += `&oauth_consumer_key=${qq.App_Key}`;
+    url += `&openid=${openid}`;
+
+    const data = await fetch(url, { method: 'GET' })
+      .then(res => res.json());
+
+    return data;
+
+    // {
+    //   "ret":0,
+    //   "msg":"",
+    //   "nickname":"Peter",
+    //   "figureurl":"http://qzapp.qlogo.cn/qzapp/111111/942FEA70050EEAFBD4DCE2C1FC775E56/30",
+    //   "figureurl_1":"http://qzapp.qlogo.cn/qzapp/111111/942FEA70050EEAFBD4DCE2C1FC775E56/50",
+    //   "figureurl_2":"http://qzapp.qlogo.cn/qzapp/111111/942FEA70050EEAFBD4DCE2C1FC775E56/100",
+    //   "figureurl_qq_1":"http://q.qlogo.cn/qqapp/100312990/DE1931D5330620DBD07FB4A5422917B6/40",
+    //   "figureurl_qq_2":"http://q.qlogo.cn/qqapp/100312990/DE1931D5330620DBD07FB4A5422917B6/100",
+    //   "gender":"男",
+    //   "is_yellow_vip":"1",
+    //   "vip":"1",
+    //   "yellow_vip_level":"7",
+    //   "level":"7",
+    //   "is_yellow_year_vip":"1"
+    //   }
   } catch (error) {
     console.log('error');
     console.log(error);
@@ -71,52 +105,46 @@ class Qq {
     try {
       const { code } = ctx.query;
 
-      console.log('code');
-      console.log(code);
-
       const { access_token } = await getAccessToken(code);
-      console.log('access_token');
-      console.log(access_token);
+
       if (!access_token) {
         console.log('qq获取access_token失败');
         ctx.redirect(DOMAIN);
       }
 
       const { openid } = await getOpenid(access_token);
-      console.log('openid');
-      console.log(openid);
+
       if (!openid) {
         console.log('qq获取openid失败');
         ctx.redirect(DOMAIN);
       }
-      return;
 
       // 从数据库查找对应用户第三方登录信息
-      let oauth = await Oauth.findOne({ from: 'qq', 'data.uid': uid });
+      // let oauth = await Oauth.findOne({ from: 'qq', 'data.openid': openid });
 
       // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-      if (!oauth) {
-        // 获取用户信息
-        const userinfo = await fetch(`https://api.qq.com/2/users/show.json?access_token=${access_token}&uid=${uid}`, { method: 'GET' })
-          .then((res) => {
-            return res.json();
-          });
+      // if (!oauth) {
+      // 获取用户信息
+      const userinfo = await getUserInfo(access_token, openid);
 
-        const { name: nickname, profile_image_url } = userinfo;
+      console.log('userinfo');
+      console.log(userinfo);
 
-        // console.log('profile_image_url');
-        // console.log(profile_image_url);
-        // // 将用户头像上传至七牛
-        const avatarUrl = await fetchToQiniu(profile_image_url);
-        // console.log(avatarUrl);
-        const user = await User.create({ avatarUrl, nickname });
-        // await client.setAsync(user._id, user);
-        oauth = await Oauth.create({ from: 'qq', data: { ...userinfo, access_token, uid }, user });
-      }
-      // 生成token（用户身份令牌）
-      const token = await getUserToken(oauth.user);
-      // 重定向页面到用户登录页，并返回token
-      ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+      // const { name: nickname, profile_image_url } = userinfo;
+
+      // console.log('profile_image_url');
+      // console.log(profile_image_url);
+      // // 将用户头像上传至七牛
+      // const avatarUrl = await fetchToQiniu(profile_image_url);
+      // // console.log(avatarUrl);
+      // const user = await User.create({ avatarUrl, nickname });
+      // // await client.setAsync(user._id, user);
+      // oauth = await Oauth.create({ from: 'qq', data: { ...userinfo, access_token, uid }, user });
+      // // }
+      // // 生成token（用户身份令牌）
+      // const token = await getUserToken(oauth.user);
+      // // 重定向页面到用户登录页，并返回token
+      // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
       ctx.redirect(DOMAIN);
       console.log('error');
