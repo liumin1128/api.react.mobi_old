@@ -133,6 +133,8 @@ class Qq {
 
       if (oauth) {
         // 更新三方登录信息
+        console.log('更新三方登录信息');
+        console.log(data);
         oauth.update({ data });
       } else {
         // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
