@@ -1,6 +1,6 @@
 import { User, Oauth } from '@/mongo/modals';
-import wechat from '@/config/wechat';
 import { DOMAIN, API_DOMAIN } from '@/config/base';
+import wechat from '@/config/wechat';
 import fetch from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
