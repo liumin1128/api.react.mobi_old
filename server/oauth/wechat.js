@@ -5,7 +5,6 @@ import fetch from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
 
-
 function getOauthUrl() {
   let url = 'https://open.weixin.qq.com/connect/qrconnect';
   url += `?appid=${wechat.appid}`;
@@ -70,13 +69,13 @@ async function getUserInfo(access_token, openid) {
 }
 
 class WeChat {
-  // 用户注册
   async login(ctx) {
     console.log('微信账号登录');
     ctx.redirect(getOauthUrl());
   }
 
   async callback(ctx) {
+    console.log('微信账号登录回调');
     const { code } = ctx.query;
 
     const data = await getAccessToken(code);

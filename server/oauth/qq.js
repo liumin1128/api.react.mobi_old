@@ -101,13 +101,13 @@ async function getUserInfo(access_token, openid) {
 }
 
 class Qq {
-  // 用户注册
   async login(ctx) {
     console.log('qq账号登录');
     ctx.redirect(getOauthUrl());
   }
 
   async callback(ctx) {
+    console.log('qq账号登录回调');
     try {
       const { code } = ctx.query;
 
