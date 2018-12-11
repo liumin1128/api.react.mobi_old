@@ -47,6 +47,7 @@ async function getOpenid(access_token) {
   }
 }
 
+
 class Qq {
   // 用户注册
   async login(ctx) {
