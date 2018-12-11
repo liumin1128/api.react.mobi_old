@@ -63,11 +63,9 @@ async function getUserInfo(access_token, openid) {
     // http://wiki.connect.qq.com/get_user_info
     let url = 'https://graph.qq.com/user/get_user_info';
     url += `?access_token=${access_token}`;
-    url += `&oauth_consumer_key=${qq.App_Key}`;
+    url += `&oauth_consumer_key=${qq.App_Id}`;
     url += `&openid=${openid}`;
 
-    console.log('url');
-    console.log(url);
     const data = await fetch(url, { method: 'GET' })
       .then(res => res.json());
 
