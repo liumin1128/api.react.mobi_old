@@ -44,9 +44,12 @@ async function getOpenid(access_token) {
     const data = await fetch(
       `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`,
       { method: 'GET' },
-    ).then((res) => {
-      return res.text();
-    });
+    ).then(res => res.text())
+      .then((res) => {
+        let str = res.replace('callback( ', '');
+        str = str.replace(' );', '');
+        return JSON.parse(str);
+      });
     console.log('data');
     console.log(data);
     return data;
