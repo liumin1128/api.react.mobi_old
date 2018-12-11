@@ -114,6 +114,9 @@ class Qq {
 
       const { openid } = await getOpenid(access_token);
 
+      console.log('openid');
+      console.log(openid);
+
       if (!openid) {
         console.log('qq获取openid失败');
         ctx.redirect(DOMAIN);
