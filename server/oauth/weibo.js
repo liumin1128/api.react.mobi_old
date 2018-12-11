@@ -84,6 +84,8 @@ class Weibo {
       // 重定向页面到用户登录页，并返回token
       ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
+      ctx.redirect(DOMAIN);
+
       console.log('error');
       console.log(error);
     }

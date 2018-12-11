@@ -75,37 +75,43 @@ class WeChat {
   }
 
   async callback(ctx) {
-    console.log('微信账号登录回调');
-    const { code } = ctx.query;
+    try {
+      console.log('微信账号登录回调');
+      const { code } = ctx.query;
 
-    const data = await getAccessToken(code);
-    const { access_token, openid, unionid } = data;
-    if (!access_token) {
-      console.log('微信获取access_token失败');
+      const data = await getAccessToken(code);
+      const { access_token, openid, unionid } = data;
+      if (!access_token) {
+        console.log('微信获取access_token失败');
+        ctx.redirect(DOMAIN);
+      }
+
+      // 从数据库查找对应用户第三方登录信息
+      let oauth = await Oauth.findOne({ from: 'wechat', 'data.unionid': unionid });
+
+      if (oauth) {
+        // 更新三方登录信息
+        await oauth.update({ data });
+      } else {
+        // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
+        const userInfo = await getUserInfo(access_token, openid);
+        const { nickname, headimgurl } = userInfo;
+        // 将用户头像上传至七牛，避免头像过期或无法访问
+        const avatarUrl = await fetchToQiniu(headimgurl);
+        // 创建该用户
+        const user = await User.create({ avatarUrl, nickname });
+        // 创建三方登录信息
+        oauth = await Oauth.create({ from: 'wechat', data, userInfo, user });
+      }
+      // 生成token（用户身份令牌）
+      const token = await getUserToken(oauth.user);
+      // 重定向页面到用户登录页，并返回token
+      ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+    } catch (error) {
       ctx.redirect(DOMAIN);
+      console.log('error');
+      console.log(error);
     }
-
-    // 从数据库查找对应用户第三方登录信息
-    let oauth = await Oauth.findOne({ from: 'wechat', 'data.unionid': unionid });
-
-    if (oauth) {
-      // 更新三方登录信息
-      await oauth.update({ data });
-    } else {
-      // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
-      const userInfo = await getUserInfo(access_token, openid);
-      const { nickname, headimgurl } = userInfo;
-      // 将用户头像上传至七牛，避免头像过期或无法访问
-      const avatarUrl = await fetchToQiniu(headimgurl);
-      // 创建该用户
-      const user = await User.create({ avatarUrl, nickname });
-      // 创建三方登录信息
-      oauth = await Oauth.create({ from: 'wechat', data, userInfo, user });
-    }
-    // 生成token（用户身份令牌）
-    const token = await getUserToken(oauth.user);
-    // 重定向页面到用户登录页，并返回token
-    ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
   }
 }
 
