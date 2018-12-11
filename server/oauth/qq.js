@@ -19,6 +19,7 @@ function getOauthUrl() {
 
 async function getAccessToken(code) {
   try {
+    // http://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token
     let url = 'https://graph.qq.com/oauth2.0/token';
     url += `?client_id=${qq.App_Id}`;
     url += `&client_secret=${qq.App_Key}`;
@@ -29,7 +30,7 @@ async function getAccessToken(code) {
     const data = await fetch(url, { method: 'GET' })
       .then(res => res.text())
       .then(res => parse(res));
-
+    // access_token,expires_in,refresh_token
     return data;
   } catch (error) {
     console.log('error');
@@ -39,10 +40,15 @@ async function getAccessToken(code) {
 
 async function getOpenid(access_token) {
   try {
+    // http://wiki.connect.qq.com/%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7openid_oauth2-0
     const data = await fetch(
       `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`,
       { method: 'GET' },
     ).then((res) => {
+      console.log('res');
+      console.log(res);
+      console.log('res.text()');
+      console.log(res.text());
       return res.json();
     });
     return data;
