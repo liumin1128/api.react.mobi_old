@@ -19,7 +19,9 @@ function getOauthUrl() {
 
 async function getAccessToken(code) {
   try {
+    // 文档地址
     // http://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token
+
     let url = 'https://graph.qq.com/oauth2.0/token';
     url += `?client_id=${qq.App_Id}`;
     url += `&client_secret=${qq.App_Key}`;
@@ -30,8 +32,10 @@ async function getAccessToken(code) {
     const data = await fetch(url, { method: 'GET' })
       .then(res => res.text())
       .then(res => parse(res));
-    // access_token,expires_in,refresh_token
+
     return data;
+    // 返回值示例
+    // access_token,expires_in,refresh_token
   } catch (error) {
     console.log('error');
     console.log(error);
@@ -40,6 +44,7 @@ async function getAccessToken(code) {
 
 async function getOpenid(access_token) {
   try {
+    // 文档地址
     // http://wiki.connect.qq.com/%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7openid_oauth2-0
 
     const url = `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`;
@@ -50,8 +55,10 @@ async function getOpenid(access_token) {
         str = str.replace(' );', '');
         return JSON.parse(str);
       });
-    // {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"}
+
     return data;
+    // 返回值示例
+    // {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"}
   } catch (error) {
     console.log('error');
     console.log(error);
@@ -60,6 +67,7 @@ async function getOpenid(access_token) {
 
 async function getUserInfo(access_token, openid) {
   try {
+    // 文档地址
     // http://wiki.connect.qq.com/get_user_info
     let url = 'https://graph.qq.com/user/get_user_info';
     url += `?access_token=${access_token}`;
@@ -70,7 +78,7 @@ async function getUserInfo(access_token, openid) {
       .then(res => res.json());
 
     return data;
-
+    // 返回值示例
     // {
     //   "ret":0,
     //   "msg":"",
@@ -106,48 +114,37 @@ class Qq {
       const { code } = ctx.query;
 
       const { access_token } = await getAccessToken(code);
-
       if (!access_token) {
         console.log('qq获取access_token失败');
         ctx.redirect(DOMAIN);
       }
 
       const { openid } = await getOpenid(access_token);
-
-      console.log('openid');
-      console.log(openid);
-
       if (!openid) {
         console.log('qq获取openid失败');
         ctx.redirect(DOMAIN);
       }
 
       // 从数据库查找对应用户第三方登录信息
-      // let oauth = await Oauth.findOne({ from: 'qq', 'data.openid': openid });
+      let oauth = await Oauth.findOne({ from: 'qq', 'data.openid': openid });
 
       // 如果不存在则创建新用户，并保存该用户的第三方登录信息
-      // if (!oauth) {
-      // 获取用户信息
-      const userinfo = await getUserInfo(access_token, openid);
+      if (!oauth) {
+        // 获取用户信息
+        const userinfo = await getUserInfo(access_token, openid);
+        const { nickname, figureurl_qq_1, figureurl_qq_2 } = userinfo;
+        // 将用户头像上传至七牛，避免头像过期或无法访问
+        const avatarUrl = await fetchToQiniu(figureurl_qq_2 || figureurl_qq_1);
+        // 创建该用户
+        const user = await User.create({ avatarUrl, nickname });
+        // 创建三方登录信息
+        oauth = await Oauth.create({ from: 'qq', data: { ...userinfo, access_token, openid }, user });
+      }
 
-      console.log('userinfo');
-      console.log(userinfo);
-
-      // const { name: nickname, profile_image_url } = userinfo;
-
-      // console.log('profile_image_url');
-      // console.log(profile_image_url);
-      // // 将用户头像上传至七牛
-      // const avatarUrl = await fetchToQiniu(profile_image_url);
-      // // console.log(avatarUrl);
-      // const user = await User.create({ avatarUrl, nickname });
-      // // await client.setAsync(user._id, user);
-      // oauth = await Oauth.create({ from: 'qq', data: { ...userinfo, access_token, uid }, user });
-      // // }
-      // // 生成token（用户身份令牌）
-      // const token = await getUserToken(oauth.user);
-      // // 重定向页面到用户登录页，并返回token
-      // ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
+      // 生成token（用户身份令牌）
+      const token = await getUserToken(oauth.user);
+      // 重定向页面到用户登录页，并返回token
+      ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
       ctx.redirect(DOMAIN);
       console.log('error');
