@@ -1,6 +1,7 @@
 import Router from 'koa-router';
 import github from './github';
 import wechat from './wechat';
+import qq from './qq';
 import weibo from './weibo';
 import outlook from './outlook';
 
@@ -11,6 +12,8 @@ export default router
   .get('/github/callback', github.callback)
   .get('/wechat', wechat.login)
   .get('/wechat/callback', wechat.callback)
+  .get('/qq', qq.login)
+  .get('/qq/callback', qq.callback)
   .get('/weibo', weibo.login)
   .get('/weibo/callback', weibo.callback)
   .get('/outlook', outlook.login)
