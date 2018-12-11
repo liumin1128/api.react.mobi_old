@@ -1,4 +1,5 @@
 import { User, Oauth } from '@/mongo/modals';
+import { parse } from 'query-string';
 import fetch from 'node-fetch';
 import qq from '@/config/qq';
 import { DOMAIN, API_DOMAIN } from '@/config/base';
@@ -24,7 +25,11 @@ async function getAccessToken(code) {
     url += `&code=${code}`;
     url += '&grant_type=authorization_code';
     url += `&redirect_uri=${API_DOMAIN}/oauth/qq/callback`;
-    const data = await request(url);
+
+    const data = await fetch(url, { method: 'GET' })
+      .then(res => res.text())
+      .then(res => parse(res));
+
     return data;
   } catch (error) {
     console.log('error');
@@ -34,7 +39,7 @@ async function getAccessToken(code) {
 
 async function getOpenid(access_token) {
   try {
-    const data = await request(
+    const data = await fetch(
       `https://graph.qq.com/oauth2.0/me?access_token=${access_token}`,
       { method: 'GET' },
     ).then((res) => {
@@ -67,7 +72,7 @@ class Qq {
       console.log(access_token);
       if (!access_token) {
         console.log('qq获取access_token失败');
-        ctx.redirect('/');
+        ctx.redirect(DOMAIN);
       }
 
       const { openid } = await getOpenid(access_token);
@@ -75,7 +80,7 @@ class Qq {
       console.log(openid);
       if (!openid) {
         console.log('qq获取openid失败');
-        ctx.redirect('/');
+        ctx.redirect(DOMAIN);
       }
       return;
 
