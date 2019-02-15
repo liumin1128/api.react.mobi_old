@@ -12,6 +12,8 @@ import '@/utils/redis';
 // import '@/server/recognition/tencent';
 // import '@/server/crawler/other/company';
 // import '@/server/crawler/other/excel';
+// import '@/server/crawler/other/csv';
+// import '@/server/crawler/other/parcels';
 
 const app = new Koa();
 
