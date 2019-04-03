@@ -70,7 +70,7 @@ export async function getTags() {
     const tag = $(this).find('a').attr('href').slice(25, -1);
     const title = $(this).find('a').text();
     const count = $(this).find('i').text().slice(1, -2);
-    const cover = $(this).find('a img').attr('src');
+    const cover = $(this).find('a img').attr('data-original');
     // const type = (types[types.findIndex(i => i.index >= idx) - 1] || {}).title;
     const type = (types.reverse().find(i => idx <= i.index) || {}).title;
     // const cover = thumbnail.replace(/limg/, '01');
