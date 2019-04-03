@@ -4,11 +4,13 @@ import fetch from './utils/fetch';
 // import { sleep } from './utils/common';
 import { aesEncode } from '../../utils/crypto';
 
-export async function getUrl({ search = '', page = 1, tag = '' }) {
+export async function getUrl({ search = '', page = 1, tag = '', type = 'xinggan' }) {
   let url = 'http://www.mzitu.com/';
   if (search) url += `search/${encodeURIComponent(search)}/`;
+  if (type) url += `/${type}/`;
   if (tag) url += `tag/${tag}/`;
   if (page) url += `page/${page}/`;
+  console.log('getUrl', url);
   return url;
 }
 
