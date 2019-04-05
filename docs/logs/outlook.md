@@ -14,7 +14,7 @@ https://apps.dev.microsoft.com/#/appList
 
 名称随意: 本王今年八岁
 
-应用程序 ID: f72db335-991d-4ffa-b52f-39a8c9c760c0
+应用程序 ID: f72db335-991d-4ffa-b52f-xxxxxxxxxxx
 
 类型: Web
 
