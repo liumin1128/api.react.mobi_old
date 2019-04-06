@@ -14,6 +14,7 @@ import '@/utils/redis';
 // import '@/server/crawler/other/excel';
 // import '@/server/crawler/other/csv';
 // import '@/server/crawler/other/parcels';
+import '@/server/other/toutiao';
 
 const app = new Koa();
 
