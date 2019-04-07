@@ -10,6 +10,7 @@ import other from './models/other/schema';
 import qiniu from './models/qiniu/schema';
 import comment from './models/comment/schema';
 import like from './models/like/schema';
+import news from './models/news/schema';
 
 export default `
   scalar Date
@@ -26,6 +27,7 @@ export default `
   ${qiniu}
   ${comment}
   ${like}
+  ${news}
 
   type Result {
     status: Int!
@@ -83,6 +85,9 @@ export default `
     # 七牛Token
     qiniuToken: QiniuToken
 
+    # 新闻资讯
+    NewsList(keyword: String): [News]
+    NewsDetail: News
   }
   type Mutation {
 

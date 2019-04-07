@@ -12,6 +12,8 @@ import comment from './models/comment/resolver';
 import like from './models/like/resolver';
 import scalar from './scalar';
 
+import news from './models/news/resolver';
+
 import { resolverCombine } from './utils';
 
 export default resolverCombine(
@@ -28,4 +30,5 @@ export default resolverCombine(
   other,
   comment,
   like,
+  news,
 );
