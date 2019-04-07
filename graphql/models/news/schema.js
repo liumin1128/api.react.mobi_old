@@ -18,5 +18,6 @@ export default `
     tags: [String]
     html: String!
     source: String
+    pageToken: String
   }
 `;

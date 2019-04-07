@@ -86,7 +86,7 @@ export default `
     qiniuToken: QiniuToken
 
     # 新闻资讯
-    NewsList(keyword: String): [News]
+    NewsList(first: Int, skip: Int, keyword: String, pageToken: String): [News]
     NewsDetail: News
   }
   type Mutation {
