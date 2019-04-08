@@ -11,7 +11,7 @@ export default {
     },
     NewsList: async (root, args) => {
       try {
-        const data = await getList('switch');
+        const data = await getList({ keyword: 'switch' });
         return data;
       } catch (error) {
         console.log(error);
