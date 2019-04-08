@@ -3,7 +3,7 @@ import moment from 'moment';
 import fetch from 'node-fetch';
 import { API_KEY } from '@/config/idataapi';
 import { News } from '@/mongo/modals';
-import { Promise } from 'mongoose';
+import { CronJob } from 'cron';
 
 export function format(data) {
   return {
@@ -30,7 +30,7 @@ export function filter(data) {
   return true;
 }
 
-export async function getList({ keyword: kw = 'switch', ago = 90, options }) {
+export async function getList({ keyword: kw = 'switch', ago = 10, options }) {
   const params = {
     kw,
     apikey: API_KEY,
@@ -73,9 +73,9 @@ async function test() {
       keyword: 'switch',
     });
     // const data = await getDetail({ id: 'a55bfba3edca4d6a3b83db59d884bebb' });
-    console.log('data');
-    console.log(data);
-    console.log(`${moment().subtract(100, 'minute').format('X')},${moment().format('X')}`);
+    // console.log('data');
+    // console.log(data);
+    // console.log(`${moment().subtract(100, 'minute').format('X')},${moment().format('X')}`);
     console.log(data.length);
     const results = Promise.all(data.map(async (i) => {
       const obj = await News.findOne({ 'sourceData.id': i.id });
@@ -85,12 +85,17 @@ async function test() {
       }
       News.create({ ...i, sourceData: i });
     }));
-    console.log('results');
-    console.log(results);
+    // console.log('results');
+    // console.log(results);
   } catch (error) {
     console.log('error');
     console.log(error);
   }
 }
 
-test();
+/* eslint-disable no-new */
+new CronJob('0 10 * * * *', () => {
+  console.log(`10分钟抓取一次，${moment().format('llll')}`);
+  test();
+}, null, true);
+/* eslint-enable no-new */
