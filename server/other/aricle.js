@@ -2,6 +2,8 @@ import { stringify } from 'query-string';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { API_KEY } from '@/config/idataapi';
+import { News } from '@/mongo/modals';
+import { Promise } from 'mongoose';
 
 export function format(data) {
   return {
@@ -28,11 +30,12 @@ export function filter(data) {
   return true;
 }
 
-export async function getList({ keyword: kw, options }) {
+export async function getList({ keyword: kw = 'switch', ago = 90, options }) {
   const params = {
     kw,
     apikey: API_KEY,
     sourceRegion: '中国',
+    publishDateRange: `${moment().subtract(ago, 'minute').format('X')},${moment().format('X')}`,
     ...options,
   };
   const str = stringify(params);
@@ -43,10 +46,6 @@ export async function getList({ keyword: kw, options }) {
     const result = data.data
       .filter(i => filter(i))
       .map(i => format(i));
-
-    console.log('result');
-    console.log(result);
-
     return result;
   }
   throw data;
@@ -70,14 +69,28 @@ async function test() {
   try {
     // const data = await getCategory();
   // const data = await getList();
-    const data = await getList('switch');
+    const data = await getList({
+      keyword: 'switch',
+    });
     // const data = await getDetail({ id: 'a55bfba3edca4d6a3b83db59d884bebb' });
     console.log('data');
     console.log(data);
+    console.log(`${moment().subtract(100, 'minute').format('X')},${moment().format('X')}`);
+    console.log(data.length);
+    const results = Promise.all(data.map(async (i) => {
+      const obj = await News.findOne({ 'sourceData.id': i.id });
+      if (obj) {
+        console.log(i.title, obj.title, '已存在');
+        return;
+      }
+      News.create({ ...i, sourceData: i });
+    }));
+    console.log('results');
+    console.log(results);
   } catch (error) {
     console.log('error');
     console.log(error);
   }
 }
 
-// test();
+test();
