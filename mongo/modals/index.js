@@ -1,4 +1,4 @@
-import modal from './modalCreator';
+import modalCreator from './modalCreator';
 
 import {
   userSchema,
@@ -7,11 +7,13 @@ import {
   saySchema,
   commentSchema,
   likeSchema,
+  newsSchema,
 } from '../schemas';
 
-export const Say = modal('Say', saySchema);
-export const User = modal('User', userSchema);
-export const Oauth = modal('Oauth', oauthSchema);
-export const Article = modal('Article', articleSchema);
-export const Comment = modal('Comment', commentSchema);
-export const Like = modal('Like', likeSchema);
+export const Say = modalCreator('Say', saySchema);
+export const User = modalCreator('User', userSchema);
+export const Oauth = modalCreator('Oauth', oauthSchema);
+export const Article = modalCreator('Article', articleSchema);
+export const Comment = modalCreator('Comment', commentSchema);
+export const Like = modalCreator('Like', likeSchema);
+export const News = modalCreator('News', newsSchema);

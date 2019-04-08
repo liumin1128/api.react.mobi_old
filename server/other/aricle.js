@@ -11,7 +11,7 @@ export function format(data) {
     date: data.publishDate,
     labels: [data.catLabel1, data.catLabel2],
     photos: data.imageUrls,
-    cover: Array.isArray(data.imageUrls) ? data.imageUrls[0] : '',
+    cover: data.cover || (Array.isArray(data.imageUrls) ? data.imageUrls[0] : ''),
     tags: data.topkeyword,
   };
 }
@@ -19,6 +19,8 @@ export function format(data) {
 export function filter(data) {
   // 排除没有正文的
   if (!data.html) return false;
+  // 排除微信公众号，因为图片不显示
+  if (data.appCode === 'weixin') return false;
   // 排除国外源
   // if (data.sourceRegion !== '中国') return false;
   // 排除无图的
@@ -27,7 +29,12 @@ export function filter(data) {
 }
 
 export async function getList({ keyword: kw, options }) {
-  const params = { apikey: API_KEY, sourceRegion: '中国', kw, ...options };
+  const params = {
+    kw,
+    apikey: API_KEY,
+    sourceRegion: '中国',
+    ...options,
+  };
   const str = stringify(params);
   const api = `http://api01.idataapi.cn:8000/article/idataapi?${str}`;
   console.log('抓取综合文章：', api);
@@ -37,8 +44,8 @@ export async function getList({ keyword: kw, options }) {
       .filter(i => filter(i))
       .map(i => format(i));
 
-    // console.log('result');
-    // console.log(result);
+    console.log('result');
+    console.log(result);
 
     return result;
   }
