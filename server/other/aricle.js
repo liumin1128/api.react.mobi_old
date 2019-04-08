@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import { API_KEY } from '@/config/idataapi';
 import { News } from '@/mongo/modals';
 import { CronJob } from 'cron';
+import { sleep } from '@/utils/common';
 
 export function format(data) {
   return {
@@ -30,23 +31,20 @@ export function filter(data) {
   return true;
 }
 
-export async function getList({ keyword: kw = 'switch', ago = 10, options }) {
+export async function getList({ keyword: kw = 'switch', ...options }) {
   const params = {
     kw,
     apikey: API_KEY,
     sourceRegion: '中国',
-    publishDateRange: `${moment().subtract(ago, 'minute').format('X')},${moment().format('X')}`,
     ...options,
   };
+
   const str = stringify(params);
   const api = `http://api01.idataapi.cn:8000/article/idataapi?${str}`;
   console.log('抓取综合文章：', api);
   const data = await fetch(api, { method: 'GET' }).then(res => res.json());
-  if (data.data) {
-    const result = data.data
-      .filter(i => filter(i))
-      .map(i => format(i));
-    return result;
+  if (data.retcode === '000000') {
+    return data;
   }
   throw data;
 }
@@ -65,28 +63,32 @@ export async function getDetail(options) {
   throw data;
 }
 
-async function test() {
+async function getData(args) {
   try {
-    // const data = await getCategory();
-  // const data = await getList();
-    const data = await getList({
-      keyword: 'switch',
-    });
-    // const data = await getDetail({ id: 'a55bfba3edca4d6a3b83db59d884bebb' });
-    // console.log('data');
-    // console.log(data);
-    // console.log(`${moment().subtract(100, 'minute').format('X')},${moment().format('X')}`);
-    console.log(data.length);
-    const results = Promise.all(data.map(async (i) => {
+    const data = await getList(args);
+    console.log(`本次查到 ${data.data.length} 条数据`);
+
+    const result = data.data
+      .filter(i => filter(i))
+      .map(i => format(i));
+
+    await Promise.all(result.map(async (i) => {
       const obj = await News.findOne({ 'sourceData.id': i.id });
       if (obj) {
-        console.log(i.title, obj.title, '已存在');
+        console.log('已存在：', i.title);
         return;
       }
       News.create({ ...i, sourceData: i });
+      console.log('已写入：', i.title);
     }));
-    // console.log('results');
-    // console.log(results);
+
+    if (data.hasNext && data.pageToken) {
+      await sleep(3000);
+      console.log(`继续查询下一页：${data.pageToken}`);
+      getData({ ...args, pageToken: data.pageToken });
+    } else {
+      console.log('全部数据抓取完成');
+    }
   } catch (error) {
     console.log('error');
     console.log(error);
@@ -94,8 +96,15 @@ async function test() {
 }
 
 /* eslint-disable no-new */
-new CronJob('0 10 * * * *', () => {
-  console.log(`10分钟抓取一次，${moment().format('llll')}`);
-  test();
-}, null, true);
+// new CronJob('0 */10 * * * *', () => {
+//   console.log(`10分钟抓取一次，${moment().format('llll')}`);
+//   getData();
+// }, null, true);
 /* eslint-enable no-new */
+
+const publishDateRange = `${moment().subtract(1, 'day').format('X')},${moment().format('X')}`;
+
+// getData({
+//   keyword: 'switch',
+//   publishDateRange,
+// });
