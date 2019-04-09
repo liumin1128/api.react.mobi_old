@@ -1,11 +1,14 @@
 const canShowHtmlList = [
+  // 知名网站
   '3dmgame.com',
   'qq.com',
   'duowan.com',
   'eastday.com',
-  'ikanchai.com',
   'ifeng.com',
   'doyo.cn',
+  // 其他
+  'ikanchai.com',
+  'pcpop.com',
 ];
 
 function canShowHtml(appCode) {
@@ -13,11 +16,19 @@ function canShowHtml(appCode) {
 }
 
 const blackList = [
-  'weixin',
-  'game234.com',
-  'myzaker.com',
-  'pcgames.com.cn',
+  'ali213.net', // 翻页有问题
+  'weixin', // 图片不显示
+  'yxdown.com', // 图片不显示
+  'game234.com', // 内容质量过低
+  'myzaker.com', // 内容质量过低
+  'pcgames.com.cn', // 内容质量过低
+  'yzz.cn', // 内容质量过低
+  'china.com', // 分页异常
+  'uuu9.com', // 图片不显示
 ];
+
+// 文本模式
+// 163.com
 
 function isInBlackList(appCode) {
   return blackList.indexOf(appCode) !== -1;
@@ -31,17 +42,10 @@ export function format(data) {
     photos: data.imageUrls,
     tags: data.topkeyword,
     showHtml: canShowHtml(data.appCode),
-
   };
 }
 
 export function filter(data) {
-  // 排除没有正文的
-  if (!data.html) return false;
-
-  // 排除微信公众号，因为图片不显示
-  if (data.appCode === 'weixin') return false;
-
   // 排除腾讯网，已经有腾讯新闻了
   if (data.appName === '腾讯网') return false;
 

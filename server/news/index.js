@@ -2,24 +2,7 @@ import moment from 'moment';
 import { CronJob } from 'cron';
 import { getData } from './service';
 
-// 垃圾网站
-// game234.com
-// myzaker.com
-// pcgames.com.cn
-
-// 反爬
-// yxdown.com
-
-// 翻页有问题
-// 'ali213.net'
-
-// 待考察
-// 7k7k
-// 37txt.cn
-// yidianzixun.com
-
 // 今日头条，网易新闻， sohu.com的图片显示有问题，只能用文本模式
-
 
 /* eslint-disable no-new */
 // new CronJob('0 */10 * * * *', () => {
@@ -29,10 +12,10 @@ import { getData } from './service';
 /* eslint-enable no-new */
 
 
-function newsFetch() {
+function test() {
   // const start = moment().subtract(10, 'minute');
-  const start = moment().subtract(1, 'day');
-  const end = moment();
+  const start = moment().subtract(2, 'day');
+  const end = moment().subtract(1, 'day');
   const publishDateRange = `${start.format('X')},${end.format('X')}`;
   console.log(`抓取${start.format('llll')}至今的文章`);
   getData({
@@ -42,5 +25,4 @@ function newsFetch() {
   });
 }
 
-newsFetch();
-
+// test();
