@@ -1,5 +1,4 @@
 
-import { getDetail, getList } from '@/server/other/aricle';
 import { News } from '@/mongo/modals';
 // import { userLoader, commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
 

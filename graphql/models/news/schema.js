@@ -19,7 +19,8 @@ export default `
     labels: [String]
     tags: [String]
     html: String!
-    source: String
+    appCode: String
+    appName: String
     url: String
     pageToken: String
   }
