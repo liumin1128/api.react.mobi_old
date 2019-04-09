@@ -7,6 +7,7 @@ export default {
   json: String,
   title: String,
   source: String,
+  url: String,
   cover: String,
   description: String,
   tags: Array,

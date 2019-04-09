@@ -7,8 +7,9 @@ export default `
     """
     文档 [API](http://example.com)!
     """
-    id: String!
-    date: Date
+    _id: String!
+    createdAt: Date!
+    updatedAt: Date!
     # 标题
     title: String!
     description: String!
@@ -18,6 +19,7 @@ export default `
     tags: [String]
     html: String!
     source: String
+    url: String
     pageToken: String
   }
 `;

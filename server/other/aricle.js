@@ -90,6 +90,10 @@ async function getData(args) {
       console.log('全部数据抓取完成');
     }
   } catch (error) {
+    if (error.retcode === '100002') {
+      console.log('未找到到任何文章，查询结束');
+      return;
+    }
     console.log('error');
     console.log(error);
   }
@@ -102,9 +106,11 @@ async function getData(args) {
 // }, null, true);
 /* eslint-enable no-new */
 
-const publishDateRange = `${moment().subtract(1, 'day').format('X')},${moment().format('X')}`;
-
-// getData({
-//   keyword: 'switch',
-//   publishDateRange,
-// });
+const start = moment().subtract(1000, 'minute');
+const end = moment();
+const publishDateRange = `${start.format('X')},${end.format('X')}`;
+console.log(`抓取${start.format('llll')}至今的文章`);
+getData({
+  keyword: 'switch',
+  publishDateRange,
+});
