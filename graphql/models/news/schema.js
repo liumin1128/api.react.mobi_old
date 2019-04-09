@@ -12,7 +12,8 @@ export default `
     updatedAt: Date!
     # 标题
     title: String!
-    description: String!
+    content: String!
+    showHtml: Boolean
     cover: String
     photos: [String]
     labels: [String]
