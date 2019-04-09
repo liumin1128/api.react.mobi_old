@@ -9,6 +9,7 @@ const canShowHtmlList = [
   // 其他
   'ikanchai.com',
   'pcpop.com',
+  'vrtuoluo.cn',
 ];
 
 function canShowHtml(appCode) {
@@ -25,10 +26,13 @@ const blackList = [
   'yzz.cn', // 内容质量过低
   'china.com', // 分页异常
   'uuu9.com', // 图片不显示
+  'e23.cn',
+  'quxiu.com',
+  'erhainews.com',
 ];
 
 // 文本模式
-// 163.com
+// 163.com,toutiao.com,
 
 function isInBlackList(appCode) {
   return blackList.indexOf(appCode) !== -1;
