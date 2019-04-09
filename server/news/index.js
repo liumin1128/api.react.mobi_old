@@ -14,16 +14,19 @@ import { getData } from './service';
 
 function test() {
   // const start = moment().subtract(10, 'minute');
-  const start = moment().subtract(2, 'day');
-  const end = moment().subtract(1, 'day');
+  const start = moment().subtract(1, 'day');
+  const end = moment();
   const publishDateRange = `${start.format('X')},${end.format('X')}`;
   console.log(`抓取${start.format('llll')}至今的文章`);
   getData({
     keyword: 'switch',
     catLabel1: '游戏',
+    // catLabel1: '动漫',
     publishDateRange,
   });
 }
 
 
 // test();
+
+// switch,cos

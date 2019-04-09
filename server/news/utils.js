@@ -11,6 +11,7 @@ const canShowHtmlList = [
   'pcpop.com',
   'vrtuoluo.cn',
   'gao7.com',
+  '37txt.cn',
 ];
 
 function canShowHtml(appCode) {
@@ -20,6 +21,7 @@ function canShowHtml(appCode) {
 const blackList = [
   'ali213.net', // 翻页有问题
   'weixin', // 图片不显示
+  'weixinpro',
   'yxdown.com', // 图片不显示
   'game234.com', // 内容质量过低
   'myzaker.com', // 内容质量过低
