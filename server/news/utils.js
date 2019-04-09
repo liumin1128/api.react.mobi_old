@@ -43,7 +43,6 @@ export function format(data) {
   return {
     ...data,
     date: data.publishDate,
-    labels: [data.catLabel1, data.catLabel2],
     photos: data.imageUrls,
     tags: data.topkeyword,
     showHtml: canShowHtml(data.appCode),

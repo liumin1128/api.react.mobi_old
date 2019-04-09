@@ -2,7 +2,6 @@ export default `
   type NewsMeta {
     count: Int!
   }
-  
   type News {
     """
     文档 [API](http://example.com)!
@@ -21,6 +20,8 @@ export default `
     html: String!
     appCode: String
     appName: String
+    catLabel1: String
+    catLabel2: String
     url: String
     pageToken: String
   }
