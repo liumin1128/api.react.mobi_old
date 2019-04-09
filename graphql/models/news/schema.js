@@ -15,7 +15,6 @@ export default `
     showHtml: Boolean
     cover: String
     photos: [String]
-    labels: [String]
     tags: [String]
     html: String!
     appCode: String
