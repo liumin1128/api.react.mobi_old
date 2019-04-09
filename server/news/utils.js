@@ -10,6 +10,7 @@ const canShowHtmlList = [
   'ikanchai.com',
   'pcpop.com',
   'vrtuoluo.cn',
+  'gao7.com',
 ];
 
 function canShowHtml(appCode) {
