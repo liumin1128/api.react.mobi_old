@@ -1,6 +1,8 @@
 import { stringify } from 'query-string';
 import fetch from 'node-fetch';
 import { API_KEY } from '@/config/idataapi';
+import uniqBy from 'lodash/uniqBy';
+import reverse from 'lodash/reverse';
 import { News } from '@/mongo/modals';
 import { format, filter } from './utils';
 import { sleep } from '@/utils/common';
@@ -28,12 +30,17 @@ export async function getData(args) {
     const data = await getList(args);
     console.log(`本次查到 ${data.data.length} 条数据`);
 
-    const result = data.data
+    const result = uniqBy(reverse(data.data), 'title')
+    // const result = data.data
       .filter(i => filter(i))
       .map(i => format(i));
 
     await Promise.all(result.map(async (i) => {
-      const obj = await News.findOne({ 'sourceData.id': i.id });
+      const obj = await News.findOne({ $or: [
+        { 'sourceData.id': i.id },
+        { 'sourceData.title': i.title },
+      ] });
+      // const obj = await News.findOne({ 'sourceData.id': i.id });
       if (obj) {
         console.log('已存在：', i.title);
         return;
