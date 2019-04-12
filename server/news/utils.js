@@ -1,3 +1,5 @@
+import { fetchToQiniu } from '@/utils/qiniu';
+
 const canShowHtmlList = [
   // 知名网站
   '3dmgame.com',
@@ -32,6 +34,7 @@ const blackList = [
   'e23.cn',
   'quxiu.com',
   'erhainews.com',
+  'ledanji.com', // 内容质量过低
 ];
 
 // 文本模式
@@ -49,6 +52,14 @@ export function format(data) {
     tags: data.topkeyword,
     showHtml: canShowHtml(data.appCode),
   };
+}
+
+export async function pictureToQiniu(data) {
+  const temp = await Promise.all(data.map(async (i) => {
+    const photos = await Promise.all(i.photos.map(j => fetchToQiniu(j)));
+    return { ...i, photos };
+  }));
+  return temp;
 }
 
 export function filter(data) {
