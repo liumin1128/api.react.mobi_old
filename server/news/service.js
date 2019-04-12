@@ -6,7 +6,6 @@ import reverse from 'lodash/reverse';
 import { News } from '@/mongo/modals';
 import { format, filter, getNews } from './utils';
 import { sleep } from '@/utils/common';
-import { fetchToQiniu } from '@/utils/qiniu';
 
 export async function getList({ keyword: kw = 'switch', ...options }) {
   const params = {
@@ -29,7 +28,7 @@ export async function getList({ keyword: kw = 'switch', ...options }) {
 export async function getData(args) {
   try {
     const data = await getList(args);
-    console.log(`本次查到 ${data.data.length} 条数据`);
+    console.log(`本次查到 ${data.data.length} 条数据${data.pageToken}`);
 
     const result = uniqBy(reverse(data.data), 'title')
     // const result = data.data
@@ -46,11 +45,15 @@ export async function getData(args) {
         console.log('已存在：', i.title);
         return;
       }
-      const news = await getNews(i);
-      News.create(news);
-      console.log('已写入：', i.title);
+      try {
+        const news = await getNews(i);
+        await News.create(news);
+        console.log('已写入：', i.title);
+      } catch (error) {
+        console.log(`写入失败：${i.title}`);
+        console.log(error);
+      }
     }));
-
 
     if (data.hasNext && data.pageToken) {
       await sleep(3000);
