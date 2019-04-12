@@ -54,6 +54,25 @@ export function format(data) {
   };
 }
 
+export async function getNews(i) {
+  // 抓图片
+  const photos = await Promise.all(i.photos.map(j => fetchToQiniu(j)));
+  // 抓封面
+  let { cover, html } = i;
+  if (cover) { cover = await fetchToQiniu(cover); }
+  // 替换html中的图片
+  i.photos.map((j, idx) => {
+    html = html.replace(new RegExp(j, 'g'), photos[idx]);
+  });
+  // 修复今日头条图片不显示的问题
+  if (i.appCode === 'toutiao.com') {
+    photos.map((j) => {
+      html = html.replace(/<div class="pgc-img"(([\s\S])*?)<\/div>/i, `<figure><img src="${j}" alt=""/></figure>`);
+    });
+  }
+  return { ...i, cover, html, photos, sourceData: i };
+}
+
 export async function pictureToQiniu(data) {
   const temp = await Promise.all(data.map(async (i) => {
     const photos = await Promise.all(i.photos.map(j => fetchToQiniu(j)));

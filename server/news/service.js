@@ -4,7 +4,7 @@ import { API_KEY } from '@/config/idataapi';
 import uniqBy from 'lodash/uniqBy';
 import reverse from 'lodash/reverse';
 import { News } from '@/mongo/modals';
-import { format, filter, pictureToQiniu } from './utils';
+import { format, filter, getNews } from './utils';
 import { sleep } from '@/utils/common';
 import { fetchToQiniu } from '@/utils/qiniu';
 
@@ -36,8 +36,6 @@ export async function getData(args) {
       .filter(i => filter(i))
       .map(i => format(i));
 
-    // const result2 = await pictureToQiniu(result);
-
     await Promise.all(result.map(async (i) => {
       const obj = await News.findOne({ $or: [
         { 'sourceData.id': i.id },
@@ -48,24 +46,8 @@ export async function getData(args) {
         console.log('已存在：', i.title);
         return;
       }
-      // 抓图片
-      const photos = await Promise.all(i.photos.map(j => fetchToQiniu(j)));
-      // 抓封面
-      let { cover, html } = i;
-      if (cover) { cover = await fetchToQiniu(cover); }
-      // 替换html中的图片
-      i.photos.map((j, idx) => {
-        html = html.replace(new RegExp(j, 'g'), photos[idx]);
-      });
-      // 修复今日头条图片不显示的问题
-      if (i.appCode === 'toutiao.com') {
-        photos.map((j) => {
-          html = html.replace(/<div class="pgc-img"(([\s\S])*?)<\/div>/i, `<figure><img src="${j}" alt=""/></figure>`);
-        });
-      }
-
-      News.create({ ...i, cover, html, photos, sourceData: i });
-
+      const news = await getNews(i);
+      News.create(news);
       console.log('已写入：', i.title);
     }));
 
