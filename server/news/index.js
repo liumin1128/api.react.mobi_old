@@ -6,8 +6,8 @@ import { getData } from './service';
 
 
 function test() {
-  const start = moment().subtract(10, 'minute');
-  // const start = moment().subtract(2, 'day');
+  // const start = moment().subtract(10, 'minute');
+  const start = moment().subtract(2, 'day');
   const end = moment();
   const publishDateRange = `${start.format('X')},${end.format('X')}`;
   console.log(`抓取${start.format('llll')}至今的文章`);
