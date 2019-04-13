@@ -11,5 +11,5 @@ ObjectId.prototype.valueOf = function () {
 
 // mongoose.connect(ENV ? 'mongodb://localhost:27017/react' : 'mongodb://react:lol970568830@localhost:27000/react', { useNewUrlParser: true });
 mongoose.connect('mongodb://localhost:27017/react', { useNewUrlParser: true });
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 mongoose.Promise = global.Promise;

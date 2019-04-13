@@ -16,6 +16,13 @@ const canShowHtmlList = [
   '37txt.cn',
 ];
 
+// const appLogo = {
+//   '3dmgame.com': 'https://imgs.react.mobi/FhyQn2l-CNmlB-Oxi9pXvm0vZqSJ',
+//   'toutiao.com': 'https://imgs.react.mobi/Fk0vSrOldS7bHybywpj3pKXTMWEZ',
+//   'eastday.com': 'https://imgs.react.mobi/FvCrL3RB16fjHafbjXhrrg3zOmGA',
+//   'qq.com': 'https://imgs.react.mobi/FkIgsT1b8qL52F8fKidNimDhKUJB',
+// };
+
 function canShowHtml(appCode) {
   return canShowHtmlList.indexOf(appCode) !== -1;
 }
@@ -77,6 +84,7 @@ export async function getNews(i) {
       });
     }
   }
+
   return { ...i, cover, html, photos, sourceData: i };
 }
 
