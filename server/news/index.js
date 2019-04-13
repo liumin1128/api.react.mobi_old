@@ -18,7 +18,7 @@ function test() {
 }
 
 
-test();
+// test();
 
 // switch,cos
 
