@@ -13,12 +13,12 @@ function test() {
     keyword: 'switch',
     catLabel1: '游戏',
     // catLabel1: '动漫',
-    // publishDateRange,
+    publishDateRange,
   });
 }
 
 
-test();
+// test();
 
 // switch,cos
 
