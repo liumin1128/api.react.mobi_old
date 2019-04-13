@@ -30,6 +30,7 @@ const blackList = [
   'pcgames.com.cn', // 内容质量过低
   'yzz.cn', // 内容质量过低
   'china.com', // 分页异常
+  // 'gamersky.com', // 分页异常
   'uuu9.com', // 图片不显示
   'e23.cn',
   'quxiu.com',
@@ -66,9 +67,15 @@ export async function getNews(i) {
   });
   // 修复今日头条图片不显示的问题
   if (i.appCode === 'toutiao.com') {
-    photos.map((j) => {
-      html = html.replace(/<div class="pgc-img"(([\s\S])*?)<\/div>/i, `<figure><img src="${j}" alt=""/></figure>`);
-    });
+    if (html.indexOf('<div class="pgc-img"') !== -1) {
+      photos.map((j) => {
+        html = html.replace(/<div class="pgc-img"(([\s\S])*?)<\/div>/i, `<figure><img src="${j}" alt=""/></figure>`);
+      });
+    } else {
+      photos.map((j) => {
+        html = html.replace(/<a class="image"(([\s\S])*?)<\/a>/i, `<figure><img src="${j}" alt=""/></figure>`);
+      });
+    }
   }
   return { ...i, cover, html, photos, sourceData: i };
 }
