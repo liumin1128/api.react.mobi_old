@@ -4,8 +4,8 @@
         "name": "api.react.mobi",
         "script": "index.js",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
-        "cron_restart": "0 4 * * *",
-        "instances": 2,
+        "cron_restart": "0 4 * * * *",
+        "instances": 1,
         "env": {
           "NODE_ENV": "production"
         }
