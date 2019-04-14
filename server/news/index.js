@@ -17,9 +17,7 @@ function test() {
 }
 
 
-test();
-
-
+// test();
 // switch,cos
 
 /* eslint-disable no-new */
