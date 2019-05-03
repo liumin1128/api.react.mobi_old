@@ -35,6 +35,8 @@ export async function getData(args) {
       .filter(i => filter(i))
       .map(i => format(i));
 
+    let hasNew = false
+
     await Promise.all(result.map(async (i) => {
       const obj = await News.findOne({ $or: [
         { 'sourceData.id': i.id },
@@ -45,6 +47,8 @@ export async function getData(args) {
         console.log('已存在：', i.title);
         return;
       }
+
+      hasNew = true
       try {
         const news = await getNews(i);
         await News.create(news);
@@ -55,7 +59,7 @@ export async function getData(args) {
       }
     }));
 
-    if (data.hasNext && data.pageToken) {
+    if (data.hasNext && data.pageToken && hasNew) {
       await sleep(3000);
       console.log(`继续查询下一页：${data.pageToken}`);
       getData({ ...args, pageToken: data.pageToken });
