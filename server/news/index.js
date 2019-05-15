@@ -21,7 +21,7 @@ function test() {
 // switch,cos
 
 /* eslint-disable no-new */
-new CronJob('0 */10 * * * *', () => {
+new CronJob('0 */60 * * * *', () => {
   test();
   // console.log(`10分钟抓取一次，${moment().format('llll')}`);
   // const start = moment().subtract(10, 'minute');
