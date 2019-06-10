@@ -67,7 +67,7 @@ export default `
     meizituPictures(_id: String): MeizituPictures
 
     # 福利图
-    mzituList(page: Int, search: String, tag: String, type: String): [Mzitu]
+    mzituList(skip: Int, search: String, tag: String, type: String): [Mzitu]
     mzituTags: [MzituTag!]
     mzituPictures(_id: String): MzituPictures
 

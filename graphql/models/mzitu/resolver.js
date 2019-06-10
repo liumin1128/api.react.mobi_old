@@ -8,11 +8,9 @@ export default {
       return tags;
     },
     mzituList: async (root, args) => {
-      console.log('args');
-      console.log(args);
-      // const { page, search, tag } = args;
-
-      const url = await getUrl(args);
+      const { skip, ...other } = args;
+      const page = Math.ceil(skip / 24) + 1;
+      const url = await getUrl({ page, ...other });
       const list = await getList(url);
       return list;
     },
