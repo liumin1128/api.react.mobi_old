@@ -75,10 +75,10 @@ export async function getPageList(url) {
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html, { decodeEntities: false });
   const list = [];
-  function getPage() {
+  function getPage2() {
     list.push(`https://www.manhuadb.com${$(this).attr('value')}`);
   }
-  await $('select.form-control').find('option').map(getPage);
+  await $('select.form-control').eq(0).find('option').map(getPage2);
   return list;
 }
 
@@ -109,8 +109,9 @@ async function test(number) {
     console.log(pageList);
 
     const imgs = [];
+    const cur = 5;
     // 分20一组，串行访问
-    await sequence(chunk(pageList, 20).map(pages => async () => {
+    await sequence(chunk(pageList, cur).slice(0, 1).map(pages => async () => {
       await sleep(Math.random() * 5000);
       //   以20一组，并行访问
       await Promise.all(pages.map(async (j, jdx) => {
@@ -141,7 +142,10 @@ async function test(number) {
       }));
     }));
 
-    data.list[idx].list = imgs;
+    data.list[idx].list = imgs
+      .map(src => ({ src, index: parseInt(src.substr(42, 3).replace('_', ''), 0) }))
+      .sort((x, y) => x.index - y.index)
+      .map(({ src }) => src);
   }));
 
   console.log('爬取成功！！！');
@@ -149,7 +153,7 @@ async function test(number) {
   fs.writeFileSync(`../jojo/${number}.json`, JSON.stringify(data));
 }
 
-// test(128);
+test(128);
 
 async function readJson() {
 //   await checkPath('../jojo');
@@ -158,8 +162,9 @@ async function readJson() {
   console.log(data);
   const json = JSON.parse(data);
   console.log('json');
-  console.log(json.list);
+  console.log(json.list[0].list.length);
 
+  const ssss = [];
 
   const cur = 10;
   await sequence(json.list.map((list, idx) => async () => {
@@ -171,12 +176,19 @@ async function readJson() {
         const filepath = `../jojo/${idx + 1}/${cur * pdx + jdx + 1}.jpg`;
         await checkPath(dirpath);
         await dp(j, filepath);
+
+        const index = parseInt(j.substr(42, 3).replace('_', ''), 0);
+        ssss.push(index);
       }));
       console.log('获取成功');
     }));
   }));
+
+  console.log('ssss');
+  console.log(JSON.stringify(ssss.sort((x, y) => x - y)));
 }
-readJson();
+// readJson();
+
 
 function dp(url, filepath) {
   return new Promise((resolve, reject) => {
