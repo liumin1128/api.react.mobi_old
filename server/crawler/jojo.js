@@ -161,20 +161,40 @@ async function readJson() {
   console.log(json.list);
 
 
+  const cur = 10;
   await sequence(json.list.map((list, idx) => async () => {
-    await sequence(chunk(list.list, 5).slice(0, 1).map((pages, pdx) => async () => {
+    await sequence(chunk(list.list, cur).map((pages, pdx) => async () => {
       await sleep(Math.random() * 1000);
-      console.log('正在获取:', `/jojo/${idx + 1}/`, ` 第${pdx}批`);
+      console.log('正在获取:', `/jojo/${idx + 1}/`, ` 第${pdx + 1}批`);
       await Promise.all(pages.map(async (j, jdx) => {
         const dirpath = `../jojo/${idx + 1}`;
-        const filepath = `../jojo/${idx + 1}/${jdx + 1}.jpg`;
-
+        const filepath = `../jojo/${idx + 1}/${cur * pdx + jdx + 1}.jpg`;
         await checkPath(dirpath);
-
-        await request(j).pipe(fs.createWriteStream(filepath));
+        await dp(j, filepath);
       }));
       console.log('获取成功');
     }));
   }));
 }
-// readJson();
+readJson();
+
+function dp(url, filepath) {
+  return new Promise((resolve, reject) => {
+    // 块方式写入文件
+    const wstream = fs.createWriteStream(filepath);
+
+    wstream.on('open', () => {
+      console.log('下载：', url, filepath);
+    });
+    wstream.on('error', (err) => {
+      console.log('出错：', url, filepath);
+      reject(err);
+    });
+    wstream.on('finish', () => {
+      console.log('完成：', url, filepath);
+      resolve(true);
+    });
+
+    request(url).pipe(wstream);
+  });
+}
