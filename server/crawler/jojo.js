@@ -102,10 +102,6 @@ async function test(number) {
     await sleep(Math.random() * 1000);
     let pageList = await getPageList(i.href);
 
-    // pageList = pageList.slice(0, 5);
-    console.log('pageList');
-    console.log(pageList);
-
     pageList = pageList
       .map(src => ({ src, index: parseInt(src.substr(42, 3).replace('_', ''), 0) }))
       .sort((x, y) => x.index - y.index)
@@ -113,16 +109,17 @@ async function test(number) {
 
     const imgs = [];
     const cur = 5;
+
     // 分20一组，串行访问
     await sequence(chunk(pageList, cur).map((pages, pdx) => async () => {
       await sleep(Math.random() * 5000);
-      //   以20一组，并行访问
+      // 以20一组，并行访问
       await Promise.all(pages.map(async (j, jdx) => {
         let src;
         async function race() {
           await sleep(Math.random() * 1000);
           console.log(`前往url:${j}`);
-          //   如果超时，重新加入队列
+          // 如果超时，重新加入队列
           const res = await Promise.race([
             getPage(j),
             sleep(5000),
