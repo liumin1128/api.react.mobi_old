@@ -1,4 +1,5 @@
 import fs from 'fs';
+import request from 'request';
 
 // 创建文件夹
 export function mkdir(pos, dirArray, _callback) {
@@ -85,5 +86,25 @@ export function saveFile(filePath, fileData) {
     });
     wstream.on('error', (err) => { reject(err); });
     wstream.on('finish', () => { resolve(true); });
+  });
+}
+
+
+function downloadFile(url, filepath) {
+  return new Promise((resolve, reject) => {
+    // 块方式写入文件
+    const ws = fs.createWriteStream(filepath);
+    ws.on('open', () => {
+      console.log('下载：', url, filepath);
+    });
+    ws.on('error', (err) => {
+      console.log('出错：', url, filepath);
+      reject(err);
+    });
+    ws.on('finish', () => {
+      console.log('完成：', url, filepath);
+      resolve(true);
+    });
+    request(url).pipe(ws);
   });
 }

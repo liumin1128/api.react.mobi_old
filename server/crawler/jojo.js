@@ -1,22 +1,22 @@
 import cheerio from 'cheerio';
 import chunk from 'lodash/chunk';
-import request from 'request';
 import fs from 'fs';
 import { sleep } from '@/utils/common';
 import { sequence } from '@/utils/promise';
-import { checkPath, readFile, saveFile } from '@/utils/fs';
+import { checkPath, readFile, downloadFile } from '@/utils/fs';
 import fetch from './utils/fetch';
 
+const baseUrl = 'https://www.manhuadb.com';
+
+// 根据编号获取url地址
 export async function getIndexUrl(number) {
-  let url = 'https://www.manhuadb.com/manhua/';
+  let url = `${baseUrl}/manhua/`;
   if (number) url += number;
   return url;
 }
 
+// 获取漫画基本信息和章节目录
 export async function getData(url) {
-  // 获取首页福利图列表
-  // await sleep();
-  console.log(`getData: ${url}`);
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html, { decodeEntities: false });
 
@@ -25,7 +25,6 @@ export async function getData(url) {
 
   //   获取简介
   const description = await $('p.comic_story').text();
-
 
   //   获取creators
   const creators = [];
@@ -37,7 +36,7 @@ export async function getData(url) {
   //   获取卷
   const list = [];
   function getVlue() {
-    const href = `https://www.manhuadb.com${$(this).find('a').attr('href')}`;
+    const href = `${baseUrl}${$(this).find('a').attr('href')}`;
     list.push({
       href,
     });
@@ -62,33 +61,32 @@ export async function getData(url) {
 
   return {
     title,
-    // creators,
-    // description,
+    creators,
+    description,
     list,
-    // data,
-    // detail,
+    data,
+    detail,
   };
 }
 
+// 获取章节内全部页
 export async function getPageList(url) {
-  console.log(`getPageList: ${url}`);
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html, { decodeEntities: false });
   const list = [];
   function getPage2() {
-    list.push(`https://www.manhuadb.com${$(this).attr('value')}`);
+    list.push(`${baseUrl}${$(this).attr('value')}`);
   }
   await $('select.form-control').eq(0).find('option').map(getPage2);
   return list;
 }
 
+// 获取页内图片地址
 export async function getPage(url) {
-//   console.log(`getPage: ${url}`);
   const html = await fetch(url).then(res => res.text());
   const $ = cheerio.load(html, { decodeEntities: false });
-
   const src = await $('img.img-fluid').attr('src');
-  return `https://www.manhuadb.com${src}`;
+  return `${baseUrl}${src}`;
 }
 
 async function test(number) {
@@ -96,22 +94,27 @@ async function test(number) {
   const indexUrl = await getIndexUrl(number);
   const data = await getData(indexUrl);
 
-  data.list = data.list.slice(0, 1);
+  data.list = [data.list[14]];
 
   console.log(data.list);
 
   await sequence(data.list.map((i, idx) => async () => {
     await sleep(Math.random() * 1000);
-    const pageList = await getPageList(i.href);
+    let pageList = await getPageList(i.href);
 
     // pageList = pageList.slice(0, 5);
     console.log('pageList');
     console.log(pageList);
 
+    pageList = pageList
+      .map(src => ({ src, index: parseInt(src.substr(42, 3).replace('_', ''), 0) }))
+      .sort((x, y) => x.index - y.index)
+      .map(({ src }) => src);
+
     const imgs = [];
     const cur = 5;
     // 分20一组，串行访问
-    await sequence(chunk(pageList, cur).slice(0, 1).map(pages => async () => {
+    await sequence(chunk(pageList, cur).map((pages, pdx) => async () => {
       await sleep(Math.random() * 5000);
       //   以20一组，并行访问
       await Promise.all(pages.map(async (j, jdx) => {
@@ -134,6 +137,12 @@ async function test(number) {
           }
         }
         await race();
+
+        // const dirpath = `../jojo/${idx + 1}`;
+        // const filepath = `../jojo/${idx + 1}/${cur * pdx + jdx + 1}.jpg`;
+        // await checkPath(dirpath);
+        // await downloadFile(j, filepath);
+
         // const name = `${(idx + 1)}_${(jdx + 1)}.jpg`;
         //   list.push({ src, name });
         imgs.push(src);
@@ -153,18 +162,13 @@ async function test(number) {
   fs.writeFileSync(`../jojo/${number}.json`, JSON.stringify(data));
 }
 
-test(128);
+// test(128);
 
 async function readJson() {
 //   await checkPath('../jojo');
   const data = await readFile('../jojo/128.json');
-  console.log('data');
-  console.log(data);
   const json = JSON.parse(data);
-  console.log('json');
   console.log(json.list[0].list.length);
-
-  const ssss = [];
 
   const cur = 10;
   await sequence(json.list.map((list, idx) => async () => {
@@ -175,38 +179,23 @@ async function readJson() {
         const dirpath = `../jojo/${idx + 1}`;
         const filepath = `../jojo/${idx + 1}/${cur * pdx + jdx + 1}.jpg`;
         await checkPath(dirpath);
-        await dp(j, filepath);
-
-        const index = parseInt(j.substr(42, 3).replace('_', ''), 0);
-        ssss.push(index);
+        async function race() {
+          await sleep(Math.random() * 1000);
+          const res = await Promise.race([
+            downloadFile(j, filepath),
+            sleep(20000),
+          ]);
+          if (res) {
+            console.log('下载成功');
+          } else {
+            console.log('重新加入队列');
+            await race();
+          }
+        }
+        await race();
       }));
-      console.log('获取成功');
     }));
   }));
-
-  console.log('ssss');
-  console.log(JSON.stringify(ssss.sort((x, y) => x - y)));
+  console.log('获取成功');
 }
 // readJson();
-
-
-function dp(url, filepath) {
-  return new Promise((resolve, reject) => {
-    // 块方式写入文件
-    const wstream = fs.createWriteStream(filepath);
-
-    wstream.on('open', () => {
-      console.log('下载：', url, filepath);
-    });
-    wstream.on('error', (err) => {
-      console.log('出错：', url, filepath);
-      reject(err);
-    });
-    wstream.on('finish', () => {
-      console.log('完成：', url, filepath);
-      resolve(true);
-    });
-
-    request(url).pipe(wstream);
-  });
-}
