@@ -90,7 +90,7 @@ export function saveFile(filePath, fileData) {
 }
 
 
-function downloadFile(url, filepath) {
+export function downloadFile(url, filepath) {
   return new Promise((resolve, reject) => {
     // 块方式写入文件
     const ws = fs.createWriteStream(filepath);

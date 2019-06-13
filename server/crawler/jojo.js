@@ -94,7 +94,7 @@ async function test(number) {
   const indexUrl = await getIndexUrl(number);
   const data = await getData(indexUrl);
 
-  data.list = [data.list[14]];
+  // data.list = [data.list[16]];
 
   console.log(data.list);
 
@@ -108,7 +108,7 @@ async function test(number) {
       .map(({ src }) => src);
 
     const imgs = [];
-    const cur = 5;
+    const cur = 20;
 
     // 分20一组，串行访问
     await sequence(chunk(pageList, cur).map((pages, pdx) => async () => {
@@ -122,7 +122,7 @@ async function test(number) {
           // 如果超时，重新加入队列
           const res = await Promise.race([
             getPage(j),
-            sleep(5000),
+            sleep(60000),
           ]);
 
           if (res) {
@@ -159,31 +159,31 @@ async function test(number) {
   fs.writeFileSync(`../jojo/${number}.json`, JSON.stringify(data));
 }
 
-// test(128);
+// test(147);
 
 async function readJson() {
 //   await checkPath('../jojo');
-  const data = await readFile('../jojo/128.json');
+  const data = await readFile('../jojo/147.json');
   const json = JSON.parse(data);
   console.log(json.list[0].list.length);
 
-  const cur = 10;
+  const cur = 50;
   await sequence(json.list.map((list, idx) => async () => {
+    const dirpath = `../jojo/${idx + 1}`;
+    await checkPath(dirpath);
     await sequence(chunk(list.list, cur).map((pages, pdx) => async () => {
       await sleep(Math.random() * 1000);
       console.log('正在获取:', `/jojo/${idx + 1}/`, ` 第${pdx + 1}批`);
       await Promise.all(pages.map(async (j, jdx) => {
-        const dirpath = `../jojo/${idx + 1}`;
         const filepath = `../jojo/${idx + 1}/${cur * pdx + jdx + 1}.jpg`;
-        await checkPath(dirpath);
         async function race() {
           await sleep(Math.random() * 1000);
           const res = await Promise.race([
             downloadFile(j, filepath),
-            sleep(20000),
+            sleep(60000),
           ]);
           if (res) {
-            console.log('下载成功');
+            // console.log('下载成功');
           } else {
             console.log('重新加入队列');
             await race();

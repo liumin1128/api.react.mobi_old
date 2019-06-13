@@ -40,31 +40,31 @@ export function sequence(promises) {
 }
 
 
-// const list = [];
-// for (let i = 0; i < 5; ++i) {
-//   list.push(i);
-// }
+// // const list = [];
+// // for (let i = 0; i < 5; ++i) {
+// //   list.push(i);
+// // }
 
 
-const sss = list.map(number => () => new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log(`$${number}`);
-    resolve(number);
-  }, 1000);
-}));
+// const sss = list.map(number => () => new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     console.log(`$${number}`);
+//     resolve(number);
+//   }, 1000);
+// }));
 
 
 // console.log('sss');
 // console.log(sss);
-sequence([1, 2, 3, 4, 5].map(number => () => new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log(`$${number}`);
-    resolve(number);
-  }, 1000);
-}))).then((data) => {
-  console.log('成功');
-  console.log(data);
-}).catch((err) => {
-  console.log('失败');
-  console.log(err);
-});
+// sequence([1, 2, 3, 4, 5].map(number => () => new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     console.log(`$${number}`);
+//     resolve(number);
+//   }, 1000);
+// }))).then((data) => {
+//   console.log('成功');
+//   console.log(data);
+// }).catch((err) => {
+//   console.log('失败');
+//   console.log(err);
+// });
