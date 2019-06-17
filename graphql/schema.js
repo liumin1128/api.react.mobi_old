@@ -104,7 +104,7 @@ export default `
     deleteArticle(id: String): Result!
 
     # 创建说说
-    createSay(input: SayInput): Result!
+    SayCreate(input: SayInput): Result!
 
     # 创建评论
     createComment(content: String!, commentTo: String!): Result!

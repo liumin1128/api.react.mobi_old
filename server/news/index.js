@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { CronJob } from 'cron';
+import { isProd } from '@/config/base';
 import { getData } from './service';
 
 // 今日头条，网易新闻， sohu.com的图片显示有问题，只能用文本模式
@@ -20,9 +21,10 @@ function test() {
 // test();
 // switch,cos
 
+if (isProd) {
 /* eslint-disable no-new */
-new CronJob('0 */60 * * * *', () => {
-  test();
+  new CronJob('0 */60 * * * *', () => {
+    test();
   // console.log(`10分钟抓取一次，${moment().format('llll')}`);
   // const start = moment().subtract(10, 'minute');
   // const end = moment();
@@ -33,5 +35,6 @@ new CronJob('0 */60 * * * *', () => {
   //   catLabel1: '游戏',
   //   publishDateRange,
   // });
-}, null, true);
-/* eslint-enable no-new */
+  }, null, true);
+  /* eslint-enable no-new */
+}

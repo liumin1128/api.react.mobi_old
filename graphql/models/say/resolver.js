@@ -3,7 +3,7 @@ import { userLoader } from '../../utils';
 
 export default {
   Mutation: {
-    createSay: async (root, args, ctx, op) => {
+    SayCreate: async (root, args, ctx, op) => {
       const { user } = ctx;
       if (!user) {
         ctx.body = {
