@@ -4,7 +4,7 @@ export default `
   }
   type Say {
     _id: String!
-    content: String!
+    content: String
     photos: [String!]
     createdAt: String!
     user: User!

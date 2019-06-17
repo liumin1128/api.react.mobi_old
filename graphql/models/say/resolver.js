@@ -4,19 +4,20 @@ import { userLoader } from '../../utils';
 export default {
   Mutation: {
     SayCreate: async (root, args, ctx, op) => {
-      const { user } = ctx;
-      if (!user) {
-        ctx.body = {
-          status: 401,
-          messge: '尚未登录',
-        };
-        return;
+      try {
+        const { user } = ctx;
+        if (!user) return { status: 401, message: '尚未登录' };
+        const { input } = args;
+        const say = await Say.create({ ...input, user });
+        if (say) return { status: 200, message: '创建成功' };
+        return { status: 504, message: '操作异常' };
+      } catch (error) {
+        console.log('error');
+        console.log(error);
       }
-      const { input } = args;
-      const say = await Say.create({ ...input, user });
-      return say;
     },
   },
+
   Query: {
     say: async (root, args) => {
       const { _id } = args;
@@ -32,6 +33,9 @@ export default {
           .skip(skip)
           .limit(first)
           .sort(sort);
+
+        console.log('data');
+        console.log(data);
 
         return data;
       } catch (error) {
