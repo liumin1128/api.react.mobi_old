@@ -156,6 +156,6 @@ export default {
   Comment: {
     user: ({ user }) => userLoader.load(user),
     replys: ({ _id }) => commentReplysLoader.load(_id),
-    replyTo: ({ replyTo }) => replyToLoader.load(replyTo),
+    replyTo: ({ replyTo }) => (replyTo ? replyToLoader.load(replyTo) : null),
   },
 };
