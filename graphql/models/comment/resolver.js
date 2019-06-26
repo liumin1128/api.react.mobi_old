@@ -10,7 +10,7 @@ export const commentReplysLoader = new DataLoader(ids => Comment
   .find({ commentTo: { $in: uniq(ids) } })
   .then((data) => {
     const temp = groupBy(data, 'commentTo');
-    return ids.map(id => temp[id]);
+    return ids.map(id => temp[id] || []);
   })
   .catch((err) => { console.log(err); }));
 
