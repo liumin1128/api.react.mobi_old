@@ -11,6 +11,8 @@ export default `
     content: String!
     user: User!
     replyTo: String
+
+    replys: [Comment]
   }
   type CreateCommentResult {
     status: Int!

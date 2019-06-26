@@ -107,7 +107,7 @@ export default `
     SayCreate(input: SayInput): Result!
 
     # 创建评论
-    createComment(content: String!, commentTo: String!): CreateCommentResult!
+    createComment(content: String!, commentTo: String!, replyTo: String): CreateCommentResult!
 
     # 删除评论
     deleteComment(id: String): Result!

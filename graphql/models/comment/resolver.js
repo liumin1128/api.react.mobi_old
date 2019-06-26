@@ -1,6 +1,6 @@
 
 import { Comment } from '@/mongo/modals';
-import { userLoader } from '../../utils';
+import { userLoader, commentReplysLoader } from '../../utils';
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import { sleep } from '@/utils/common';
 
@@ -9,6 +9,7 @@ export default {
     createComment: async (root, args, ctx, op) => {
       console.log('createComment');
       const { user } = ctx;
+
       // if (!user) {
       //   throw new AuthenticationError('must authenticate');
       // }
@@ -139,5 +140,6 @@ export default {
   },
   Comment: {
     user: ({ user }) => userLoader.load(user),
+    replys: ({ _id }) => commentReplysLoader.load(_id),
   },
 };

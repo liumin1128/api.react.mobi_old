@@ -1,5 +1,7 @@
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
+import groupBy from 'lodash/groupBy';
+
 import { User, Comment, Article, Like } from '@/mongo/modals';
 
 export const userLoader = new DataLoader(ids => User
@@ -41,6 +43,15 @@ export const likeStatusLoader = new DataLoader(params => Like
     }
   }))
   .catch((err) => { console.log(err); }));
+
+export const commentReplysLoader = new DataLoader(ids => Comment
+  .find({ commentTo: { $in: uniq(ids) } })
+  .then((data) => {
+    const temp = groupBy(data, 'commentTo');
+    return ids.map(id => temp[id]);
+  })
+  .catch((err) => { console.log(err); }));
+
 
 // ids => Promise.all(ids.map(id => Comment.count({ commentTo: id }))),
 // .then((data) => {
