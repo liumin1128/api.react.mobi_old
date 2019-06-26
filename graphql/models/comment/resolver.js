@@ -2,6 +2,7 @@
 import { Comment } from '@/mongo/modals';
 import { userLoader } from '../../utils';
 import { AuthenticationError, ApolloError } from 'apollo-server';
+import { sleep } from '@/utils/common';
 
 export default {
   Mutation: {
@@ -47,6 +48,7 @@ export default {
         return {
           status: 200,
           message: '创建成功',
+          data: say,
         };
       }
       return {

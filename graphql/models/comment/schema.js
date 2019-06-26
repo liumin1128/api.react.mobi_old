@@ -12,4 +12,9 @@ export default `
     user: User!
     replyTo: String
   }
+  type CreateCommentResult {
+    status: Int!
+    message: String
+    data: Comment
+  }
 `;
