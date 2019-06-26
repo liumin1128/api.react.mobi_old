@@ -10,8 +10,8 @@ export default `
     commentTo: String!
     content: String!
     user: User!
-    replyTo: String
-
+    
+    replyTo: Comment
     replys: [Comment]
   }
   type CreateCommentResult {

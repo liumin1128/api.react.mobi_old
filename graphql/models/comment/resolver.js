@@ -1,8 +1,23 @@
 
-import { Comment } from '@/mongo/modals';
-import { userLoader, commentReplysLoader } from '../../utils';
 import { AuthenticationError, ApolloError } from 'apollo-server';
-import { sleep } from '@/utils/common';
+import DataLoader from 'dataloader';
+import uniq from 'lodash/uniq';
+import groupBy from 'lodash/groupBy';
+import { Comment } from '@/mongo/modals';
+import { userLoader } from '../../utils';
+
+export const commentReplysLoader = new DataLoader(ids => Comment
+  .find({ commentTo: { $in: uniq(ids) } })
+  .then((data) => {
+    const temp = groupBy(data, 'commentTo');
+    return ids.map(id => temp[id]);
+  })
+  .catch((err) => { console.log(err); }));
+
+export const replyToLoader = new DataLoader(ids => Comment
+  .find({ replyTo: { $in: uniq(ids) } })
+  .then(data => ids.map(id => data.find(i => `${i.replyTo}` === `${id}`)))
+  .catch((err) => { console.log(err); }));
 
 export default {
   Mutation: {
@@ -141,5 +156,6 @@ export default {
   Comment: {
     user: ({ user }) => userLoader.load(user),
     replys: ({ _id }) => commentReplysLoader.load(_id),
+    replyTo: ({ replyTo }) => replyToLoader.load(replyTo),
   },
 };

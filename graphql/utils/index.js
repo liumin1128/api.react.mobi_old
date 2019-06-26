@@ -44,14 +44,6 @@ export const likeStatusLoader = new DataLoader(params => Like
   }))
   .catch((err) => { console.log(err); }));
 
-export const commentReplysLoader = new DataLoader(ids => Comment
-  .find({ commentTo: { $in: uniq(ids) } })
-  .then((data) => {
-    const temp = groupBy(data, 'commentTo');
-    return ids.map(id => temp[id]);
-  })
-  .catch((err) => { console.log(err); }));
-
 
 // ids => Promise.all(ids.map(id => Comment.count({ commentTo: id }))),
 // .then((data) => {
