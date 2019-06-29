@@ -1,7 +1,7 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server';
-import { Comment } from '@/mongo/models';
-import { commentReplysLoader, replysCountLoader, replyToLoader } from '@/mongo/dataloader';
+import Comment from '@/mongo/models/comment';
+import { commentReplysLoader, replysCountLoader, replyToLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
 
 
