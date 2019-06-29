@@ -11,7 +11,7 @@ export default `
     content: String!
     user: User!
 
-    replys: [Comment]
+    replys(first: Int): [Comment]
     replyCount: Int
     replyTo: Comment
     commentTo: Comment

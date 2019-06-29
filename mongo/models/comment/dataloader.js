@@ -6,6 +6,7 @@ import Comment from './index';
 // 根据commentTo，拿到评论的回复
 export const commentReplysLoader = new DataLoader(ids => Promise.all(
   ids.map(id => Comment.find({ commentTo: id }).limit(5) || []),
+  // ids.map(([id, first]) => Comment.find({ commentTo: id }).limit(first) || []),
 ));
 
 // 根据commentTo，拿到评论回复数
