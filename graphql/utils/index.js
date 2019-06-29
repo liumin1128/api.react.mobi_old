@@ -16,8 +16,8 @@ export const articleLoader = new DataLoader(ids => Article
 
 export const commentCountLoader = new DataLoader(ids => Comment
   .aggregate([
-    { $match: { commentTo: { $in: ids } } },
-    { $group: { _id: '$commentTo', count: { $sum: 1 } } },
+    { $match: { session: { $in: ids } } },
+    { $group: { _id: '$session', count: { $sum: 1 } } },
   ])
   .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
   .catch((err) => { console.log(err); }));
@@ -45,7 +45,7 @@ export const likeStatusLoader = new DataLoader(params => Like
   .catch((err) => { console.log(err); }));
 
 
-// ids => Promise.all(ids.map(id => Comment.count({ commentTo: id }))),
+// ids => Promise.all(ids.map(id => Comment.count({ session: id }))),
 // .then((data) => {
 //   console.log('data');
 //   console.log(data);
@@ -53,9 +53,9 @@ export const likeStatusLoader = new DataLoader(params => Like
 // }),
 
 // export const commentCountLoader = new DataLoader(ids => Comment
-// .find({ commentTo: { $in: uniq(ids) } })
-// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).count())))
-// .then(list => Promise.all(ids.map(id => list.find(i => `${i.commentTo}` === `${id}`).count())))
+// .find({ session: { $in: uniq(ids) } })
+// .then(list => Promise.all(ids.map(id => list.find(i => `${i.session}` === `${id}`).count())))
+// .then(list => Promise.all(ids.map(id => list.find(i => `${i.session}` === `${id}`).count())))
 // .then((data) => {
 //   console.log('data');
 //   console.log(data);

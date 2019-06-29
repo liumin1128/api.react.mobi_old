@@ -7,7 +7,7 @@ export default `
     createdAt: Date!
     updatedAt: Date!
 
-    commentTo: String!
+    session: String!
     content: String!
     user: User!
     

@@ -45,8 +45,8 @@ export default `
     _articlesMeta: ArticleMeta!
 
     # 评论
-    comments(first: Int, skip: Int, commentTo: String!): [Comment]
-    _commentsMeta(commentTo: String!): CommentsMeta!
+    comments(first: Int, skip: Int, session: String!): [Comment]
+    _commentsMeta(session: String!): CommentsMeta!
     comment(_id: String): Comment!
 
     # 喜欢
@@ -107,7 +107,7 @@ export default `
     SayCreate(input: SayInput): Result!
 
     # 创建评论
-    createComment(content: String!, commentTo: String!, replyTo: String): CreateCommentResult!
+    createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!
 
     # 删除评论
     deleteComment(id: String): Result!

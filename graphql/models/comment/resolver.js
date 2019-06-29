@@ -9,6 +9,10 @@ import { userLoader } from '../../utils';
 export const commentReplysLoader = new DataLoader(ids => Comment
   .find({ commentTo: { $in: uniq(ids) } })
   .then((data) => {
+    // console.log('data');
+    // console.log(data);
+    // console.log('ids');
+    // console.log(ids);
     const temp = groupBy(data, 'commentTo');
     return ids.map(id => temp[id] || []);
   })
@@ -24,6 +28,9 @@ export default {
     createComment: async (root, args, ctx, op) => {
       console.log('createComment');
       const { user } = ctx;
+
+      console.log('args');
+      console.log(args);
 
       // if (!user) {
       //   throw new AuthenticationError('must authenticate');
@@ -125,14 +132,14 @@ export default {
     },
     comments: async (root, args) => {
       try {
-        const { commentTo, skip = 0, first = 5, sort = '-createdAt' } = args;
+        const { session, skip = 0, first = 5, sort = '-createdAt' } = args;
 
-        if (!commentTo) {
+        if (!session) {
           throw new ApolloError('必须要有评论对象');
         }
 
         const data = await Comment
-          .find({ commentTo })
+          .find({ session, commentTo: null, replyTo: null })
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -144,9 +151,9 @@ export default {
     },
     _commentsMeta: async (root, args) => {
       try {
-        const { commentTo } = args;
+        const { session } = args;
 
-        const data = await Comment.countDocuments({ commentTo });
+        const data = await Comment.countDocuments({ session });
         return { count: data };
       } catch (error) {
         console.log(error);

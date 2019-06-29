@@ -126,7 +126,7 @@ export default {
     user: ({ user }) => userLoader.load(user),
 
     // commentCount: ({ _id }) => commentCountLoader.load(_id.toString()),
-    // 管道查询的关键字commentTo为字符型
+    // 管道查询的关键字session为字符型
     commentCount: ({ _id }) => commentCountLoader.load(_id),
     likeCount: ({ _id }) => likeCountLoader.load(_id),
 
