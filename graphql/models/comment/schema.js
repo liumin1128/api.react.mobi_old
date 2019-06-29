@@ -10,8 +10,9 @@ export default `
     session: String!
     content: String!
     user: User!
-    
+
     replys: [Comment]
+    replyCount: Int
     replyTo: Comment
     commentTo: Comment
   }

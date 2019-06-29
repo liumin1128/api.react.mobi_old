@@ -9,19 +9,24 @@ import { userLoader } from '../../utils';
 export const commentReplysLoader = new DataLoader(ids => Comment
   .find({ commentTo: { $in: uniq(ids) } })
   .then((data) => {
-    // console.log('data');
-    // console.log(data);
-    // console.log('ids');
-    // console.log(ids);
     const temp = groupBy(data, 'commentTo');
     return ids.map(id => temp[id] || []);
   })
+  .catch((err) => { console.log(err); }));
+
+export const replysCountLoader = new DataLoader(ids => Comment
+  .aggregate([
+    { $match: { commentTo: { $in: ids } } },
+    { $group: { _id: '$commentTo', count: { $sum: 1 } } },
+  ])
+  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
   .catch((err) => { console.log(err); }));
 
 export const replyToLoader = new DataLoader(ids => Comment
   .find({ _id: { $in: uniq(ids) } })
   .then(data => ids.map(id => data.find(i => `${i._id}` === `${id}`)))
   .catch((err) => { console.log(err); }));
+
 
 export default {
   Mutation: {
@@ -163,6 +168,7 @@ export default {
   Comment: {
     user: ({ user }) => userLoader.load(user),
     replys: ({ _id }) => commentReplysLoader.load(_id),
+    replyCount: ({ _id }) => replysCountLoader.load(_id),
     replyTo: ({ replyTo }) => (replyTo ? replyToLoader.load(replyTo) : null),
   },
 };
