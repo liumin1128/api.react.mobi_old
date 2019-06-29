@@ -72,6 +72,8 @@ export default {
 
       console.log('创建模式');
       const say = await Comment.create({ ...params, user });
+      console.log('say');
+      console.log(say);
       if (say) {
         return {
           status: 200,
@@ -168,7 +170,7 @@ export default {
   Comment: {
     user: ({ user }) => userLoader.load(user),
     replys: ({ _id }) => commentReplysLoader.load(_id),
+    replyTo: ({ replyTo }) => replyToLoader.load(replyTo),
     replyCount: ({ _id }) => replysCountLoader.load(_id),
-    replyTo: ({ replyTo }) => (replyTo ? replyToLoader.load(replyTo) : null),
   },
 };
