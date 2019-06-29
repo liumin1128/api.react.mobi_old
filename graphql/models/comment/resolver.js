@@ -1,40 +1,8 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server';
-import DataLoader from 'dataloader';
-import uniq from 'lodash/uniq';
-import groupBy from 'lodash/groupBy';
 import { Comment } from '@/mongo/modals';
+import { commentReplysLoader, replysCountLoader, replyToLoader } from '@/mongo/dataloader';
 import { userLoader } from '../../utils';
-
-export const commentReplysLoader = new DataLoader(ids => Promise.all(
-  ids.map(id => Comment.find({ commentTo: id }).limit(5)),
-));
-
-// Comment;
-// .aggregate([
-//   { $match: { score: { $gt: 70, $lte: 90 } } },
-//   { $group: { _id: null, count: { $sum: 1 } } },
-// ])
-// .find({ commentTo: { $in: uniq(ids) } })
-// .limit(10)
-// .then((data) => {
-//   const temp = groupBy(data, 'commentTo');
-//   return ids.map(id => temp[id] || []);
-// })
-// .catch((err) => { console.log(err); }));
-
-export const replysCountLoader = new DataLoader(ids => Comment
-  .aggregate([
-    { $match: { commentTo: { $in: ids } } },
-    { $group: { _id: '$commentTo', count: { $sum: 1 } } },
-  ])
-  .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
-  .catch((err) => { console.log(err); }));
-
-export const replyToLoader = new DataLoader(ids => Comment
-  .find({ _id: { $in: uniq(ids) } })
-  .then(data => ids.map(id => data.find(i => `${i._id}` === `${id}`)))
-  .catch((err) => { console.log(err); }));
 
 
 export default {
@@ -83,6 +51,7 @@ export default {
       const say = await Comment.create({ ...params, user });
       console.log('say');
       console.log(say);
+
       if (say) {
         return {
           status: 200,

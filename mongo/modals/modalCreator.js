@@ -12,7 +12,7 @@ export default (name, schema, cb) => {
   const temp = new Schema(schema);
 
   // 这样写是因为func-names规则表示尽量不要用匿名函数
-  temp.pre('save', save);
+  // temp.pre('save', save);
 
   // 这里留下钩子，万一需要加属性还可以用下
   if (cb) cb(temp);
