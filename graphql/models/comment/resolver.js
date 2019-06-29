@@ -19,8 +19,8 @@ export const commentReplysLoader = new DataLoader(ids => Comment
   .catch((err) => { console.log(err); }));
 
 export const replyToLoader = new DataLoader(ids => Comment
-  .find({ replyTo: { $in: uniq(ids) } })
-  .then(data => ids.map(id => data.find(i => `${i.replyTo}` === `${id}`)))
+  .find({ _id: { $in: uniq(ids) } })
+  .then(data => ids.map(id => data.find(i => `${i._id}` === `${id}`)))
   .catch((err) => { console.log(err); }));
 
 export default {
