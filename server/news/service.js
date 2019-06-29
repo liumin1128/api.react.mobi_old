@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { API_KEY } from '@/config/idataapi';
 import uniqBy from 'lodash/uniqBy';
 import reverse from 'lodash/reverse';
-import { News } from '@/mongo/modals';
+import { News } from '@/mongo/models';
 import { format, filter, getNews } from './utils';
 import { sleep } from '@/utils/common';
 

@@ -1,5 +1,5 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
-import { User } from '@/mongo/modals';
+import { User } from '@/mongo/models';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode } from '@/utils/common';

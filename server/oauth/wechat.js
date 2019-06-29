@@ -1,4 +1,4 @@
-import { User, Oauth } from '@/mongo/modals';
+import { User, Oauth } from '@/mongo/models';
 import { DOMAIN, API_DOMAIN } from '@/config/base';
 import wechat from '@/config/wechat';
 import fetch from '@/utils/fetch';

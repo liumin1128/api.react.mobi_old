@@ -1,5 +1,5 @@
 
-import { Like } from '@/mongo/modals';
+import { Like } from '@/mongo/models';
 import { userLoader, articleLoader } from '../../utils';
 
 export default {

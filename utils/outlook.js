@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { Oauth } from '../mongo/modals';
+import { Oauth } from '../mongo/models';
 
 const fetch1 = (url, params = {}, options = {}) => {
   return fetch(url, {

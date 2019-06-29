@@ -1,4 +1,4 @@
-import { User, Oauth } from '@/mongo/modals';
+import { User, Oauth } from '@/mongo/models';
 import { parse } from 'query-string';
 import fetch from 'node-fetch';
 import { DOMAIN, API_DOMAIN } from '@/config/base';

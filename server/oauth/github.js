@@ -1,6 +1,6 @@
 import github from '@/config/github';
 import fetch from '@/utils/fetch';
-import { User, Oauth } from '@/mongo/modals';
+import { User, Oauth } from '@/mongo/models';
 import { DOMAIN } from '@/config/base';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';

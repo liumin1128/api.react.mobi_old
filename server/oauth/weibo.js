@@ -1,4 +1,4 @@
-import { User, Oauth } from '@/mongo/modals';
+import { User, Oauth } from '@/mongo/models';
 import fetch from 'node-fetch';
 import weibo from '@/config/weibo';
 import { DOMAIN } from '@/config/base';

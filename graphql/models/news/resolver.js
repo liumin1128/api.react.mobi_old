@@ -1,5 +1,5 @@
 
-import { News } from '@/mongo/modals';
+import { News } from '@/mongo/models';
 // import { userLoader, commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
 
 export default {

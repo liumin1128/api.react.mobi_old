@@ -1,4 +1,4 @@
-import { Say } from '@/mongo/modals';
+import { Say } from '@/mongo/models';
 import { userLoader } from '../../utils';
 
 export default {

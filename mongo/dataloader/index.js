@@ -1,7 +1,7 @@
 
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
-import { Comment } from '@/mongo/modals';
+import { Comment } from '@/mongo/models';
 
 // 根据commentTo，拿到评论的回复
 export const commentReplysLoader = new DataLoader(ids => Promise.all(

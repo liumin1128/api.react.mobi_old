@@ -1,5 +1,5 @@
 
-import { Article } from '@/mongo/modals';
+import { Article } from '@/mongo/models';
 import { userLoader, commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
 import { AuthenticationError } from 'apollo-server-koa';
 
