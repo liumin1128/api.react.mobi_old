@@ -6,13 +6,22 @@ import groupBy from 'lodash/groupBy';
 import { Comment } from '@/mongo/modals';
 import { userLoader } from '../../utils';
 
-export const commentReplysLoader = new DataLoader(ids => Comment
-  .find({ commentTo: { $in: uniq(ids) } })
-  .then((data) => {
-    const temp = groupBy(data, 'commentTo');
-    return ids.map(id => temp[id] || []);
-  })
-  .catch((err) => { console.log(err); }));
+export const commentReplysLoader = new DataLoader(ids => Promise.all(
+  ids.map(id => Comment.find({ commentTo: id }).limit(5)),
+));
+
+// Comment;
+// .aggregate([
+//   { $match: { score: { $gt: 70, $lte: 90 } } },
+//   { $group: { _id: null, count: { $sum: 1 } } },
+// ])
+// .find({ commentTo: { $in: uniq(ids) } })
+// .limit(10)
+// .then((data) => {
+//   const temp = groupBy(data, 'commentTo');
+//   return ids.map(id => temp[id] || []);
+// })
+// .catch((err) => { console.log(err); }));
 
 export const replysCountLoader = new DataLoader(ids => Comment
   .aggregate([
