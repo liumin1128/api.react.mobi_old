@@ -177,9 +177,9 @@ export default {
     },
   },
   Comment: {
-    user: ({ user }) => userLoader.load(user),
-    replys: ({ _id }) => commentReplysLoader.load(_id),
-    replyTo: ({ replyTo }) => replyToLoader.load(replyTo),
-    replyCount: ({ _id }) => replysCountLoader.load(_id),
+    user: ({ user }) => userLoader.load(user.toString()),
+    replys: ({ _id }) => commentReplysLoader.load(_id.toString()),
+    replyTo: ({ replyTo }) => replyToLoader.load(replyTo.toString()),
+    replyCount: ({ _id }) => replysCountLoader.load(_id.toString()),
   },
 };
