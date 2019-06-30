@@ -1,6 +1,7 @@
 export default `
   type CommentsMeta {
     count: Int!
+    commentCount: Int!
   }
   type Comment {
     _id: String!

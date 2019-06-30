@@ -6,14 +6,23 @@ import Comment from './index';
 
 const { ObjectId } = mongoose.Types;
 
+// 根据session，拿到评论和回复合计数量
+export const commentsAndRelysCountLoader = new DataLoader(sessions => Promise.all(
+  sessions.map(session => Comment.countDocuments({ session })),
+));
+// aggregate可以实现，但尽量不使用
+// export const commentsAndRelysCountLoader = new DataLoader(sessions => Comment
+//   .aggregate([
+//     { $match: { session: { $in: sessions } } },
+//     { $group: { _id: '$session', count: { $sum: 1 } } },
+//   ])
+// .then(data => sessions.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
+//   .catch((err) => { console.log(err); }));
+
 // 根据session，拿到评论数量
-export const commentsCountLoader = new DataLoader(sessions => Comment
-  .aggregate([
-    { $match: { session: { $in: sessions } } },
-    { $group: { _id: '$session', count: { $sum: 1 } } },
-  ])
-  .then(data => sessions.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))
-  .catch((err) => { console.log(err); }));
+export const commentsCountLoader = new DataLoader(sessions => Promise.all(
+  sessions.map(session => Comment.countDocuments({ session, commentTo: null, replyTo: null })),
+));
 
 // 根据commentTo，拿到评论的回复
 export const commentReplysLoader = new DataLoader(ids => Promise.all(

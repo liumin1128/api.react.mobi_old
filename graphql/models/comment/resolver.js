@@ -6,6 +6,7 @@ import {
   replysCountLoader,
   replyToLoader,
   commentsCountLoader,
+  commentsAndRelysCountLoader,
 } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
 
@@ -68,7 +69,6 @@ export default {
         message: '系统异常',
       };
     },
-
     deleteComment: async (root, args, ctx, op) => {
       try {
         console.log('deleteComment');
@@ -121,7 +121,7 @@ export default {
     },
     comments: async (root, args) => {
       try {
-        const { session, skip = 0, first = 5, sort = '-createdAt' } = args;
+        const { session, skip = 0, first = 5, sort = '-_id' } = args;
 
         if (!session) {
           throw new ApolloError('必须要有评论对象');
@@ -160,10 +160,9 @@ export default {
     _commentsMeta: async (root, args) => {
       try {
         const { session } = args;
-
-        // const data = await Comment.countDocuments({ session });
-        const data = await commentsCountLoader.load(session);
-        return { count: data };
+        const commentCount = await commentsCountLoader.load(session);
+        const count = await commentsAndRelysCountLoader.load(session);
+        return { count, commentCount };
       } catch (error) {
         console.log(error);
       }
