@@ -102,7 +102,7 @@ export default `
     createArticle(input: ArticleInput): Result!
 
     # 删除文章
-    deleteArticle(id: String): Result!
+    deleteArticle(_id: String): Result!
 
     # 创建说说
     SayCreate(input: SayInput): Result!
@@ -111,7 +111,7 @@ export default `
     createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!
 
     # 删除评论
-    deleteComment(id: String): Result!
+    deleteComment(_id: String): Result!
 
     # 喜欢
     like(id: String!, unlike: Boolean): Result!

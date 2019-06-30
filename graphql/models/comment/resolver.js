@@ -81,18 +81,20 @@ export default {
             message: '权限不足',
           };
         }
-        const { id } = args;
-        // if (!id) throw new ApolloError('参数无效', 401);
-        if (!id) {
+        const { _id } = args;
+        // if (!_id) throw new ApolloError('参数无效', 401);
+        if (!_id) {
           return {
             status: 401,
             message: '目标不存在或已被删除',
           };
         }
-        const say = await Comment.findById(id);
+
+        const say = await Comment.findById(_id);
         if (say) {
           if (say.user.toString() === user) {
             await say.remove();
+            await Comment.find({ commentTo: _id }).remove();
             return {
               status: 200,
               message: '删除成功',

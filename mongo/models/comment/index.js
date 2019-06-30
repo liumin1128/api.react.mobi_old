@@ -21,6 +21,6 @@ function refreshDataloader(next) {
 const schema = new mongoose.Schema(config);
 
 schema.pre('save', refreshDataloader);
-schema.pre('delete', refreshDataloader);
+schema.pre('remove', refreshDataloader);
 
 export default mongoose.model('Comment', schema);
