@@ -1,7 +1,10 @@
 
+import mongoose from 'mongoose';
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
 import Comment from './index';
+
+const { ObjectId } = mongoose.Types;
 
 // 根据commentTo，拿到评论的回复
 export const commentReplysLoader = new DataLoader(ids => Promise.all(
@@ -12,7 +15,7 @@ export const commentReplysLoader = new DataLoader(ids => Promise.all(
 // 根据commentTo，拿到评论回复数
 export const replysCountLoader = new DataLoader(ids => Comment
   .aggregate([
-    { $match: { commentTo: { $in: ids } } },
+    { $match: { commentTo: { $in: ids.map(i => new ObjectId(i)) } } },
     { $group: { _id: '$commentTo', count: { $sum: 1 } } },
   ])
   .then(data => ids.map(id => (data.find(i => `${i._id}` === `${id}`) || { count: 0 }).count))

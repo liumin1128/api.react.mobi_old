@@ -147,8 +147,8 @@ export default {
   },
   Comment: {
     user: ({ user }) => userLoader.load(user.toString()),
-    replys: ({ _id }, { first = 5 }) => commentReplysLoader.load(_id.toString()),
     replyTo: ({ replyTo }) => replyToLoader.load(replyTo.toString()),
+    replys: ({ _id }, { first = 5 }) => commentReplysLoader.load(_id.toString()),
     replyCount: ({ _id }) => replysCountLoader.load(_id.toString()),
   },
 };
