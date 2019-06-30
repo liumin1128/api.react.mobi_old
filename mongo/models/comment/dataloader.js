@@ -26,7 +26,7 @@ export const commentsCountLoader = new DataLoader(sessions => Promise.all(
 
 // 根据commentTo，拿到评论的回复
 export const commentReplysLoader = new DataLoader(ids => Promise.all(
-  ids.map(id => Comment.find({ commentTo: id }).limit(5).sort('-createdAt') || []),
+  ids.map(id => Comment.find({ commentTo: id }).limit(5).sort('-_id') || []),
   // ids.map(([id, first]) => Comment.find({ commentTo: id }).limit(first) || []),
 ));
 

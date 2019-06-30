@@ -140,7 +140,7 @@ export default {
     },
     replys: async (root, args) => {
       try {
-        const { commentTo, skip = 0, first = 5, sort = '-createdAt' } = args;
+        const { commentTo, skip = 0, first = 5, sort = '-_id' } = args;
 
         if (!commentTo) {
           throw new ApolloError('必须要有评论对象');

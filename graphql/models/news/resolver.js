@@ -11,7 +11,7 @@ export default {
     },
     NewsList: async (root, args) => {
       try {
-        const { skip = 0, first = 16, sort = '-createdAt' } = args;
+        const { skip = 0, first = 16, sort = '-_id' } = args;
         const data = await News
           .find({})
           .skip(skip)

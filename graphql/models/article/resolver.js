@@ -101,7 +101,7 @@ export default {
     },
     articles: async (root, args) => {
       try {
-        const { skip = 0, first = 10, sort = '-createdAt' } = args;
+        const { skip = 0, first = 10, sort = '-_id' } = args;
         const data = await Article
           .find({})
           .skip(skip)

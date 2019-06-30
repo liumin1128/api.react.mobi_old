@@ -36,7 +36,7 @@ export default {
   Query: {
     likes: async (root, args, ctx) => {
       try {
-        const { user, unlike, skip = 0, first = 5, sort = '-createdAt' } = args;
+        const { user, unlike, skip = 0, first = 5, sort = '-_id' } = args;
 
         const data = await Like
           .find({ user, unlike })
