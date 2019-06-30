@@ -52,6 +52,6 @@ export default {
     },
   },
   Say: {
-    user: ({ user }) => userLoader.load(user),
+    user: ({ user }) => userLoader.load(user.toString()),
   },
 };

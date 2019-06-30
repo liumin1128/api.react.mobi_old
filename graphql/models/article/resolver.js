@@ -123,7 +123,7 @@ export default {
     },
   },
   Article: {
-    user: ({ user }) => userLoader.load(user),
+    user: ({ user }) => userLoader.load(user.toString()),
 
     // commentCount: ({ _id }) => commentCountLoader.load(_id.toString()),
     // 管道查询的关键字session为字符型

@@ -60,7 +60,7 @@ export default {
     },
   },
   Like: {
-    user: ({ user }) => userLoader.load(user),
+    user: ({ user }) => userLoader.load(user.toString()),
     article: ({ id }) => articleLoader.load(id),
   },
 };
