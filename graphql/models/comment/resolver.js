@@ -1,9 +1,13 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import Comment from '@/mongo/models/comment';
-import { commentReplysLoader, replysCountLoader, replyToLoader, commentsCountLoader } from '@/mongo/models/comment/dataloader';
+import {
+  commentReplysLoader,
+  replysCountLoader,
+  replyToLoader,
+  commentsCountLoader,
+} from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
-
 
 export default {
   Mutation: {
@@ -125,6 +129,25 @@ export default {
 
         const data = await Comment
           .find({ session, commentTo: null, replyTo: null })
+          .skip(skip)
+          .limit(first)
+          .sort(sort);
+
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    replys: async (root, args) => {
+      try {
+        const { commentTo, skip = 0, first = 5, sort = '-createdAt' } = args;
+
+        if (!commentTo) {
+          throw new ApolloError('必须要有评论对象');
+        }
+
+        const data = await Comment
+          .find({ commentTo })
           .skip(skip)
           .limit(first)
           .sort(sort);

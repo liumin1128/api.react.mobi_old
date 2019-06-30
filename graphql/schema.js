@@ -46,6 +46,7 @@ export default `
 
     # 评论
     comments(first: Int, skip: Int, session: String!): [Comment]
+    replys(first: Int, skip: Int, commentTo: String!): [Comment]
     _commentsMeta(session: String!): CommentsMeta!
     comment(_id: String): Comment!
 
