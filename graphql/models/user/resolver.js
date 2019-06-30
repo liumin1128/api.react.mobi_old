@@ -5,6 +5,7 @@ import { sentSMS } from '@/utils/sms';
 import { randomCode } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
+import { userLoader } from '@/graphql/utils/index';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -24,7 +25,7 @@ export default {
       if (!user) {
         throw new AuthenticationError('用户未登录');
       }
-      const data = await User.findById(user);
+      const data = await userLoader.load(user);
       if (!data) {
         throw new ApolloError('用户不存在', 403, { test: 'xxx' });
       }

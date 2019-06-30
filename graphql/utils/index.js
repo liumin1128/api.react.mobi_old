@@ -1,7 +1,5 @@
 import DataLoader from 'dataloader';
 import uniq from 'lodash/uniq';
-import groupBy from 'lodash/groupBy';
-
 import { User, Comment, Article, Like } from '@/mongo/models';
 
 export const userLoader = new DataLoader(ids => User
