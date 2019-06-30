@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import config from './schema';
-import { commentReplysLoader, replysCountLoader } from './dataloader';
+import { commentReplysLoader, replysCountLoader, commentsCountLoader } from './dataloader';
 
 function refreshDataloader(next) {
   // 刷新回复及、回复数
@@ -8,6 +8,10 @@ function refreshDataloader(next) {
     const key = this.commentTo.toString();
     commentReplysLoader.clear(key);
     replysCountLoader.clear(key);
+  }
+  if (this.session) {
+    const key = this.session;
+    commentsCountLoader.clear(key);
   }
   // 甚至可以使用prime来扩充存缓，但风险较大
   next();

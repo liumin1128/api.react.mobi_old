@@ -1,7 +1,7 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import Comment from '@/mongo/models/comment';
-import { commentReplysLoader, replysCountLoader, replyToLoader } from '@/mongo/models/comment/dataloader';
+import { commentReplysLoader, replysCountLoader, replyToLoader, commentsCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
 
 
@@ -138,7 +138,8 @@ export default {
       try {
         const { session } = args;
 
-        const data = await Comment.countDocuments({ session });
+        // const data = await Comment.countDocuments({ session });
+        const data = await commentsCountLoader.load(session);
         return { count: data };
       } catch (error) {
         console.log(error);

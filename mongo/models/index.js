@@ -5,12 +5,12 @@ import {
   oauthSchema,
   articleSchema,
   saySchema,
-  commentSchema,
+  // commentSchema,
   likeSchema,
   newsSchema,
 } from '../schemas';
 
-import { commentReplysLoader, replysCountLoader } from '../dataloader';
+// import { commentReplysLoader, replysCountLoader } from '../dataloader';
 
 export const Say = modalCreator('Say', saySchema);
 export const User = modalCreator('User', userSchema);
