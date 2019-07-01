@@ -8,6 +8,8 @@ import {
   commentsCountLoader,
   commentsAndRelysCountLoader,
 } from '@/mongo/models/comment/dataloader';
+
+import { zanCountLoader } from '@/mongo/models/zan/dataloader';
 import { userLoader } from '../../utils';
 
 export default {
@@ -175,5 +177,6 @@ export default {
     replyTo: ({ replyTo }) => replyToLoader.load(replyTo.toString()),
     replys: ({ _id }, { first = 5 }) => commentReplysLoader.load(_id.toString()),
     replyCount: ({ _id }) => replysCountLoader.load(_id.toString()),
+    zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
   },
 };

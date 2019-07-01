@@ -14,6 +14,8 @@ export default `
 
     replys(first: Int): [Comment]
     replyCount: Int
+    zanCount: Int
+
     replyTo: Comment
     commentTo: Comment
   }

@@ -113,6 +113,9 @@ export default `
     # 删除评论
     deleteComment(_id: String): Result!
 
+    # 创建评论
+    zan(_id: String): Result!
+
     # 喜欢
     like(id: String!, unlike: Boolean): Result!
 
