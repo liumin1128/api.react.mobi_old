@@ -1,5 +1,6 @@
 
 import { AuthenticationError, ApolloError } from 'apollo-server';
+import { stringify } from 'query-string';
 import Comment from '@/mongo/models/comment';
 import {
   commentReplysLoader,
@@ -9,7 +10,7 @@ import {
   commentsAndRelysCountLoader,
 } from '@/mongo/models/comment/dataloader';
 
-import { zanCountLoader } from '@/mongo/models/zan/dataloader';
+import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
 import { userLoader } from '../../utils';
 
 export default {
@@ -178,5 +179,6 @@ export default {
     replys: ({ _id }, { first = 5 }) => commentReplysLoader.load(_id.toString()),
     replyCount: ({ _id }) => replysCountLoader.load(_id.toString()),
     zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
+    zanStatus: ({ _id }, _, { user }) => (user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false),
   },
 };

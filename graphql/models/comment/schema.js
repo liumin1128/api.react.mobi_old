@@ -15,6 +15,7 @@ export default `
     replys(first: Int): [Comment]
     replyCount: Int
     zanCount: Int
+    zanStatus: Boolean
 
     replyTo: Comment
     commentTo: Comment
