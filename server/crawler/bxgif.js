@@ -17,7 +17,7 @@ export async function getList(url) {
   const list = [];
   function getVlue() {
     const title = $(this).find('em a').text();
-    const itemUrl = $(this).find('em a').attr('href');
+    const itemUrl = $(this).find('em a').attr('href') || '';
     const _id = itemUrl.substr(29, 6);
     const temp = $(this).find('em').text();
     const createdAt = temp.substring(title.length + 1, temp.length);
