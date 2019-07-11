@@ -34,10 +34,10 @@ export default {
       const { _id, ...params } = args;
       if (_id) {
         console.log('更新模式');
-        const say = await Comment.findById(_id);
-        if (say) {
-          if (say.user.toString() === user) {
-            await say.update(params);
+        const dynamic = await Comment.findById(_id);
+        if (dynamic) {
+          if (dynamic.user.toString() === user) {
+            await dynamic.update(params);
             return {
               status: 200,
               message: '更新成功',
@@ -56,15 +56,15 @@ export default {
       }
 
       console.log('创建模式');
-      const say = await Comment.create({ ...params, user });
-      console.log('say');
-      console.log(say);
+      const dynamic = await Comment.create({ ...params, user });
+      console.log('dynamic');
+      console.log(dynamic);
 
-      if (say) {
+      if (dynamic) {
         return {
           status: 200,
           message: '创建成功',
-          data: say,
+          data: dynamic,
         };
       }
       return {
@@ -93,10 +93,10 @@ export default {
           };
         }
 
-        const say = await Comment.findById(_id);
-        if (say) {
-          if (say.user.toString() === user) {
-            await say.remove();
+        const dynamic = await Comment.findById(_id);
+        if (dynamic) {
+          if (dynamic.user.toString() === user) {
+            await dynamic.remove();
             await Comment.find({ commentTo: _id }).remove();
             return {
               status: 200,

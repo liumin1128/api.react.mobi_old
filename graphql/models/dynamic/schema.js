@@ -1,15 +1,15 @@
 export default `
-  type SayMeta {
+  type DynamicMeta {
     count: Int!
   }
-  type Say {
+  type Dynamic {
     _id: String!
     content: String
     photos: [String!]
     createdAt: String!
     user: User!
   }
-  input SayInput {
+  input DynamicInput {
     content: String!
   }
 `;

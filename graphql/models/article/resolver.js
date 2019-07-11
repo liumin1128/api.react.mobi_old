@@ -14,10 +14,10 @@ export default {
       const { input: { _id, ...params } } = args;
       if (_id) {
         console.log('更新模式');
-        const say = await Article.findById(_id);
-        if (say) {
-          if (say.user.toString() === user) {
-            await say.update(params);
+        const dynamic = await Article.findById(_id);
+        if (dynamic) {
+          if (dynamic.user.toString() === user) {
+            await dynamic.update(params);
             return {
               status: 200,
               message: '更新成功',
@@ -36,8 +36,8 @@ export default {
       }
 
       console.log('创建模式');
-      const say = await Article.create({ ...params, user });
-      if (say) {
+      const dynamic = await Article.create({ ...params, user });
+      if (dynamic) {
         return {
           status: 200,
           message: '创建成功',
@@ -69,10 +69,10 @@ export default {
             message: '目标不存在或已被删除',
           };
         }
-        const say = await Article.findById(id);
-        if (say) {
-          if (say.user.toString() === user) {
-            await say.remove();
+        const dynamic = await Article.findById(id);
+        if (dynamic) {
+          if (dynamic.user.toString() === user) {
+            await dynamic.remove();
             return {
               status: 200,
               message: '删除成功',

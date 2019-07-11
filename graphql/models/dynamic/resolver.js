@@ -1,15 +1,15 @@
-import { Say } from '@/mongo/models';
+import { Dynamic } from '@/mongo/models';
 import { userLoader } from '../../utils';
 
 export default {
   Mutation: {
-    SayCreate: async (root, args, ctx, op) => {
+    DynamicCreate: async (root, args, ctx, op) => {
       try {
         const { user } = ctx;
         if (!user) return { status: 401, message: '尚未登录' };
         const { input } = args;
-        const say = await Say.create({ ...input, user });
-        if (say) return { status: 200, message: '创建成功' };
+        const dynamic = await Dynamic.create({ ...input, user });
+        if (dynamic) return { status: 200, message: '创建成功' };
         return { status: 504, message: '操作异常' };
       } catch (error) {
         console.log('error');
@@ -19,16 +19,16 @@ export default {
   },
 
   Query: {
-    say: async (root, args) => {
+    dynamic: async (root, args) => {
       const { _id } = args;
-      const data = await Say.findById(_id);
+      const data = await Dynamic.findById(_id);
       return data;
     },
-    says: async (root, args) => {
+    dynamics: async (root, args) => {
       try {
         const { skip = 0, first = 10, sort = '-_id' } = args;
 
-        const data = await Say
+        const data = await Dynamic
           .find({})
           .skip(skip)
           .limit(first)
@@ -42,16 +42,16 @@ export default {
         console.log(error);
       }
     },
-    _saysMeta: async (root, args) => {
+    _dynamicsMeta: async (root, args) => {
       try {
-        const data = await Say.countDocuments();
+        const data = await Dynamic.countDocuments();
         return { count: data };
       } catch (error) {
         console.log(error);
       }
     },
   },
-  Say: {
+  Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
   },
 };

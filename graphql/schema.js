@@ -1,4 +1,4 @@
-import say from './models/say/schema';
+import dynamic from './models/dynamic/schema';
 import user from './models/user/schema';
 import article from './models/article/schema';
 import wechat from './models/wechat/schema';
@@ -15,7 +15,7 @@ import news from './models/news/schema';
 export default `
   scalar Date
   
-  ${say}
+  ${dynamic}
   ${user}
   ${article}
   ${wechat}
@@ -55,9 +55,9 @@ export default `
     _likesMeta(user: String, unlike: Boolean): LikesMeta!
 
     # 说说
-    say(_id: String): Say!
-    says(first: Int, skip: Int): [Say!]
-    _saysMeta: SayMeta!
+    dynamic(_id: String): Dynamic!
+    dynamics(first: Int, skip: Int): [Dynamic!]
+    _dynamicsMeta: DynamicMeta!
 
     # 微信公众号文章
     wechat(name: String): [Wechat!]
@@ -105,7 +105,7 @@ export default `
     deleteArticle(_id: String): Result!
 
     # 创建说说
-    SayCreate(input: SayInput): Result!
+    DynamicCreate(input: DynamicInput): Result!
 
     # 创建评论
     createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!
