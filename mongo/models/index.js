@@ -4,7 +4,7 @@ import {
   userSchema,
   oauthSchema,
   articleSchema,
-  dynamicSchema,
+  // dynamicSchema,
   // commentSchema,
   likeSchema,
   newsSchema,
@@ -12,7 +12,7 @@ import {
 
 // import { commentReplysLoader, replysCountLoader } from '../dataloader';
 
-export const Dynamic = modalCreator('Dynamic', dynamicSchema);
+// export const Dynamic = modalCreator('Dynamic', dynamicSchema);
 export const User = modalCreator('User', userSchema);
 export const Oauth = modalCreator('Oauth', oauthSchema);
 export const Article = modalCreator('Article', articleSchema);
