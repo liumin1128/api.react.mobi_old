@@ -1,6 +1,8 @@
 // import { Dynamic } from '@/mongo/models';
 import Dynamic from '@/mongo/models/dynamic';
+import DynamicTopic from '@/mongo/models/dynamic/topic';
 import uniq from 'lodash/uniq';
+import { sequence } from '@/utils/promise';
 import { userLoader } from '../../utils';
 
 function getTopic(str) {
@@ -24,11 +26,15 @@ export default {
         const topics = getTopic(content);
         console.log('topics');
         console.log(topics);
-        // if (topics) {
-        //   await Promise.all(topics.map(async topic => {
-
-        //   }))
-        // }
+        if (topics) {
+          await sequence(topics.map(topic => async () => {
+            const that = await DynamicTopic.findOne({ title: topic });
+            if (that) return;
+            const last = await DynamicTopic.findOne().sort('_id');
+            const number = (last || { number: 1000 }).number + 1;
+            await DynamicTopic.create({ title: topic, number });
+          }));
+        }
         const dynamic = await Dynamic.create({ ...input, user });
         if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
