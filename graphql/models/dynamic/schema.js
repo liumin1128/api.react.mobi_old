@@ -5,11 +5,17 @@ export default `
   type Dynamic {
     _id: String!
     content: String
-    photos: [String!]
+    pictures: [String!]
     createdAt: String!
     user: User!
   }
   input DynamicInput {
     content: String!
+    pictures: [String]
+  }
+  type CreateDynamicResult {
+    status: Int!
+    message: String
+    data: Dynamic
   }
 `;

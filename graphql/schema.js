@@ -105,7 +105,7 @@ export default `
     deleteArticle(_id: String): Result!
 
     # 创建说说
-    DynamicCreate(input: DynamicInput): Result!
+    DynamicCreate(input: DynamicInput): CreateDynamicResult!
 
     # 创建评论
     createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!

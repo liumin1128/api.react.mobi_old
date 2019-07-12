@@ -6,6 +6,6 @@ export default {
   content: String,
   title: String,
   url: String,
-  photos: Array,
+  pictures: Array,
   user: { type: ObjectId, ref: 'User' },
 };

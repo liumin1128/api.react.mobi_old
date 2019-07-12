@@ -9,7 +9,7 @@ export default {
         if (!user) return { status: 401, message: '尚未登录' };
         const { input } = args;
         const dynamic = await Dynamic.create({ ...input, user });
-        if (dynamic) return { status: 200, message: '创建成功' };
+        if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
       } catch (error) {
         console.log('error');
