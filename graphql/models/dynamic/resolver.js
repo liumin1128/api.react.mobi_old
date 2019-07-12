@@ -69,6 +69,24 @@ export default {
         console.log(error);
       }
     },
+    DynamicTopics: async (root, args) => {
+      try {
+        const { skip = 0, first = 10, sort = '-_id', title } = args;
+
+        const data = await DynamicTopic
+          .find({ title: new RegExp(title) })
+          .skip(skip)
+          .limit(first)
+          .sort(sort);
+
+        console.log('data');
+        console.log(data);
+
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     _dynamicsMeta: async (root, args) => {
       try {
         const data = await Dynamic.countDocuments();

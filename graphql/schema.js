@@ -57,6 +57,7 @@ export default `
     # 说说
     dynamic(_id: String): Dynamic!
     dynamics(first: Int, skip: Int): [Dynamic!]
+    DynamicTopics(first: Int, skip: Int, title: String): [DynamicTopic!]
     _dynamicsMeta: DynamicMeta!
 
     # 微信公众号文章

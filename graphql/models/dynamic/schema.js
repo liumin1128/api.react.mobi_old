@@ -9,6 +9,12 @@ export default `
     createdAt: String!
     user: User!
   }
+  type DynamicTopic {
+    _id: String!
+    title: String!
+    number: String!
+    createdAt: String!
+  }
   input DynamicInput {
     content: String!
     pictures: [String]
