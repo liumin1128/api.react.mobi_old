@@ -23,19 +23,24 @@ export default {
         const { content } = input;
         console.log('content');
         console.log(content);
-        const topics = getTopic(content);
-        console.log('topics');
-        console.log(topics);
-        if (topics) {
-          await sequence(topics.map(topic => async () => {
+        const topicStrList = getTopic(content);
+        console.log('topicStrList');
+        console.log(topicStrList);
+        const topics = [];
+        if (topicStrList) {
+          await sequence(topicStrList.map(topic => async () => {
             const that = await DynamicTopic.findOne({ title: topic });
-            if (that) return;
-            const last = await DynamicTopic.findOne().sort('_id');
+            if (that) {
+              topics.push(that);
+              return;
+            }
+            const last = await DynamicTopic.findOne().sort('-_id');
             const number = (last || { number: 1000 }).number + 1;
-            await DynamicTopic.create({ title: topic, number });
+            const data = await DynamicTopic.create({ title: topic, number });
+            topics.push(data);
           }));
         }
-        const dynamic = await Dynamic.create({ ...input, user });
+        const dynamic = await Dynamic.create({ ...input, user, topics });
         if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
       } catch (error) {
