@@ -11,6 +11,7 @@ export default `
     user: User!
     zanCount: Int
     zanStatus: Boolean
+    commentCount: Int
   }
   type DynamicTopic {
     _id: String!
