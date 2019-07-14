@@ -6,13 +6,7 @@ import uniq from 'lodash/uniq';
 import { sequence } from '@/utils/promise';
 import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
-import {
-  commentReplysLoader,
-  replysCountLoader,
-  replyToLoader,
-  commentsCountLoader,
-  commentsAndRelysCountLoader,
-} from '@/mongo/models/comment/dataloader';
+import { commentsCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
 
 function getTopic(str) {
@@ -70,16 +64,21 @@ export default {
     },
     dynamics: async (root, args) => {
       try {
-        const { skip = 0, first = 10, sort = '-_id' } = args;
+        const { skip = 0, first = 10, topic, user, sort = '-_id' } = args;
+
+        let dt;
+        if (topic) {
+          dt = await DynamicTopic.findOne({ number: topic });
+        }
 
         const data = await Dynamic
-          .find({})
+          .find(dt ? { topics: { $elemMatch: { $eq: dt._id } } } : {})
           .skip(skip)
           .limit(first)
           .sort(sort);
 
-        console.log('data');
-        console.log(data);
+        // console.log('data');
+        // console.log(data);
 
         return data;
       } catch (error) {
@@ -95,9 +94,6 @@ export default {
           .skip(skip)
           .limit(first)
           .sort(sort);
-
-        console.log('data');
-        console.log(data);
 
         return data;
       } catch (error) {

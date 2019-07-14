@@ -54,10 +54,10 @@ export default `
     likes(first: Int, skip: Int, user: String, unlike: Boolean): [Like]
     _likesMeta(user: String, unlike: Boolean): LikesMeta!
 
-    # 说说
-    dynamic(_id: String): Dynamic!
-    dynamics(first: Int, skip: Int): [Dynamic!]
-    DynamicTopics(first: Int, skip: Int, title: String): [DynamicTopic!]
+    # 动态
+    dynamic(_id: String): Dynamic
+    dynamics(first: Int, skip: Int, topic: String, user: String): [Dynamic]
+    DynamicTopics(first: Int, skip: Int, title: String): [DynamicTopic]
     _dynamicsMeta: DynamicMeta!
 
     # 微信公众号文章
