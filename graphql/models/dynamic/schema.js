@@ -9,6 +9,8 @@ export default `
     topics: [DynamicTopic]
     createdAt: String!
     user: User!
+    zanCount: Int
+    zanStatus: Boolean
   }
   type DynamicTopic {
     _id: String!

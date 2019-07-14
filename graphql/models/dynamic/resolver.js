@@ -1,9 +1,11 @@
 // import { Dynamic } from '@/mongo/models';
+import { stringify } from 'query-string';
 import Dynamic from '@/mongo/models/dynamic';
 import DynamicTopic from '@/mongo/models/dynamic/topic';
 import uniq from 'lodash/uniq';
 import { sequence } from '@/utils/promise';
 import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
+import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
 import { userLoader } from '../../utils';
 
 function getTopic(str) {
@@ -107,5 +109,7 @@ export default {
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
     topics: ({ topics }) => Promise.all(topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString()))),
+    zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
+    zanStatus: ({ _id }, _, { user }) => (user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false),
   },
 };
