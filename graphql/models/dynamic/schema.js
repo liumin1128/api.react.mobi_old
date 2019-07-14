@@ -6,6 +6,7 @@ export default `
     _id: String!
     content: String
     pictures: [String!]
+    topics: [DynamicTopic]
     createdAt: String!
     user: User!
   }

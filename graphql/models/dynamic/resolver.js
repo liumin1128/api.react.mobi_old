@@ -3,6 +3,7 @@ import Dynamic from '@/mongo/models/dynamic';
 import DynamicTopic from '@/mongo/models/dynamic/topic';
 import uniq from 'lodash/uniq';
 import { sequence } from '@/utils/promise';
+import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
 import { userLoader } from '../../utils';
 
 function getTopic(str) {
@@ -21,11 +22,11 @@ export default {
         if (!user) return { status: 401, message: '尚未登录' };
         const { input } = args;
         const { content } = input;
-        console.log('content');
-        console.log(content);
+        // console.log('content');
+        // console.log(content);
         const topicStrList = getTopic(content);
-        console.log('topicStrList');
-        console.log(topicStrList);
+        // console.log('topicStrList');
+        // console.log(topicStrList);
         const topics = [];
         if (topicStrList) {
           await sequence(topicStrList.map(topic => async () => {
@@ -41,6 +42,8 @@ export default {
           }));
         }
         const dynamic = await Dynamic.create({ ...input, user, topics });
+        console.log('dynamic');
+        console.log(dynamic);
         if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
       } catch (error) {
@@ -103,5 +106,6 @@ export default {
   },
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
+    topics: ({ topics }) => Promise.all(topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString()))),
   },
 };
