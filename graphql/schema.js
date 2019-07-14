@@ -58,6 +58,7 @@ export default `
     dynamic(_id: String): Dynamic
     dynamics(first: Int, skip: Int, topic: String, user: String): [Dynamic]
     DynamicTopics(first: Int, skip: Int, title: String): [DynamicTopic]
+    DynamicTopic(topic: String): DynamicTopic
     _dynamicsMeta: DynamicMeta!
 
     # 微信公众号文章

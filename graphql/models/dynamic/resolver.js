@@ -100,6 +100,17 @@ export default {
         console.log(error);
       }
     },
+    DynamicTopic: async (root, args) => {
+      try {
+        const { topic } = args;
+
+        const data = await DynamicTopic.findOne({ number: topic });
+
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     _dynamicsMeta: async (root, args) => {
       try {
         const data = await Dynamic.countDocuments();
