@@ -79,6 +79,8 @@ class OauthClass {
     try {
       const { code } = ctx.query;
       const result = await getOauth(code);
+      let userId;
+
 
       // 从数据库查找对应用户第三方登录信息
       let oauth = await Oauth.findOne({ from: 'outlook', 'data.preferred_username': result.preferred_username });
@@ -89,15 +91,15 @@ class OauthClass {
         const user = await User.create({ username, nickname, avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue' });
         // 用户第三方信息存一下
         oauth = await Oauth.create({ from: 'outlook', data: result, user });
+        userId = user._id;
       } else {
-        const ssss = await oauth.update({ data: result });
+        await oauth.update({ data: result });
         // todo 刷新一下用户信息，避免token过期
-        console.log('ssss');
-        console.log(ssss);
+        userId = oauth.user;
       }
 
       // 生成token（用户身份令牌）
-      const token = await getUserToken(oauth.user);
+      const token = await getUserToken(userId);
 
       //
       //

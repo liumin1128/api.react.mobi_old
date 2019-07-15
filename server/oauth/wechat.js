@@ -88,10 +88,12 @@ class WeChat {
 
       // 从数据库查找对应用户第三方登录信息
       let oauth = await Oauth.findOne({ from: 'wechat', 'data.unionid': unionid });
+      let userId;
 
       if (oauth) {
         // 更新三方登录信息
         await oauth.update({ data });
+        userId = oauth.user;
       } else {
         // 如果不存在则获取用户信息，创建新用户，并保存该用户的第三方登录信息
         const userInfo = await getUserInfo(access_token, openid);
@@ -102,9 +104,10 @@ class WeChat {
         const user = await User.create({ avatarUrl, nickname });
         // 创建三方登录信息
         oauth = await Oauth.create({ from: 'wechat', data, userInfo, user });
+        userId = user._id;
       }
       // 生成token（用户身份令牌）
-      const token = await getUserToken(oauth.user);
+      const token = await getUserToken(userId);
       console.log('token');
       console.log(token);
       // 重定向页面到用户登录页，并返回token
