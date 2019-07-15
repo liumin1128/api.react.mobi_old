@@ -6,7 +6,7 @@ import uniq from 'lodash/uniq';
 import { sequence } from '@/utils/promise';
 import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
-import { commentsCountLoader } from '@/mongo/models/comment/dataloader';
+import { commentsAndRelysCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '../../utils';
 
 function getTopic(str) {
@@ -125,6 +125,6 @@ export default {
     topics: ({ topics }) => Promise.all(topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString()))),
     zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
     zanStatus: ({ _id }, _, { user }) => (user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false),
-    commentCount: ({ _id }) => commentsCountLoader.load(_id.toString()),
+    commentCount: ({ _id }) => commentsAndRelysCountLoader.load(_id.toString()),
   },
 };
