@@ -105,6 +105,8 @@ class WeChat {
       }
       // 生成token（用户身份令牌）
       const token = await getUserToken(oauth.user);
+      console.log('token');
+      console.log(token);
       // 重定向页面到用户登录页，并返回token
       ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
