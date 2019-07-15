@@ -44,7 +44,7 @@ export default {
             status: 200,
             message: '登录成功',
             token,
-            userInfo: { ...user, _id: `${user._id}` },
+            userInfo: user,
           };
         } else {
           return {
@@ -83,9 +83,10 @@ export default {
             status: 200,
             message: '登录成功',
             token,
-            userInfo: { ...user, _id: `${user._id}` },
+            userInfo: user,
           };
         }
+
         return {
           status: 401,
           message: '该手机号尚未注册',
