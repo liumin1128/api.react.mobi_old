@@ -25,11 +25,7 @@ export default {
         if (!user) return { status: 401, message: '尚未登录' };
         const { input } = args;
         const { content } = input;
-        // console.log('content');
-        // console.log(content);
         const topicStrList = getTopic(content);
-        // console.log('topicStrList');
-        // console.log(topicStrList);
         const topics = [];
         if (topicStrList) {
           await sequence(topicStrList.map(topic => async () => {
@@ -52,6 +48,7 @@ export default {
       } catch (error) {
         console.log('error');
         console.log(error);
+        return { status: 504, message: '操作异常' };
       }
     },
   },
