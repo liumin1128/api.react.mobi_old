@@ -1,6 +1,5 @@
-import { stringify, parse } from 'query-string';
 import { User, Oauth } from '@/mongo/models';
-import { DOMAIN, API_DOMAIN, ENV } from '@/config/base';
+import { DOMAIN, API_DOMAIN } from '@/config/base';
 import wechat from '@/config/wechat';
 import fetch from '@/utils/fetch';
 import { fetchToQiniu } from '@/utils/qiniu';
@@ -9,17 +8,8 @@ import { getUserToken } from '@/utils/jwt';
 function getOauthUrl() {
   let url = 'https://open.weixin.qq.com/connect/qrconnect';
   url += `?appid=${wechat.appid}`;
-  url += `&redirect_uri=${wechat.redirect_uri}`;
-  url += '&response_type=code&scope=snsapi_login';
-
-  if (ENV) {
-    const query = { redirect: DOMAIN };
-    url += `&state=${stringify(query)}`;
-  } else {
-    url += '&state=123';
-  }
-
-  url += '#wechat_redirect';
+  url += `&redirect_uri=${API_DOMAIN}/oauth/wechat/callback`;
+  url += '&response_type=code&scope=snsapi_login&state=123#wechat_redirect ';
   return url;
 }
 
@@ -85,16 +75,15 @@ class WeChat {
   }
 
   async callback(ctx) {
-    console.log('微信账号登录回调');
-    const { code, state } = ctx.query;
-    const { redirect = DOMAIN } = parse(state) || {};
-
     try {
+      console.log('微信账号登录回调');
+      const { code } = ctx.query;
+
       const data = await getAccessToken(code);
       const { access_token, openid, unionid } = data;
       if (!access_token) {
         console.log('微信获取access_token失败');
-        ctx.redirect(redirect);
+        ctx.redirect(DOMAIN);
       }
 
       // 从数据库查找对应用户第三方登录信息
@@ -117,9 +106,9 @@ class WeChat {
       // 生成token（用户身份令牌）
       const token = await getUserToken(oauth.user);
       // 重定向页面到用户登录页，并返回token
-      ctx.redirect(`${redirect}/login/oauth?token=${token}`);
+      ctx.redirect(`${DOMAIN}/login/oauth?token=${token}`);
     } catch (error) {
-      ctx.redirect(redirect);
+      ctx.redirect(DOMAIN);
       console.log('error');
       console.log(error);
     }
