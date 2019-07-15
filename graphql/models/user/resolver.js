@@ -18,6 +18,13 @@ function getPhone(countryCode, purePhoneNumber) {
   }
 }
 
+console.log('xxxxxxxxxxxxxx');
+console.log('xxxxxxxxxxxxxx');
+console.log('xxxxxxxxxxxxxx');
+console.log('xxxxxxxxxxxxxx');
+console.log('xxxxxxxxxxxxxx');
+console.log('xxxxxxxxxxxxxx');
+
 export default {
   Query: {
     userInfo: async (root, args, ctx) => {
@@ -25,7 +32,11 @@ export default {
       if (!user) {
         throw new AuthenticationError('用户未登录');
       }
+      console.log('user');
+      console.log(user);
       const data = await userLoader.load(user);
+      console.log('data');
+      console.log(data);
       if (!data) {
         throw new ApolloError('用户不存在', 403, { test: 'xxx' });
       }
