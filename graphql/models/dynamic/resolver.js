@@ -41,8 +41,6 @@ export default {
           }));
         }
         const dynamic = await Dynamic.create({ ...input, user, topics });
-        console.log('dynamic');
-        console.log(dynamic);
         if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
       } catch (error) {
