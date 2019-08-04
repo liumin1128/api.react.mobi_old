@@ -1,6 +1,6 @@
-
 import { News } from '@/mongo/models';
-// import { userLoader, commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
+// import {  commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
+// import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
   Query: {
@@ -12,8 +12,7 @@ export default {
     NewsList: async (root, args) => {
       try {
         const { skip = 0, first = 16, sort = '-_id' } = args;
-        const data = await News
-          .find({})
+        const data = await News.find({})
           .skip(skip)
           .limit(first)
           .sort(sort);

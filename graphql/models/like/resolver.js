@@ -1,6 +1,6 @@
-
 import { Like } from '@/mongo/models';
-import { userLoader, articleLoader } from '../../utils';
+import { articleLoader } from '../../utils';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
   Mutation: {
@@ -9,10 +9,14 @@ export default {
         console.log('like');
 
         const { user } = ctx;
-        if (!user) { return { status: 403, message: '尚未登录' }; }
+        if (!user) {
+          return { status: 403, message: '尚未登录' };
+        }
 
         const { id, unlike = false } = args;
-        if (!id) { return { status: 401, message: '参数异常' }; }
+        if (!id) {
+          return { status: 401, message: '参数异常' };
+        }
 
         const data = await Like.findOne({ id, user });
 
@@ -22,7 +26,10 @@ export default {
             return { status: 200, message: unlike ? '不反对了' : '不喜欢了' };
           }
           await data.update({ unlike });
-          return { status: 200, message: unlike ? '喜欢 => 反对' : '反对 => 喜欢' };
+          return {
+            status: 200,
+            message: unlike ? '喜欢 => 反对' : '反对 => 喜欢',
+          };
         } else {
           await Like.create({ id, user, unlike });
           return { status: 200, message: unlike ? '反对' : '喜欢' };
@@ -38,8 +45,7 @@ export default {
       try {
         const { user, unlike, skip = 0, first = 5, sort = '-_id' } = args;
 
-        const data = await Like
-          .find({ user, unlike })
+        const data = await Like.find({ user, unlike })
           .skip(skip)
           .limit(first)
           .sort(sort);

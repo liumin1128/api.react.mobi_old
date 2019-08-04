@@ -1,7 +1,11 @@
-
 import { Article } from '@/mongo/models';
-import { userLoader, commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
+import {
+  commentCountLoader,
+  likeCountLoader,
+  likeStatusLoader,
+} from '../../utils';
 import { AuthenticationError } from 'apollo-server-koa';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
   Mutation: {
@@ -11,7 +15,9 @@ export default {
       if (!user) {
         throw new AuthenticationError('must authenticate');
       }
-      const { input: { _id, ...params } } = args;
+      const {
+        input: { _id, ...params },
+      } = args;
       if (_id) {
         console.log('更新模式');
         const dynamic = await Article.findById(_id);
@@ -102,8 +108,7 @@ export default {
     articles: async (root, args) => {
       try {
         const { skip = 0, first = 10, sort = '-_id' } = args;
-        const data = await Article
-          .find({})
+        const data = await Article.find({})
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -131,8 +136,6 @@ export default {
     likeCount: ({ _id }) => likeCountLoader.load(_id),
 
     // 查询当前帖子列表中，每一个帖子是否由当前用户点赞
-    likeStatus: ({ _id }, args, { user }) => (user
-      ? likeStatusLoader.load({ _id, user })
-      : undefined),
+    likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
   },
 };
