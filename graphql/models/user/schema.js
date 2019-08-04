@@ -17,6 +17,9 @@ export default `
     _id: String!
     nickname: String!
     avatarUrl: String!
+    sex: Int
+    sign: String
+    birthday: Date
   }
   type UserLoginResult {
     status: Int!
