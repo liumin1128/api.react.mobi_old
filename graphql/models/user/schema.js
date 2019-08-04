@@ -6,6 +6,13 @@ export default `
     code: String!
     password: String!
   }
+  input UpdateUserInfoInput {
+    avatarUrl: String!
+    nickname: String!
+    sex: Int
+    sign: String
+    birthday: Date
+  }
   type User {
     _id: String!
     nickname: String!

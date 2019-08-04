@@ -99,6 +99,7 @@ export default `
     userLoginByPhonenumberCode(countryCode: String!, purePhoneNumber: String!, code: String!): UserLoginResult!
     userRegister(input: UserRegisterInput): UserRegisterResult!
     getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
+    updateUserInfo(input: UpdateUserInfoInput): Result!
 
     # 创建文章
     createArticle(input: ArticleInput): Result!

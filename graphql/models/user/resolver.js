@@ -13,17 +13,12 @@ function getKey(phone, code) {
 
 function getPhone(countryCode, purePhoneNumber) {
   switch (countryCode) {
-    case '+86': return purePhoneNumber;
-    default: return countryCode + purePhoneNumber;
+    case '+86':
+      return purePhoneNumber;
+    default:
+      return countryCode + purePhoneNumber;
   }
 }
-
-console.log('xxxxxxxxxxxxxx');
-console.log('xxxxxxxxxxxxxx');
-console.log('xxxxxxxxxxxxxx');
-console.log('xxxxxxxxxxxxxx');
-console.log('xxxxxxxxxxxxxx');
-console.log('xxxxxxxxxxxxxx');
 
 export default {
   Query: {
@@ -38,13 +33,17 @@ export default {
       console.log('data');
       console.log(data);
       if (!data) {
-        throw new ApolloError('用户不存在', 403, { test: 'xxx' });
+        throw new ApolloError('用户不存在', 403, {
+          test: 'xxx',
+        });
       }
       return data;
     },
   },
   Mutation: {
     userLogin: async (root, args, ctx, op) => {
+      console.log('args');
+      console.log(args);
       try {
         const { password, ...other } = args;
         const user = await User.findOne(other).lean();
@@ -87,7 +86,9 @@ export default {
           };
         }
 
-        const user = await User.findOne({ phoneNumber: phone });
+        const user = await User.findOne({
+          phoneNumber: phone,
+        });
         if (user) {
           const token = await getUserToken(user._id);
           return {
@@ -130,7 +131,10 @@ export default {
 
         let user;
 
-        user = await User.findOne({ nickname: params.nickname });
+        user = await User.findOne({
+          nickname: params.nickname,
+        });
+
         if (user) {
           return {
             status: 401,
@@ -138,7 +142,10 @@ export default {
           };
         }
 
-        user = await User.findOne({ phoneNumber: phone });
+        user = await User.findOne({
+          phoneNumber: phone,
+        });
+
         if (user) {
           return {
             status: 401,
@@ -192,7 +199,6 @@ export default {
           };
         }
 
-
         const code = randomCode();
         const key = getKey(phone, code);
         const expire = 5 * 60;
@@ -215,6 +221,40 @@ export default {
         return {
           status: 403,
           message: '验证码发送失败',
+        };
+      }
+    },
+
+    updateUserInfo: async (root, args, ctx, op) => {
+      try {
+        const { user } = ctx;
+
+        const { input } = args;
+
+        console.log('updateUserInfo input');
+        console.log(input);
+
+        if (!user) {
+          throw new AuthenticationError('用户未登录');
+        }
+
+        const data = await User.findById(user);
+
+        if (data) {
+          await data.update(input);
+          return {
+            status: 200,
+            message: '用户信息更新成功',
+          };
+        }
+        return {
+          status: 401,
+          message: '用户不存在',
+        };
+      } catch (error) {
+        return {
+          status: 500,
+          message: '用户信息更新失败',
         };
       }
     },
