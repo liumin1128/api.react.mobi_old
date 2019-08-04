@@ -1,4 +1,3 @@
-
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import { stringify } from 'query-string';
 import Comment from '@/mongo/models/comment';
@@ -11,7 +10,7 @@ import {
 } from '@/mongo/models/comment/dataloader';
 
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
-import { userLoader } from '../../utils';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
   Mutation: {
@@ -129,8 +128,11 @@ export default {
           throw new ApolloError('必须要有评论对象');
         }
 
-        const data = await Comment
-          .find({ session, commentTo: null, replyTo: null })
+        const data = await Comment.find({
+          session,
+          commentTo: null,
+          replyTo: null,
+        })
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -148,8 +150,7 @@ export default {
           throw new ApolloError('必须要有评论对象');
         }
 
-        const data = await Comment
-          .find({ commentTo })
+        const data = await Comment.find({ commentTo })
           .skip(skip)
           .limit(first)
           .sort(sort);

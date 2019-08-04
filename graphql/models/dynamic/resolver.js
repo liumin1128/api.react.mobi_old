@@ -7,7 +7,7 @@ import { sequence } from '@/utils/promise';
 import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
 import { commentsAndRelysCountLoader } from '@/mongo/models/comment/dataloader';
-import { userLoader } from '../../utils';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 function getTopic(str) {
   const list = str.match(/#(\S*?)#/g);
