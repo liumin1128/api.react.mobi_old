@@ -1,11 +1,11 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
-import { User } from '@/mongo/models';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
-import { userLoader } from '@/graphql/utils/index';
+import User from '@/mongo/models/user';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -238,18 +238,11 @@ export default {
           throw new AuthenticationError('用户未登录');
         }
 
-        const data = await User.findById(user);
+        await User.updateOne({ _id: user }, input);
 
-        if (data) {
-          await data.update(input);
-          return {
-            status: 200,
-            message: '用户信息更新成功',
-          };
-        }
         return {
-          status: 401,
-          message: '用户不存在',
+          status: 200,
+          message: '用户信息更新成功',
         };
       } catch (error) {
         return {
