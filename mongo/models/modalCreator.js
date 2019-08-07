@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 function save(next) {
-  if (this.isNew) this.createdAt = Date.now();
-  this.updatedAt = Date.now();
+  if (this.isNew) this.createdAt = Date.now;
+  this.updatedAt = Date.now;
   next();
 }
 

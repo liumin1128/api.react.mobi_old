@@ -109,6 +109,7 @@ export default `
 
     # 创建说说
     DynamicCreate(input: DynamicInput): CreateDynamicResult!
+    CheckNewDynamic(latest: String): Result
 
     # 创建评论
     createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!

@@ -49,6 +49,27 @@ export default {
         return { status: 504, message: '操作异常' };
       }
     },
+
+    CheckNewDynamic: async (root, args) => {
+      try {
+        const { latest } = args;
+        const data = await Dynamic.find({ createdAt: { '$gt': latest } });
+        if(data) {
+          return {
+            status: 200,
+            message: '有新数据'
+          };
+        } else {
+          return {
+            status: 201,
+            message: '没有有新数据'
+          };
+        }
+  
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   Query: {
@@ -114,6 +135,7 @@ export default {
         console.log(error);
       }
     },
+    
   },
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
