@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { Oauth } from '../mongo/models';
+import Oauth from '@/mongo/models/oauth';
 
 const fetch1 = (url, params = {}, options = {}) => {
   return fetch(url, {
@@ -14,7 +14,6 @@ const fetch1 = (url, params = {}, options = {}) => {
       console.log(e);
     });
 };
-
 
 const fetch2 = (url, options = {}) => {
   return fetch(url, {
@@ -49,7 +48,9 @@ export const sentOutlookEmail = async (userId, params) => {
       },
     });
 
-    const urlSend = `https://graph.microsoft.com/v1.0/me/messages/${data.id}/send`;
+    const urlSend = `https://graph.microsoft.com/v1.0/me/messages/${
+      data.id
+    }/send`;
 
     const data2 = await fetch2(urlSend, {
       headers: {
@@ -57,7 +58,6 @@ export const sentOutlookEmail = async (userId, params) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
 
     return data2;
   } catch (error) {
