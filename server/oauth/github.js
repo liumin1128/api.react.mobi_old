@@ -1,6 +1,7 @@
 import github from '@/config/github';
 import fetch from '@/utils/fetch';
-import { User, Oauth } from '@/mongo/models';
+import User from '@/mongo/models/user';
+import Oauth from '@/mongo/models/oauth';
 import { DOMAIN } from '@/config/base';
 import { fetchToQiniu } from '@/utils/qiniu';
 import { getUserToken } from '@/utils/jwt';
@@ -8,7 +9,7 @@ import { getUserToken } from '@/utils/jwt';
 // https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
 
 function getOauthUrl() {
-  const dataStr = (new Date()).valueOf();
+  const dataStr = new Date().valueOf();
   let url = 'https://github.com/login/oauth/authorize';
   url += `?client_id=${github.client_id}`;
   url += `&scope=${github.scope}`;
@@ -22,7 +23,11 @@ async function getAccessToken(code) {
     // https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140842
 
     const url = 'https://github.com/login/oauth/access_token';
-    const params = { client_id: github.client_id, client_secret: github.client_secret, code };
+    const params = {
+      client_id: github.client_id,
+      client_secret: github.client_secret,
+      code,
+    };
     const data = await fetch(url, params);
 
     return data;
@@ -38,7 +43,9 @@ async function getAccessToken(code) {
 
 async function getUserInfo(access_token) {
   try {
-    const data = await fetch(`https://api.github.com/user?access_token=${access_token}`);
+    const data = await fetch(
+      `https://api.github.com/user?access_token=${access_token}`,
+    );
     return data;
     // 返回值示例
     //   {
@@ -116,6 +123,7 @@ class Github {
         const nickname = name || login;
         const avatarUrl = await fetchToQiniu(avatar_url);
         const user = await User.create({ avatarUrl, nickname });
+        console.log('创建第三方登录信息');
         oauth = await Oauth.create({ from: 'github', data, userInfo, user });
         userId = user._id;
       }

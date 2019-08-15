@@ -1,7 +1,8 @@
 import { URLSearchParams } from 'url';
 import config from '@/config/outlook';
 import fetch from '@/utils/fetch';
-import { User, Oauth } from '@/mongo/models';
+import User from '@/mongo/models/user';
+import Oauth from '@/mongo/models/oauth';
 import { DOMAIN } from '@/config/base';
 import { getUserToken } from '@/utils/jwt';
 import { sentOutlookEmail } from '@/utils/outlook';
@@ -81,14 +82,20 @@ class OauthClass {
       const result = await getOauth(code);
       let userId;
 
-
       // 从数据库查找对应用户第三方登录信息
-      let oauth = await Oauth.findOne({ from: 'outlook', 'data.preferred_username': result.preferred_username });
+      let oauth = await Oauth.findOne({
+        from: 'outlook',
+        'data.preferred_username': result.preferred_username,
+      });
       if (!oauth) {
         // 前面半天都是为了获取用户在此app的唯一标识，username，拿稳存好
         const { preferred_username: username, name: nickname } = result;
         // outlook 暂时不知道怎么拿用户头像
-        const user = await User.create({ username, nickname, avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue' });
+        const user = await User.create({
+          username,
+          nickname,
+          avatarUrl: 'https://imgs.react.mobi/FthXc5PBp6PrhR7z9RJI6aaa46Ue',
+        });
         // 用户第三方信息存一下
         oauth = await Oauth.create({ from: 'outlook', data: result, user });
         userId = user._id;

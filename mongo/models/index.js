@@ -2,7 +2,7 @@ import modalCreator from './modalCreator';
 
 import {
   // userSchema,
-  oauthSchema,
+  // oauthSchema,
   articleSchema,
   // dynamicSchema,
   // commentSchema,
@@ -14,7 +14,7 @@ import {
 
 // export const Dynamic = modalCreator('Dynamic', dynamicSchema);
 // export const User = modalCreator('User', userSchema);
-export const Oauth = modalCreator('Oauth', oauthSchema);
+// export const Oauth = modalCreator('Oauth', oauthSchema);
 export const Article = modalCreator('Article', articleSchema);
 export const Like = modalCreator('Like', likeSchema);
 export const News = modalCreator('News', newsSchema);
