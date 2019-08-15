@@ -1,4 +1,3 @@
-// import { Dynamic } from '@/mongo/models';
 import { stringify } from 'query-string';
 import Dynamic from '@/mongo/models/dynamic';
 import DynamicTopic from '@/mongo/models/dynamic/topic';
