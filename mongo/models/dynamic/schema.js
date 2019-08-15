@@ -9,6 +9,7 @@ export default {
   title: String,
   url: String,
   pictures: Array,
+  iframe: String,
   topics: [{ type: ObjectId, ref: 'DynamicTopic' }],
   user: { type: ObjectId, ref: 'User' },
 };

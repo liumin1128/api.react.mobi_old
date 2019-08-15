@@ -5,6 +5,7 @@ export default `
   type Dynamic {
     _id: String!
     content: String
+    iframe: String
     pictures: [String!]
     topics: [DynamicTopic]
     createdAt: String!
@@ -21,6 +22,7 @@ export default `
   }
   input DynamicInput {
     content: String!
+    iframe: String
     pictures: [String]
   }
   type CreateDynamicResult {
