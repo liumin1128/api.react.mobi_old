@@ -53,19 +53,20 @@ export default {
     CheckNewDynamic: async (root, args) => {
       try {
         const { latest } = args;
-        const data = await Dynamic.find({ createdAt: { '$gt': latest } });
-        if(data) {
+        const data = await Dynamic.countDocuments({ createdAt: { $gt: latest } });
+
+
+        if (data > 0) {
           return {
             status: 200,
-            message: '有新数据'
+            message: '有新数据',
           };
         } else {
           return {
             status: 201,
-            message: '没有有新数据'
+            message: '没有有新数据',
           };
         }
-  
       } catch (error) {
         console.log(error);
       }
