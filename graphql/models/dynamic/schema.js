@@ -9,7 +9,7 @@ export default `
     pictures: [String!]
     topics: [DynamicTopic]
     createdAt: String!
-    user: User!
+    user: User
     zanCount: Int
     zanStatus: Boolean
     commentCount: Int
