@@ -267,14 +267,13 @@ export default {
 
         const { oldPassword, password } = input;
 
-        console.log(checkPasswordStrength(password));
-
         if (checkPasswordStrength(password) < 3) {
           return {
             status: 401,
-            message: '新密码强度不足，请同时包含大小写字母及数字',
+            message: '新密码强度不足，请同时包含大小写字母及数字或特殊字符',
           };
         }
+
         const _user = await User.findById(user);
 
         if (!_user) {
