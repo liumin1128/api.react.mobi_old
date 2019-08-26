@@ -10,12 +10,7 @@ export const getUserToken = data => jwt.sign({ data }, JWT_SECRET, { expiresIn: 
 
 export const verifyJwt = options => koaJwt({ secret: JWT_SECRET, ...options });
 
-export default koaJwt({ secret: JWT_SECRET })
-  .unless({
-    // method: ['GET'],
-    path: [
-      /^\/graphql/,
-      /^\/oauth/,
-      /^\/recognition/,
-    ],
-  });
+export default koaJwt({ secret: JWT_SECRET }).unless({
+  // method: ['GET'],
+  path: [/^\//, /^\/graphql/, /^\/oauth/, /^\/rest/],
+});

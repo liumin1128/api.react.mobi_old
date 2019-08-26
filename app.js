@@ -18,7 +18,11 @@ import '@/server/news';
 
 const app = new Koa();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true, // 允许携带cookie
+  }),
+);
 app.use(helmet());
 app.use(BodyParser({ enableTypes: ['json', 'form', 'text'] }));
 app.use(KoaStatic(`${__dirname}/public`));
@@ -29,5 +33,7 @@ graphql.applyMiddleware({ app });
 
 app.listen(PORT, () => {
   console.log(`🚀 Server ready at http://localhost:${PORT}`);
-  console.log(`🎉 Graphql ready at http://localhost:${PORT}${graphql.graphqlPath}`);
+  console.log(
+    `🎉 Graphql ready at http://localhost:${PORT}${graphql.graphqlPath}`,
+  );
 });
