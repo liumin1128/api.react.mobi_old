@@ -18,3 +18,29 @@ export const randomString = (len = 32) => {
 };
 
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+export const checkPasswordStrength = (password) => {
+  if (password.length < 8) {
+    return 0;
+  }
+  let strength = 0;
+  if (password.match(/([0-9])+/)) {
+    strength += 1;
+  }
+  if (password.match(/([a-z])+/)) {
+    strength += 1;
+  }
+  if (password.match(/([A-Z])+/)) {
+    strength += 1;
+  }
+  if (password.match(/[^a-zA-Z0-9]+/)) {
+    strength += 1;
+  }
+  // const reg = new RegExp(
+  //   "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]",
+  // );
+  // if (password.match(reg)) {
+  //   strength += 1;
+  // }
+  return strength;
+};

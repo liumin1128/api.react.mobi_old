@@ -1,7 +1,7 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
-import { randomCode } from '@/utils/common';
+import { randomCode, checkPasswordStrength } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
 import User from '@/mongo/models/user';
@@ -260,6 +260,21 @@ export default {
           throw new AuthenticationError('用户未登录');
         }
 
+        const { input } = args;
+
+        console.log('updateUserPassword input');
+        console.log(input);
+
+        const { oldPassword, password } = input;
+
+        console.log(checkPasswordStrength(password));
+
+        if (checkPasswordStrength(password) < 3) {
+          return {
+            status: 401,
+            message: '新密码强度不足，请同时包含大小写字母及数字',
+          };
+        }
         const _user = await User.findById(user);
 
         if (!_user) {
@@ -268,13 +283,6 @@ export default {
             message: '登录信息已失效，请重新登录',
           };
         }
-
-        const { input } = args;
-
-        console.log('updateUserPassword input');
-        console.log(input);
-
-        const { oldPassword, password } = input;
 
         if (!_user.password) {
           await _user.update({ password: md5Encode(password) });
@@ -291,9 +299,7 @@ export default {
           };
         }
 
-        const pwMd5 = md5Encode(oldPassword);
-
-        if (`${pwMd5}` === _user.password) {
+        if (`${md5Encode(oldPassword)}` === _user.password) {
           await _user.update({ password: md5Encode(password) });
           return {
             status: 200,
