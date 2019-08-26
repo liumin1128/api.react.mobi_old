@@ -13,6 +13,10 @@ export default `
     sign: String
     birthday: Date
   }
+  input UpdateUserPasswordInput {
+    oldPassword: String
+    password: String!
+  }
   type User {
     _id: String!
     nickname: String!

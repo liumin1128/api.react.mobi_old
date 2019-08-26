@@ -251,5 +251,67 @@ export default {
         };
       }
     },
+
+    updateUserPassword: async (root, args, ctx, op) => {
+      try {
+        const { user } = ctx;
+
+        if (!user) {
+          throw new AuthenticationError('用户未登录');
+        }
+
+        const _user = await User.findById(user);
+
+        if (!_user) {
+          return {
+            status: 401,
+            message: '登录信息已失效，请重新登录',
+          };
+        }
+
+        const { input } = args;
+
+        console.log('updateUserPassword input');
+        console.log(input);
+
+        const { oldPassword, password } = input;
+
+        if (!_user.password) {
+          await _user.update({ password: md5Encode(password) });
+          return {
+            status: 200,
+            message: '用户密码更新成功',
+          };
+        }
+
+        if (!oldPassword) {
+          return {
+            status: 401,
+            message: '原密码不正确',
+          };
+        }
+
+        const pwMd5 = md5Encode(oldPassword);
+
+        if (`${pwMd5}` === _user.password) {
+          await _user.update({ password: md5Encode(password) });
+          return {
+            status: 200,
+            message: '用户密码更新成功',
+          };
+        }
+
+        return {
+          status: 401,
+          message: '原密码不正确',
+        };
+      } catch (error) {
+        console.log(error);
+        return {
+          status: 500,
+          message: '用户信息更新失败',
+        };
+      }
+    },
   },
 };
