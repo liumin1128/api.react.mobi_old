@@ -276,6 +276,13 @@ export default {
           };
         }
 
+        if (!_user.username) {
+          return {
+            status: 403,
+            message: '请先设置用户名',
+          };
+        }
+
         if (!_user.password) {
           await _user.update({ password: md5Encode(password) });
           return {
@@ -298,12 +305,12 @@ export default {
           };
         }
 
-        if (checkPasswordStrength(password) < 3) {
-          return {
-            status: 401,
-            message: '新密码强度不足，请同时包含大小写字母及数字或特殊字符',
-          };
-        }
+        // if (checkPasswordStrength(password) < 3) {
+        //   return {
+        //     status: 401,
+        //     message: '新密码强度不足，请同时包含大小写字母及数字或特殊字符',
+        //   };
+        // }
 
         await _user.update({ password: md5Encode(password) });
 
