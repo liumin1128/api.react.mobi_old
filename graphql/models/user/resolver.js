@@ -267,13 +267,6 @@ export default {
 
         const { oldPassword, password } = input;
 
-        if (checkPasswordStrength(password) < 3) {
-          return {
-            status: 401,
-            message: '新密码强度不足，请同时包含大小写字母及数字或特殊字符',
-          };
-        }
-
         const _user = await User.findById(user);
 
         if (!_user) {
@@ -294,21 +287,29 @@ export default {
         if (!oldPassword) {
           return {
             status: 401,
+            message: '用户已设置密码，请填写原密码',
+          };
+        }
+
+        if (`${md5Encode(oldPassword)}` !== _user.password) {
+          return {
+            status: 401,
             message: '原密码不正确',
           };
         }
 
-        if (`${md5Encode(oldPassword)}` === _user.password) {
-          await _user.update({ password: md5Encode(password) });
+        if (checkPasswordStrength(password) < 3) {
           return {
-            status: 200,
-            message: '用户密码更新成功',
+            status: 401,
+            message: '新密码强度不足，请同时包含大小写字母及数字或特殊字符',
           };
         }
 
+        await _user.update({ password: md5Encode(password) });
+
         return {
-          status: 401,
-          message: '原密码不正确',
+          status: 200,
+          message: '用户密码更新成功',
         };
       } catch (error) {
         console.log(error);
