@@ -342,12 +342,12 @@ export default {
           };
         }
 
-        if (!_user.username) {
-          return {
-            status: 403,
-            message: '请先设置用户名',
-          };
-        }
+        // if (!_user.username) {
+        //   return {
+        //     status: 403,
+        //     message: '请先设置用户名',
+        //   };
+        // }
 
         if (!_user.password) {
           await _user.update({ password: md5Encode(password) });
