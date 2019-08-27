@@ -4205,6 +4205,11 @@ node-xlsx@^0.12.1:
     buffer-from "^1.1.0"
     xlsx "^0.12.4"
 
+nodemailer@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.3.0.tgz#a89b0c62d3937bdcdeecbf55687bd7911b627e12"
+  integrity sha1-qJsMYtOTe9ze7L9VaHvXkRtifhI=
+
 nodemon@^1.18.5:
   version "1.18.10"
   resolved "http://registry.npm.taobao.org/nodemon/download/nodemon-1.18.10.tgz#3ba63f64eb4c283cf3e4f75f30817e9d4f393afe"
