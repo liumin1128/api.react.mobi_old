@@ -6,7 +6,7 @@ import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
 import User from '@/mongo/models/user';
 import { userLoader } from '@/mongo/models/user/dataloader';
-import { sendMail } from '@/server/mail/exqq';
+import { sendMail, getVerifyMailTemplate } from '@/server/mail/exqq';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -341,10 +341,14 @@ export default {
           throw new AuthenticationError('用户未登录');
         }
 
+        const token = getUserToken({ user, email });
+
         await sendMail({
           to: email,
           subject: '邮箱验证',
-          html: getUserToken({ user, email }),
+          html: getVerifyMailTemplate({
+            url: 'https://api.react.mobi/rest/mail/verify?token='+token
+          }),
         });
 
         await User.updateOne(
@@ -359,6 +363,7 @@ export default {
           message: '用户邮箱更新成功',
         };
       } catch (error) {
+        console.log(error)
         return {
           status: 500,
           message: '用户邮箱更新失败',

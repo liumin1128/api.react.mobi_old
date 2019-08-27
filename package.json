@@ -50,6 +50,7 @@
     "qiniu": "^7.2.1",
     "query-string": "^6.2.0",
     "redis": "^2.8.0",
-    "showapi-sdk": "^1.0.4"
+    "showapi-sdk": "^1.0.4",
+    "swig": "^1.4.2"
   }
 }

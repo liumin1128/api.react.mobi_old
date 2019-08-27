@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
 import exqq from '@/config/exqq';
+import swig from 'swig';
+import path from 'path';
 
 const transporter = nodemailer.createTransport({
   // host: 'smtp.ethereal.email',
@@ -44,4 +46,11 @@ export function sendMail(options) {
       // Message sent: <04ec7731-cc68-1ef6-303c-61b0f796b78f@qq.com>
     });
   });
+}
+
+export function getVerifyMailTemplate(options) {
+  const template = swig.compileFile(
+    path.join(__dirname, './templates/verify.html'),
+  );
+  return template(options);
 }
