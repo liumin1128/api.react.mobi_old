@@ -1,10 +1,10 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
+import User from '@/mongo/models/user';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode, checkPasswordStrength } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
-import User from '@/mongo/models/user';
 import { userLoader } from '@/mongo/models/user/dataloader';
 import { sendMail, getVerifyMailTemplate } from '@/server/mail/exqq';
 
