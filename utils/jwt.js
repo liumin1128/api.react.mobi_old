@@ -14,3 +14,15 @@ export default koaJwt({ secret: JWT_SECRET }).unless({
   // method: ['GET'],
   path: [/^\//, /^\/graphql/, /^\/oauth/, /^\/rest/],
 });
+
+export function verify(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, JWT_SECRET, (err, data) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}

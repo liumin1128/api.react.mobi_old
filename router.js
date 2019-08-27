@@ -12,12 +12,6 @@ export default router
     ctx.body = 'hello world';
   })
   .use('/rest', Rest.routes())
-  // .use('/', async (ctx, next) => {
-  //   // if (ENV) {
-  //   //   await sleep(500);
-  //   // }
-  //   return next();
-  // })
   .use('/oauth', Oauth.routes())
 
   .post(

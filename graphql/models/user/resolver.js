@@ -344,8 +344,7 @@ export default {
         await sendMail({
           to: email,
           subject: '邮箱验证',
-          html:
-            '<b>邮箱验证邮箱验证邮箱验证邮箱验证邮箱验证邮箱验证Hello world?</b>',
+          html: getUserToken({ user, email }),
         });
 
         await User.updateOne(
