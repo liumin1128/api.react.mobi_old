@@ -15,6 +15,7 @@ export default {
   // 系统信息
   username: String,
   email: String,
+  unverified_email: String,
   purePhoneNumber: String,
   phoneNumber: String,
   password: String,

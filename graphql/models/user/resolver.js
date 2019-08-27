@@ -326,5 +326,37 @@ export default {
         };
       }
     },
+
+    updateUserEmail: async (root, args, ctx, op) => {
+      try {
+        const { user } = ctx;
+
+        const { email } = args;
+
+        console.log('updateUserEmail email');
+        console.log(email);
+
+        if (!user) {
+          throw new AuthenticationError('用户未登录');
+        }
+
+        await User.updateOne(
+          { _id: user },
+          {
+            unverified_email: email,
+          },
+        );
+
+        return {
+          status: 200,
+          message: '用户邮箱更新成功',
+        };
+      } catch (error) {
+        return {
+          status: 500,
+          message: '用户邮箱更新失败',
+        };
+      }
+    },
   },
 };

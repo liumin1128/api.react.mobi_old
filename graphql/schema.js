@@ -100,6 +100,7 @@ export default `
     userRegister(input: UserRegisterInput): UserRegisterResult!
     getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
     updateUserInfo(input: UpdateUserInfoInput): Result!
+    updateUserEmail(email: String!): Result!
     updateUserPassword(input: UpdateUserPasswordInput): Result!
 
     # 创建文章

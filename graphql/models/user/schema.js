@@ -24,6 +24,9 @@ export default `
     sex: Int
     sign: String
     birthday: Date
+    email: String
+    unverified_email: String
+    phone: String
   }
   type UserLoginResult {
     status: Int!
