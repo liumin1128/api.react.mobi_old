@@ -101,6 +101,7 @@ export default `
     getPhoneNumberCode(countryCode: String!, purePhoneNumber: String!): Result!
     updateUserInfo(input: UpdateUserInfoInput): Result!
     updateUserEmail(email: String!): Result!
+    updateUserPhonenumber(countryCode: String!, purePhoneNumber: String!, code: String!): Result!
     updateUserPassword(input: UpdateUserPasswordInput): Result!
 
     # 创建文章
