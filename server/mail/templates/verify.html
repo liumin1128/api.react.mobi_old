@@ -1,434 +1,239 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <!-- <link rel="stylesheet/less" type="text/css" href="styles/index.less" /> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.8.1/less.min.js"></script> -->
     <style>
-        /* -------------------------------------
-          GLOBAL RESETS
-      ------------------------------------- */
-
-        /*All the styling goes here*/
-
-        img {
-            border: none;
-            -ms-interpolation-mode: bicubic;
-            max-width: 100%;
-        }
-
         body {
-            background-color: #f6f6f6;
-            font-family: sans-serif;
-            -webkit-font-smoothing: antialiased;
-            font-size: 14px;
-            line-height: 1.4;
-            margin: 0;
-            padding: 0;
-            -ms-text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
+            font-size: 16px;
+            font: '16px/1.5 "sans-serif", "PingFang SC","Lantinghei SC","Microsoft YaHei","HanHei SC","Helvetica Neue","Open Sans",Arial,"Hiragino Sans GB","微软雅黑",STHeiti,"WenQuanYi Micro Hei",SimSun,sans-serif'
         }
 
-        table {
-            border-collapse: separate;
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-            width: 100%;
-        }
-
-        table td {
-            font-family: sans-serif;
-            font-size: 14px;
-            vertical-align: top;
-        }
-
-        /* -------------------------------------
-          BODY & CONTAINER
-      ------------------------------------- */
-        .body {
-            background-color: #f6f6f6;
-            width: 100%;
-        }
-
-        /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
-        .container {
-            display: block;
-            margin: 0 auto !important;
-            /* makes it centered */
-            max-width: 580px;
-            padding: 10px;
-            width: 580px;
-        }
-
-        /* This should also be a block element, so that it will fill 100% of the .container */
-        .content {
-            box-sizing: border-box;
-            display: block;
-            margin: 0 auto;
-            max-width: 580px;
-            padding: 10px;
-        }
-
-        /* -------------------------------------
-          HEADER, FOOTER, MAIN
-      ------------------------------------- */
-        .main {
-            background: #ffffff;
-            border-radius: 3px;
-            width: 100%;
-        }
-
-        .wrapper {
-            box-sizing: border-box;
-            padding: 20px;
-        }
-
-        .content-block {
-            padding-bottom: 10px;
-            padding-top: 10px;
-        }
-
-        .footer {
-            clear: both;
-            margin-top: 10px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .footer td,
-        .footer p,
-        .footer span,
-        .footer a {
-            color: #999999;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        /* -------------------------------------
-          TYPOGRAPHY
-      ------------------------------------- */
         h1,
         h2,
         h3,
-        h4 {
-            color: #000000;
-            font-family: sans-serif;
-            font-weight: 400;
-            line-height: 1.4;
-            margin: 0;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 35px;
-            font-weight: 300;
-            text-align: center;
-            text-transform: capitalize;
-        }
-
+        h4,
+        h5,
+        h6,
+        a,
         p,
-        ul,
-        ol {
-            font-family: sans-serif;
-            font-size: 14px;
-            font-weight: normal;
+        span {
             margin: 0;
-            margin-bottom: 15px;
+            padding: 0;
         }
 
-        p li,
-        ul li,
-        ol li {
-            list-style-position: inside;
-            margin-left: 5px;
+        table,
+        tr,
+        th,
+        td,
+        tbody {
+            box-sizing: border-box;
+            display: block;
+            border: 0;
+        }
+
+        p {
+            margin-bottom: 16px;
+            line-height: 1.7;
         }
 
         a {
             color: #fd4c86;
-            text-decoration: underline;
-            word-break: break-all;
+            text-decoration: none;
         }
 
-        /* -------------------------------------
-          BUTTONS
-      ------------------------------------- */
-        .btn {
+        .container {
+            margin: 0;
+            padding: 64px 0;
             box-sizing: border-box;
+            /* font-family: "lucida Grande", Verdana, "Microsoft YaHei"; */
+            /* font-size: 12px; */
+            /* -webkit-font-smoothing: subpixel-antialiased; */
+            color: #737373;
+            background: #f5f5f5;
             width: 100%;
         }
 
-        .btn>tbody>tr>td {
-            padding-bottom: 15px;
-        }
-
-        .btn table {
-            width: auto;
-        }
-
-        .btn table td {
-            background-color: #ffffff;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .btn a {
-            background-color: #ffffff;
-            border: solid 1px #fd4c86;
-            border-radius: 5px;
-            box-sizing: border-box;
-            color: #fd4c86;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-            padding: 12px 25px;
-            text-decoration: none;
-            text-transform: capitalize;
-        }
-
-        .btn-primary table td {
-            background-color: #fd4c86;
-        }
-
-        .btn-primary a {
-            background-color: #fd4c86;
-            border-color: #fd4c86;
-            color: #ffffff;
-        }
-
-        /* -------------------------------------
-          OTHER STYLES THAT MIGHT BE USEFUL
-      ------------------------------------- */
-        .last {
-            margin-bottom: 0;
-        }
-
-        .first {
-            margin-top: 0;
-        }
-
-        .align-center {
-            text-align: center;
-        }
-
-        .align-right {
-            text-align: right;
-        }
-
-        .align-left {
-            text-align: left;
-        }
-
-        .clear {
-            clear: both;
-        }
-
-        .mt0 {
-            margin-top: 0;
-        }
-
-        .mb0 {
-            margin-bottom: 0;
-        }
-
-        .preheader {
-            color: transparent;
-            display: none;
-            height: 0;
-            max-height: 0;
-            max-width: 0;
-            opacity: 0;
+        .paper {
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-bottom: 64px;
+            background: #fff !important;
+            border-radius: 3px;
             overflow: hidden;
-            mso-hide: all;
-            visibility: hidden;
-            width: 0;
+            padding: 0;
         }
 
-        .powered-by a {
-            text-decoration: none;
+        .paper .title {
+            padding: 44px 48px;
+            background: #fd4c86;
+            width: 100% !important;
         }
 
-        hr {
-            border: 0;
-            border-bottom: 1px solid #f6f6f6;
-            margin: 20px 0;
+        .paper .title h1 {
+            color: #fff;
+            font-size: 1.6em;
         }
 
-        /* -------------------------------------
-          RESPONSIVE AND MOBILE FRIENDLY STYLES
-      ------------------------------------- */
-        @media only screen and (max-width: 620px) {
-            table[class=body] h1 {
-                font-size: 28px !important;
-                margin-bottom: 10px !important;
+        .paper .content {
+            padding: 48px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .paper .title {
+                padding: 48px 24px;
             }
 
-            table[class=body] p,
-            table[class=body] ul,
-            table[class=body] ol,
-            table[class=body] td,
-            table[class=body] span,
-            table[class=body] a {
-                font-size: 16px !important;
-            }
-
-            table[class=body] .wrapper,
-            table[class=body] .article {
-                padding: 10px !important;
-            }
-
-            table[class=body] .content {
-                padding: 0 !important;
-            }
-
-            table[class=body] .container {
-                padding: 0 !important;
-                width: 100% !important;
-            }
-
-            table[class=body] .main {
-                border-left-width: 0 !important;
-                border-radius: 0 !important;
-                border-right-width: 0 !important;
-            }
-
-            table[class=body] .btn table {
-                width: 100% !important;
-            }
-
-            table[class=body] .btn a {
-                width: 100% !important;
-            }
-
-            table[class=body] .img-responsive {
-                height: auto !important;
-                max-width: 100% !important;
-                width: auto !important;
+            .paper .content {
+                padding: 48px 24px;
             }
         }
 
-        /* -------------------------------------
-          PRESERVE THESE STYLES IN THE HEAD
-      ------------------------------------- */
-        @media all {
-            .ExternalClass {
-                width: 100%;
-            }
+        .paper .content .primary {
+            color: #fd4c86;
+            line-height: 1.25;
+            font-size: 1.5em;
+            margin: 0.83em 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
 
-            .ExternalClass,
-            .ExternalClass p,
-            .ExternalClass span,
-            .ExternalClass font,
-            .ExternalClass td,
-            .ExternalClass div {
-                line-height: 100%;
-            }
+        .paper .content .blue {
+            color: #fd4c86;
+        }
 
-            .apple-link a {
-                color: inherit !important;
-                font-family: inherit !important;
-                font-size: inherit !important;
-                font-weight: inherit !important;
-                line-height: inherit !important;
-                text-decoration: none !important;
-            }
+        .paper .content .primary a {
+            text-decoration: underline;
 
-            #MessageViewBody a {
-                color: inherit;
-                text-decoration: none;
-                font-size: inherit;
-                font-family: inherit;
-                font-weight: inherit;
-                line-height: inherit;
-            }
+        }
 
-            .btn-primary table td:hover {
-                background-color: #34495e !important;
-            }
+        .paper .table {
+            /* border: 1px #666 solid; */
+            border: 1px #eee solid;
+            width: 100%;
+            display: table;
+        }
 
-            .btn-primary a:hover {
-                background-color: #34495e !important;
-                border-color: #34495e !important;
-            }
+        .paper .table tr {
+            display: table-row;
+        }
+
+        .paper .table tbody {
+            display: table-row-group;
+        }
+
+        .paper .table th,
+        .paper .table td {
+            display: table-cell;
+            text-align: left;
+            padding: 16px;
+            border: 1px #eeeeee solid;
+        }
+
+        .paper .table th {
+            padding: 24px 16px;
+        }
+
+        .paper .table .black {
+            font-weight: bold;
+        }
+
+        .paper .address {
+            padding: 16px;
+            border: 1px solid #e4e4e4;
+        }
+
+        .paper .footer {
+            color: #ffaac7;
+            /* font-family: Arial; */
+            text-align: center;
+            padding-bottom: 48px;
+        }
+
+        .code {
+            font-size: 24px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 16px;
+            border-radius: 4px;
+            letter-spacing: 12px;
+        }
+
+        .strong {
+            font-weight: bolder;
+        }
+
+        .btn-primary {
+            background: #fd4c86;
+            color: #fff !important;
+            text-decoration: none !important;
+            padding: 12px 24px;
+            border-radius: 6px;
+            margin: auto;
+            display: block;
+            width: 180px;
+            text-align: center;
+            cursor: pointer !important;
+            border: none !important;
         }
 
     </style>
 </head>
 
-<body class="">
-    <!-- <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span> -->
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+
+
+<body>
+    <table>
         <tr>
-            <td>&nbsp;</td>
-            <td class="container">
-                <div class="content">
+            <td class="root">
+                <table>
+                    <tr>
+                        <td class="container">
 
-                    <!-- START CENTERED WHITE CONTAINER -->
-                    <table role="presentation" class="main">
 
-                        <!-- START MAIN CONTENT AREA -->
-                        <tr>
-                            <td class="wrapper">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td>
-                                            <p>Hi,</p>
-                                            <p>Click on the button below to verify the email. If it is not for your own operation, please ignore this email.</p>
-                                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                                                <tbody>
-                                                    <tr>
-                                                        <td align="center">
-                                                            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td> <a href="{{ url }}" target="_blank">Click To Verify Email</a> </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <p>Or click this link：
-                                                <br> </p>
-                                            <!-- <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p> -->
-                                            <!-- <p>Good luck! Hope it works.</p> -->
-                                            <p>
-                                                <a href="{{ url }}">Click To Verify Email</a>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                            <table>
+                                <tr>
+                                    <td class="paper">
+                                        <table>
+                                            <tr>
+                                                <td class="title">
+                                                    <h1>Verify Email</h1>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table>
+                                            <tr>
+                                                <td class="content">
 
-                        <!-- END MAIN CONTENT AREA -->
-                    </table>
-                    <!-- END CENTERED WHITE CONTAINER -->
+                                                    <p>Hi,</p>
+                                                    <p>Click on the button below to verify the email. If it is not for your own operation, please ignore this email.</p>
 
-                    <!-- START FOOTER -->
-                    <!-- <div class="footer">
-            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <td class="content-block">
-                  <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                  <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
-                </td>
-              </tr>
-              <tr>
-                <td class="content-block powered-by">
-                  Powered by <a href="{{ url }}">HTMLemail</a>.
-                </td>
-              </tr>
-            </table>
-          </div> -->
-                    <!-- END FOOTER -->
+                                                    <a href="{{ url }}" class="btn btn-primary">Click To Verify Email</a>
 
-                </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table>
+                                            <tr>
+                                                <td class="footer">
+                                                    react.mobi
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
             </td>
-            <td>&nbsp;</td>
         </tr>
     </table>
 </body>
