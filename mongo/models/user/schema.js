@@ -10,12 +10,12 @@ export default {
   birthday: Date,
   position: String,
   company: String,
-  countryCode: String,
 
   // 系统信息
   username: String,
   email: String,
   unverified_email: String,
+  countryCode: String,
   purePhoneNumber: String,
   phoneNumber: String,
   password: String,

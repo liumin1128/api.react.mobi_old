@@ -26,7 +26,9 @@ export default `
     birthday: Date
     email: String
     unverified_email: String
-    phone: String
+    countryCode: String 
+    purePhoneNumber: String 
+    phoneNumber: String 
   }
   type UserLoginResult {
     status: Int!
