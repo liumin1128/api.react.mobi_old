@@ -39,13 +39,10 @@ export async function verifyMail(ctx) {
       return;
     }
 
-    await User.updateOne(
-      { id: data.user },
-      {
-        email: user.unverified_email,
-        unverified_email: undefined,
-      },
-    );
+    await user.updateOne({
+      email: user.unverified_email,
+      unverified_email: undefined,
+    });
 
     ctx.body = {
       status: 200,
