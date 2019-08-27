@@ -6,6 +6,7 @@ import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
 import User from '@/mongo/models/user';
 import { userLoader } from '@/mongo/models/user/dataloader';
+import { sendMail } from '@/server/mail/exqq';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -339,6 +340,13 @@ export default {
         if (!user) {
           throw new AuthenticationError('用户未登录');
         }
+
+        await sendMail({
+          to: email,
+          subject: '邮箱验证',
+          html:
+            '<b>邮箱验证邮箱验证邮箱验证邮箱验证邮箱验证邮箱验证Hello world?</b>',
+        });
 
         await User.updateOne(
           { _id: user },

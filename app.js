@@ -9,7 +9,7 @@ import graphql from '@/graphql';
 import router from './router';
 import '@/utils/mongoose';
 import '@/utils/redis';
-import '@/server/email/exqq';
+// import '@/server/email/exqq';
 // import '@/server/recognition/tencent';
 // import '@/server/crawler/jojo';
 // import '@/server/crawler/other/excel';
