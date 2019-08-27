@@ -343,6 +343,9 @@ export default {
 
         const token = getUserToken({ user, email });
 
+        console.log('token');
+        console.log(token);
+
         await sendMail({
           to: email,
           subject: '邮箱验证',

@@ -21,9 +21,7 @@ export async function verifyMail(ctx) {
       return;
     }
 
-    const user = User.findById(data.user);
-
-    console.log(user.doc);
+    const user = await User.findById(data.user);
 
     if (!user) {
       ctx.body = {
@@ -41,10 +39,13 @@ export async function verifyMail(ctx) {
       return;
     }
 
-    await user.update({
-      email: user.unverified_email,
-      unverified_email: undefined,
-    });
+    await User.updateOne(
+      { id: data.user },
+      {
+        email: user.unverified_email,
+        unverified_email: undefined,
+      },
+    );
 
     ctx.body = {
       status: 200,
