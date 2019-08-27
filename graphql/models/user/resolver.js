@@ -347,7 +347,7 @@ export default {
           if (_user._id+'' === user) {
             return {
               status: 401,
-              message: '新邮箱云原邮箱相同',
+              message: '新邮箱不能和原来相同',
             };
           } else {
             return {
