@@ -341,6 +341,22 @@ export default {
           throw new AuthenticationError('用户未登录');
         }
 
+        const _user = await User.findOne({ email });
+
+        if (_user) {
+          if (_user._id+'' === user) {
+            return {
+              status: 401,
+              message: '新邮箱云原邮箱相同',
+            };
+          } else {
+            return {
+              status: 403,
+              message: '该邮箱已被使用',
+            };
+          }
+        }
+
         const token = getUserToken({ user, email });
 
         console.log('token');
