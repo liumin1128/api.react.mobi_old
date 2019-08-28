@@ -46,8 +46,16 @@ export default {
       console.log('args');
       console.log(args);
       try {
-        const { password, ...other } = args;
-        const user = await User.findOne(other).lean();
+        const { password, username } = args;
+        
+        let type;
+        if (username.indexOf('@') !== -1) {
+          type = 'email'
+        } else {
+          type = 'phoneNumber'
+        }
+
+        const user = await User.findOne({[type]: username}).lean();
         const pwMd5 = md5Encode(password);
         if (user && `${pwMd5}` === user.password) {
           const token = await getUserToken(user._id);
