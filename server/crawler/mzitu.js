@@ -24,21 +24,42 @@ export async function getList(url) {
   const $ = cheerio.load(html);
   const list = [];
   function getVlue() {
-    const src = $(this).find('a img').attr('data-original');
+    const src = $(this)
+      .find('a img')
+      .attr('data-original');
     const cover = {
-      width: $(this).find('a img').attr('width'),
-      height: $(this).find('a img').attr('height'),
-      src: `http://mzitu.react.mobi/${src.substring(21, src.length)}`,
+      width: $(this)
+        .find('a img')
+        .attr('width'),
+      height: $(this)
+        .find('a img')
+        .attr('height'),
+      src: `http://mzitu.react.mobi/${src.substring(23, src.length)}`,
     };
-    const href = $(this).find('a').attr('href');
-    const title = $(this).find('span a').text();
-    const createdAt = $(this).find('.time').text();
-    const view = $(this).find('.view').text();
+    const href = $(this)
+      .find('a')
+      .attr('href');
+    const title = $(this)
+      .find('span a')
+      .text();
+    const createdAt = $(this)
+      .find('.time')
+      .text();
+    const view = $(this)
+      .find('.view')
+      .text();
     list.push({
-      url: href, title, createdAt, view, cover, _id: aesEncode(href),
+      url: href,
+      title,
+      createdAt,
+      view,
+      cover,
+      _id: aesEncode(href),
     });
   }
-  await $('.postlist ul#pins').find('li').map(getVlue);
+  await $('.postlist ul#pins')
+    .find('li')
+    .map(getVlue);
   return list;
 }
 
@@ -51,14 +72,22 @@ export async function getPictures(url) {
   const title = $('.main-title').text();
   const meta = $('.main-meta').text();
   const src = $('.main-image p img').attr('src');
-  const temp = src.substring(21, src.length - 6);
-  const total = $('.pagenavi a').eq(-2).text();
+  const temp = src.substring(23, src.length - 6);
+  const total = $('.pagenavi a')
+    .eq(-2)
+    .text();
   const pictures = [];
   for (let i = 1; i <= total; i += 1) {
-    pictures.push(`http://mzitu.react.mobi/${temp + (`0${i}`).slice(-2)}.jpg`);
+    pictures.push(`http://mzitu.react.mobi/${temp + `0${i}`.slice(-2)}.jpg`);
   }
   return {
-    title, meta, src, total, temp, pictures, _id: aesEncode(url),
+    title,
+    meta,
+    src,
+    total,
+    temp,
+    pictures,
+    _id: aesEncode(url),
   };
 }
 
@@ -69,10 +98,20 @@ export async function getTags() {
   const list = [];
   const types = [];
   function getValue(idx) {
-    const tag = $(this).find('a').attr('href').slice(25, -1);
-    const title = $(this).find('a').text();
-    const count = $(this).find('i').text().slice(1, -2);
-    const cover = $(this).find('a img').attr('data-original');
+    const tag = $(this)
+      .find('a')
+      .attr('href')
+      .slice(25, -1);
+    const title = $(this)
+      .find('a')
+      .text();
+    const count = $(this)
+      .find('i')
+      .text()
+      .slice(1, -2);
+    const cover = $(this)
+      .find('a img')
+      .attr('data-original');
     // const type = (types[types.findIndex(i => i.index >= idx) - 1] || {}).title;
     const type = (types.reverse().find(i => idx <= i.index) || {}).title;
     // const cover = thumbnail.replace(/limg/, '01');
@@ -80,7 +119,7 @@ export async function getTags() {
       tag,
       title,
       count,
-      cover: `http://mzitu.react.mobi/${cover.substring(21, cover.length)}`,
+      cover: `http://mzitu.react.mobi/${cover.substring(23, cover.length)}`,
       type,
       _id: tag,
     });
@@ -92,8 +131,12 @@ export async function getTags() {
     });
   }
 
-  $('.postlist .tags').find('dt').map(getTypes);
-  $('.postlist .tags').find('dd').map(getValue);
+  $('.postlist .tags')
+    .find('dt')
+    .map(getTypes);
+  $('.postlist .tags')
+    .find('dd')
+    .map(getValue);
 
   // console.log('list');
   // console.log(list);
