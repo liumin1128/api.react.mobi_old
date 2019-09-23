@@ -119,7 +119,8 @@ export async function getTags() {
       tag,
       title,
       count,
-      cover: `http://mzitu.react.mobi/${cover.substring(23, cover.length)}`,
+      cover,
+      // cover: `http://mzitu.react.mobi/${cover.substring(23, cover.length)}`,
       type,
       _id: tag,
     });
