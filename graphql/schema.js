@@ -112,6 +112,7 @@ export default `
 
     # 创建说说
     DynamicCreate(input: DynamicInput): CreateDynamicResult!
+    DynamicUpdate(input: DynamicInput, _id: String!): CreateDynamicResult!
     CheckNewDynamic(latest: String): Result
 
     # 创建评论
