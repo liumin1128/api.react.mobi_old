@@ -6,6 +6,7 @@ export default `
     code: String!
     password: String!
   }
+
   input UpdateUserInfoInput {
     avatarUrl: String!
     nickname: String!
@@ -13,10 +14,18 @@ export default `
     sign: String
     birthday: Date
   }
+
   input UpdateUserPasswordInput {
     oldPassword: String
     password: String!
   }
+
+  type UserOauth {
+    from: String!
+    data: String
+    userInfo: String
+  }
+
   type User {
     _id: String!
     nickname: String!
@@ -29,18 +38,23 @@ export default `
     countryCode: String 
     purePhoneNumber: String 
     phoneNumber: String 
+    oauths: [UserOauth]
   }
+
   type UserLoginResult {
     status: Int!
     token: String
     message: String
     userInfo: User
   }
+
   type UserRegisterResult {
     status: Int!
     message: String
     token: String
     userInfo: User
   }
+
+
   
 `;

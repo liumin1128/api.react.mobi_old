@@ -1,11 +1,13 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import User from '@/mongo/models/user';
+import Oauth from '@/mongo/models/oauth';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode, checkPasswordStrength } from '@/utils/common';
 import { setAsync, getAsync } from '@/utils/redis';
 import { md5Encode } from '@/utils/crypto';
 import { userLoader } from '@/mongo/models/user/dataloader';
+import { oauthsLoader } from '@/mongo/models/oauth/dataloader';
 import { sendMail, getVerifyMailTemplate } from '@/server/mail/exqq';
 
 function getKey(phone, code) {
@@ -40,6 +42,16 @@ export default {
       }
       return data;
     },
+
+    // userOauth: async (root, args, ctx) => {
+    //   const { user } = ctx;
+    //   if (!user) {
+    //     throw new AuthenticationError('用户未登录');
+    //   }
+
+    //   const data = await Oauth.find({ user }); 
+    //   return data;
+    // },
   },
   Mutation: {
     userLogin: async (root, args, ctx, op) => {
@@ -462,5 +474,9 @@ export default {
         };
       }
     },
+  },
+
+  User: {
+    oauths: (root, args, ctx) => oauthsLoader.load(ctx.user),
   },
 };
