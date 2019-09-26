@@ -10,11 +10,10 @@ import other from './models/other/resolver';
 import qiniu from './models/qiniu/resolver';
 import comment from './models/comment/resolver';
 import zan from './models/zan/resolver';
+import follow from './models/follow/resolver';
 import like from './models/like/resolver';
 import news from './models/news/resolver';
-
 import scalar from './scalar';
-
 import { resolverCombine } from './utils';
 
 export default resolverCombine(
@@ -31,6 +30,7 @@ export default resolverCombine(
   other,
   comment,
   zan,
+  follow,
   like,
   news,
 );
