@@ -1,5 +1,5 @@
 import Follow from '@/mongo/models/follow';
-import Notification, { getActionShowText } from '@/mongo/models/notification';
+import Notification from '@/mongo/models/notification';
 
 async function follow(root, args, ctx, op) {
   try {

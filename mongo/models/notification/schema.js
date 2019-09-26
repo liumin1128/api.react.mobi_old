@@ -20,7 +20,7 @@ export default {
   userShowText: String,
 
   // 若通知类型为评论或点赞，应有此字段
-  comment: { type: ObjectId, ref: 'Comment' },
+  // comment: { type: ObjectId, ref: 'Comment' },
 
   // 若通知类型为喜欢，应有此字段
   // like: { type: ObjectId, ref: 'Comment' },

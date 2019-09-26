@@ -8,9 +8,40 @@ import {
   commentsCountLoader,
   commentsAndRelysCountLoader,
 } from '@/mongo/models/comment/dataloader';
-
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
 import { userLoader } from '@/mongo/models/user/dataloader';
+import Notification from '@/mongo/models/notification';
+import Dynamic from '@/mongo/models/dynamic';
+
+async function CreateNotification({
+  _id,
+  type,
+  user,
+  actionor,
+  actionorShowText,
+}) {
+  let content;
+
+  if (type === 'commentToDynamic') {
+    const dynamic = await Dynamic.findById(_id);
+    console.log('dynamic');
+    console.log(dynamic);
+    content = dynamic.content
+  }
+  if (type === 'commentToComment') {
+    const comment = await Comment.findById(_id);
+    console.log('comment');
+    console.log(comment);
+    content = comment.content
+  }
+  await Notification.create({
+    user,
+    actionor,
+    type: 'comment',
+    userShowText: content,
+    actionorShowText,
+  });
+}
 
 export default {
   Mutation: {
@@ -56,6 +87,26 @@ export default {
 
       console.log('创建模式');
       const data = await Comment.create({ ...params, user });
+
+      // Notification.create({
+      //   user: _id,
+      //   actionor: user,
+      //   type: 'comment',
+      //   userShowText: '',
+      //   actionorShowText: data.content,
+      // });
+
+      // console.log('params');
+      // console.log(params);
+
+      CreateNotification({
+        user: _id,
+        actionor: user,
+        actionorShowText: data.content,
+        _id: params.replyTo || params.session,
+        type: (!params.replyTo && !params.commentTo) ? 'commentToDynamic' : 'commentToComment',
+      });
+
       if (data) {
         return {
           status: 200,
