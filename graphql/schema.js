@@ -113,7 +113,8 @@ export default `
     # 创建说说
     DynamicCreate(input: DynamicInput): CreateDynamicResult!
     DynamicUpdate(input: DynamicInput, _id: String!): CreateDynamicResult!
-    CheckNewDynamic(latest: String): Result
+    CheckNewDynamic(latest: String): Result!
+    RemoveDynamic(_id: String): Result!
 
     # 创建评论
     createComment(content: String!, session: String!, replyTo: String, commentTo: String): CreateCommentResult!

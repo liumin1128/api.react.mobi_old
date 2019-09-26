@@ -48,7 +48,7 @@ export default {
         if (topicStrList) {
           topics = await getTopics(topicStrList);
         }
-        
+
         const dynamic = await Dynamic.create({ ...input, user, topics });
         if (dynamic) return { status: 200, message: '创建成功', data: dynamic };
         return { status: 504, message: '操作异常' };
@@ -73,15 +73,36 @@ export default {
         }
 
         const dynamic = await Dynamic.findById(_id);
-        
+
         if (!dynamic) return { status: 401, message: '对象不存在或已被删除' };
 
         if (dynamic.user+'' !== user) return { status: 403, message: '权限不足' };
 
         await dynamic.updateOne({ ...input, topics });
-        
-        return { status: 200, message: '更新成功', data: dynamic };
 
+        return { status: 200, message: '更新成功', data: dynamic };
+      } catch (error) {
+        console.log('error');
+        console.log(error);
+        return { status: 504, message: '操作异常' };
+      }
+    },
+
+    RemoveDynamic: async (root, args, ctx, op) => {
+      try {
+        const { user } = ctx;
+        if (!user) return { status: 401, message: '尚未登录' };
+        const { _id } = args;
+
+        const dynamic = await Dynamic.findById(_id);
+
+        if (!dynamic) return { status: 401, message: '对象不存在或已被删除' };
+
+        if (dynamic.user+'' !== user) return { status: 403, message: '权限不足' };
+
+        await dynamic.remove();
+
+        return { status: 200, message: '删除成功', data: dynamic };
       } catch (error) {
         console.log('error');
         console.log(error);
@@ -175,7 +196,6 @@ export default {
         console.log(error);
       }
     },
-    
   },
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
