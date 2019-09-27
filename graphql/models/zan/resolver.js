@@ -1,5 +1,5 @@
-
 import Zan from '@/mongo/models/zan';
+import Notification from '@/mongo/models/notification';
 
 export default {
   Mutation: {
@@ -18,6 +18,9 @@ export default {
         }
 
         await Zan.create({ zanTo: _id, user });
+
+        Notification.create({ user: _id, actionor: user, type: 'follow' });
+
         return { status: 200, message: '点赞成功' };
       } catch (error) {
         console.log('error');

@@ -13,34 +13,32 @@ import { userLoader } from '@/mongo/models/user/dataloader';
 import Notification from '@/mongo/models/notification';
 import Dynamic from '@/mongo/models/dynamic';
 
-async function CreateNotification({
-  _id,
-  type,
-  user,
-  actionor,
-  actionorShowText,
-}) {
-  let content;
-
-  if (type === 'commentToDynamic') {
-    const dynamic = await Dynamic.findById(_id);
-    console.log('dynamic');
-    console.log(dynamic);
-    content = dynamic.content
+async function CreateNotification({ _id, type, actionor, actionorShowText }) {
+  try {
+    let content;
+    let user;
+    if (type === 'commentToDynamic') {
+      const dynamic = await Dynamic.findById(_id);
+      if (!dynamic) return;
+      user = dynamic.user;
+      content = dynamic.content;
+    }
+    if (type === 'commentToComment') {
+      const comment = await Comment.findById(_id);
+      if (!comment) return;
+      user = comment.user;
+      content = comment.content;
+    }
+    await Notification.create({
+      user,
+      actionor,
+      type: 'comment',
+      userShowText: content,
+      actionorShowText,
+    });
+  } catch (error) {
+    console.log(error);
   }
-  if (type === 'commentToComment') {
-    const comment = await Comment.findById(_id);
-    console.log('comment');
-    console.log(comment);
-    content = comment.content
-  }
-  await Notification.create({
-    user,
-    actionor,
-    type: 'comment',
-    userShowText: content,
-    actionorShowText,
-  });
 }
 
 export default {
@@ -49,18 +47,8 @@ export default {
       console.log('createComment');
       const { user } = ctx;
 
-      console.log('args');
-      console.log(args);
+      if (!user) return { status: 403, message: '尚未登录' };
 
-      // if (!user) {
-      //   throw new AuthenticationError('must authenticate');
-      // }
-      if (!user) {
-        return {
-          status: 403,
-          message: '尚未登录',
-        };
-      }
       const { _id, ...params } = args;
       if (_id) {
         console.log('更新模式');
@@ -88,23 +76,12 @@ export default {
       console.log('创建模式');
       const data = await Comment.create({ ...params, user });
 
-      // Notification.create({
-      //   user: _id,
-      //   actionor: user,
-      //   type: 'comment',
-      //   userShowText: '',
-      //   actionorShowText: data.content,
-      // });
-
-      // console.log('params');
-      // console.log(params);
-
       CreateNotification({
-        user: _id,
+        // replyTo 回复评论，session评论场景
+        _id: params.replyTo || params.session,
         actionor: user,
         actionorShowText: data.content,
-        _id: params.replyTo || params.session,
-        type: (!params.replyTo && !params.commentTo) ? 'commentToDynamic' : 'commentToComment',
+        type: !params.replyTo ? 'commentToDynamic' : 'commentToComment',
       });
 
       if (data) {
