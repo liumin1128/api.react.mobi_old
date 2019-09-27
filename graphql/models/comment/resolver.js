@@ -30,7 +30,7 @@ async function CreateNotification({ _id, type, actionor, actionorShowText }) {
       user = comment.user;
       content = comment.content;
     }
-    if (user === actionor) return;
+    if (user+'' === actionor+'') return;
     await Notification.create({
       user,
       actionor,
