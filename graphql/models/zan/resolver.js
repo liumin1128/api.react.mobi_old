@@ -13,6 +13,8 @@ async function CreateNotification({ _id, actionor }) {
     user = comment.user;
     content = comment.content;
 
+    if (user === actionor) return;
+
     await Notification.create({
       user,
       actionor,

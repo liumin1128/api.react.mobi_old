@@ -17,6 +17,7 @@ async function CreateNotification({ _id, type, actionor, actionorShowText }) {
   try {
     let content;
     let user;
+
     if (type === 'comment') {
       const dynamic = await Dynamic.findById(_id);
       if (!dynamic) return;
@@ -29,6 +30,7 @@ async function CreateNotification({ _id, type, actionor, actionorShowText }) {
       user = comment.user;
       content = comment.content;
     }
+    if (user === actionor) return;
     await Notification.create({
       user,
       actionor,
