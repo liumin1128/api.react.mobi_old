@@ -17,13 +17,13 @@ async function CreateNotification({ _id, type, actionor, actionorShowText }) {
   try {
     let content;
     let user;
-    if (type === 'commentToDynamic') {
+    if (type === 'comment') {
       const dynamic = await Dynamic.findById(_id);
       if (!dynamic) return;
       user = dynamic.user;
       content = dynamic.content;
     }
-    if (type === 'commentToComment') {
+    if (type === 'reply') {
       const comment = await Comment.findById(_id);
       if (!comment) return;
       user = comment.user;
@@ -32,7 +32,7 @@ async function CreateNotification({ _id, type, actionor, actionorShowText }) {
     await Notification.create({
       user,
       actionor,
-      type: 'comment',
+      type,
       userShowText: content,
       actionorShowText,
     });
@@ -76,12 +76,22 @@ export default {
       console.log('创建模式');
       const data = await Comment.create({ ...params, user });
 
+
+
+      console.log(user)
+      console.log(user)
+      console.log(user)
+      console.log(user)
+      console.log(user)
+      console.log(user)
+      console.log(user)
+
       CreateNotification({
         // replyTo 回复评论，session评论场景
         _id: params.replyTo || params.session,
         actionor: user,
         actionorShowText: data.content,
-        type: !params.replyTo ? 'commentToDynamic' : 'commentToComment',
+        type: !params.replyTo ? 'comment' : 'reply',
       });
 
       if (data) {

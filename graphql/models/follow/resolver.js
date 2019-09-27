@@ -17,7 +17,7 @@ async function follow(root, args, ctx, op) {
 
     await Follow.create({ follow: _id, user });
 
-    Notification.create({ user: _id, actionor: user, type: 'follow' });
+    Notification.create({ actionor: user, user: _id, type: 'follow' });
 
     return { status: 200, message: '关注成功' };
   } catch (error) {

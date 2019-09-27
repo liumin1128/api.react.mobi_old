@@ -1,3 +1,4 @@
+import notification from './models/notification/schema';
 import dynamic from './models/dynamic/schema';
 import user from './models/user/schema';
 import article from './models/article/schema';
@@ -14,7 +15,8 @@ import news from './models/news/schema';
 
 export default `
   scalar Date
-  
+
+  ${notification}
   ${dynamic}
   ${user}
   ${article}
@@ -38,6 +40,11 @@ export default `
 
     # 用户
     userInfo: User!
+
+    # 消息通知
+    notification(_id: String): Notification
+    notifications(first: Int, skip: Int): [Notification]
+    _notificationsMeta: NotificationMeta!
 
     # 文章
     article(_id: String): Article!

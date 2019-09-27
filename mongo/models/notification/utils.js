@@ -2,7 +2,7 @@ export function getActionShowText(type) {
   let actionShowText = '';
   switch (type) {
     case 'zan': {
-      actionShowText = '赞了你的评论';
+      actionShowText = '赞了你';
       break;
     }
     case 'comment': {
@@ -10,7 +10,7 @@ export function getActionShowText(type) {
       break;
     }
     case 'reply': {
-      actionShowText = '回复了你的评论';
+      actionShowText = '回复了你';
       break;
     }
     case 'like': {

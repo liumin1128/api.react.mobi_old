@@ -1,4 +1,5 @@
 import user from './models/user/resolver';
+import notification from './models/notification/resolver';
 import dynamic from './models/dynamic/resolver';
 import article from './models/article/resolver';
 import wechat from './models/wechat/resolver';
@@ -19,6 +20,7 @@ import { resolverCombine } from './utils';
 export default resolverCombine(
   scalar,
   user,
+  notification,
   dynamic,
   article,
   wechat,
