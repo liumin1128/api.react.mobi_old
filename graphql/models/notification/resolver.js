@@ -14,15 +14,17 @@ export default {
         const { user } = ctx;
         if (!user) return { status: 401, message: '尚未登录' };
 
-        const { skip = 0, first = 10, sort = '-_id' } = args;
+        const { skip = 0, first = 10, sort = '-_id', unread, type } = args;
 
-        const data = await Notification.find({ user })
+        const query = {};
+        query.user = user;
+        if (unread) query.unread = unread;
+        if (type) query.type = type;
+
+        const data = await Notification.find(query)
           .skip(skip)
           .limit(first)
           .sort(sort);
-
-        console.log('Notification');
-        console.log(data);
 
         return data;
       } catch (error) {

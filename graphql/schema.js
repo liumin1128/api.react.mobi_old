@@ -43,7 +43,7 @@ export default `
 
     # 消息通知
     notification(_id: String): Notification
-    notifications(first: Int, skip: Int): [Notification]
+    notifications(first: Int, skip: Int, unread: Boolean, type: String): [Notification]
     _notificationsMeta: NotificationMeta!
 
     # 文章
