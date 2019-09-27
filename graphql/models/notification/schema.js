@@ -7,6 +7,7 @@ export default `
     createdAt: String!
     user: User
     actionor: User
+    type: String
     content: String
     actionShowText: String
     actionorShowText: String

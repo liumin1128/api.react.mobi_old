@@ -1,6 +1,7 @@
 import { AuthenticationError, ApolloError } from 'apollo-server';
+import { stringify } from 'query-string';
 import User from '@/mongo/models/user';
-import Oauth from '@/mongo/models/oauth';
+// import Oauth from '@/mongo/models/oauth';
 import { getUserToken } from '@/utils/jwt';
 import { sentSMS } from '@/utils/sms';
 import { randomCode, checkPasswordStrength } from '@/utils/common';
@@ -9,6 +10,7 @@ import { md5Encode } from '@/utils/crypto';
 import { userLoader } from '@/mongo/models/user/dataloader';
 import { oauthsLoader } from '@/mongo/models/oauth/dataloader';
 import { sendMail, getVerifyMailTemplate } from '@/server/mail/exqq';
+import { followStatusLoader } from '@/mongo/models/follow/dataloader';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -478,5 +480,6 @@ export default {
 
   User: {
     oauths: (root, args, ctx) => oauthsLoader.load(ctx.user),
+    followStatus: ({ _id }, _, { user }) => (user ? followStatusLoader.load(stringify({ follow: _id, user })) : false),
   },
 };

@@ -39,6 +39,7 @@ export default `
     purePhoneNumber: String 
     phoneNumber: String 
     oauths: [UserOauth]
+    followStatus: Boolean
   }
 
   type UserLoginResult {
