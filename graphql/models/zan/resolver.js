@@ -1,5 +1,28 @@
 import Zan from '@/mongo/models/zan';
 import Notification from '@/mongo/models/notification';
+import Comment from '@/mongo/models/comment';
+
+async function CreateNotification({ _id, actionor }) {
+  try {
+    let content;
+    let user;
+
+    const comment = await Comment.findById(_id);
+    if (!comment) return;
+
+    user = comment.user;
+    content = comment.content;
+
+    await Notification.create({
+      user,
+      actionor,
+      type: 'zan',
+      userShowText: content,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default {
   Mutation: {
@@ -19,7 +42,7 @@ export default {
 
         await Zan.create({ zanTo: _id, user });
 
-        Notification.create({ user: _id, actionor: user, type: 'follow' });
+        CreateNotification({ _id, actionor: user });
 
         return { status: 200, message: '点赞成功' };
       } catch (error) {
