@@ -7,6 +7,7 @@ async function follow(root, args, ctx, op) {
     if (!user) return { status: 403, message: '尚未登录' };
 
     const { _id } = args;
+    // 无法关注自己
     if (_id === user) return;
     if (!_id) return { status: 401, message: '参数异常' };
 
