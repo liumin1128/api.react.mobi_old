@@ -32,9 +32,11 @@ export default {
       }
     },
 
-    _notificationsMeta: async (root, args) => {
+    _notificationsMeta: async (root, args, ctx) => {
       try {
-        const data = await Notification.countDocuments();
+        const { user } = ctx;
+
+        const data = await Notification.countDocuments({ user });
         return { count: data };
       } catch (error) {
         console.log(error);
