@@ -26,6 +26,16 @@ export default `
     userInfo: String
   }
 
+  # 用户的社区信息
+  type UserCommunityInfo {
+    # 关注了多少人
+    follow: Int
+    # 被多少人关注
+    fans: Int
+    # 动态数
+    dynamic: Int
+  }
+
   type User {
     _id: String!
     nickname: String!
@@ -40,6 +50,15 @@ export default `
     phoneNumber: String 
     oauths: [UserOauth]
     followStatus: Boolean
+
+    # 关注了多少人
+    follow: Int
+
+    # 被多少人关注
+    fans: Int
+
+    # 动态数
+    dynamic: Int
   }
 
   type UserLoginResult {

@@ -1,12 +1,16 @@
 import mongoose from 'mongoose';
 import { stringify } from 'query-string';
 import config from './schema';
-import { followCountLoader, followStatusLoader } from './dataloader';
+import {
+  followCountLoader,
+  fansCountLoader,
+  followStatusLoader,
+} from './dataloader';
 
 function refreshDataloader(next) {
   // 刷新点赞数
-  const key = this.follow.toString();
-  followCountLoader.clear(key);
+  followCountLoader.clear(this.user.toString());
+  fansCountLoader.clear(this.follow.toString());
   followStatusLoader.clear(stringify({ follow: this.follow, user: this.user }));
   next();
 }

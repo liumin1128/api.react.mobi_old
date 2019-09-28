@@ -10,7 +10,8 @@ import { md5Encode } from '@/utils/crypto';
 import { userLoader } from '@/mongo/models/user/dataloader';
 import { oauthsLoader } from '@/mongo/models/oauth/dataloader';
 import { sendMail, getVerifyMailTemplate } from '@/server/mail/exqq';
-import { followStatusLoader } from '@/mongo/models/follow/dataloader';
+import { followStatusLoader, followCountLoader, fansCountLoader } from '@/mongo/models/follow/dataloader';
+import { userDynamicCountLoader } from '@/mongo/models/dynamic/dataloader';
 
 function getKey(phone, code) {
   return `purePhoneNumber=${phone}&code=${code}`;
@@ -32,11 +33,9 @@ export default {
       if (!user) {
         throw new AuthenticationError('用户未登录');
       }
-      console.log('user');
-      console.log(user);
+ 
       const data = await userLoader.load(user);
-      console.log('data');
-      console.log(data);
+  
       if (!data) {
         throw new ApolloError('用户不存在', 403, {
           test: 'xxx',
@@ -44,6 +43,22 @@ export default {
       }
       return data;
     },
+
+    // userCommunityInfo: async (root, args, ctx) => {
+    //   const { user } = ctx;
+    //   if (!user) {
+    //     throw new AuthenticationError('用户未登录');
+    //   }
+ 
+    //   const data = await userLoader.load(user);
+  
+    //   if (!data) {
+    //     throw new ApolloError('用户不存在', 403, {
+    //       test: 'xxx',
+    //     });
+    //   }
+    //   return data;
+    // },
 
     // userOauth: async (root, args, ctx) => {
     //   const { user } = ctx;
@@ -481,5 +496,11 @@ export default {
   User: {
     oauths: (root, args, ctx) => oauthsLoader.load(ctx.user),
     followStatus: ({ _id }, _, { user }) => (user ? followStatusLoader.load(stringify({ follow: _id, user })) : false),
+    // 关注数
+    follow: ({ _id }) => followCountLoader.load(_id.toString()),
+    // 粉丝数
+    fans: ({ _id }) => fansCountLoader.load(_id.toString()),
+    // 动态数
+    dynamic: ({ _id }) => userDynamicCountLoader.load(_id.toString()),
   },
 };
