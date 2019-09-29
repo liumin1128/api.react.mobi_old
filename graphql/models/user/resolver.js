@@ -44,6 +44,22 @@ export default {
       return data;
     },
 
+    userInfoById: async (root, args, ctx) => {
+      const { _id } = args;
+      if (!_id) {
+        throw new AuthenticationError('用户_id不存在');
+      }
+ 
+      const data = await userLoader.load(_id);
+  
+      if (!data) {
+        throw new ApolloError('用户不存在', 403, {
+          test: 'xxx',
+        });
+      }
+      return data;
+    },
+
     // userCommunityInfo: async (root, args, ctx) => {
     //   const { user } = ctx;
     //   if (!user) {

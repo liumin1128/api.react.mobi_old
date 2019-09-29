@@ -46,6 +46,7 @@ export default `
 
     # 用户
     userInfo: User!
+    userInfoById(_id: String): User!
 
     # 消息通知
     notification(_id: String): Notification
