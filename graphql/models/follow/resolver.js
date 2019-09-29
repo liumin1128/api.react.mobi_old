@@ -9,7 +9,8 @@ async function follow(root, args, ctx, op) {
 
     const { _id } = args;
     // 无法关注自己
-    if (_id === user) return;
+    if (_id === user) return { status: 401, message: '不要关注自己' };
+
     if (!_id) return { status: 401, message: '参数异常' };
 
     const obj = await Follow.findOne({ follow: _id, user });
