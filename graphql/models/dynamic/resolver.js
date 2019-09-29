@@ -144,12 +144,18 @@ export default {
         const { skip = 0, first = 10, topic, user, sort = '-_id' } = args;
 
         let dt;
+        const query = {};
+
         if (topic) {
           dt = await DynamicTopic.findOne({ number: topic });
+          query.topics = { $elemMatch: { $eq: dt._id } };
+        }
+        if (user) {
+          query.user = user;
         }
 
         const data = await Dynamic
-          .find(dt ? { topics: { $elemMatch: { $eq: dt._id } } } : {})
+          .find(query)
           .skip(skip)
           .limit(first)
           .sort(sort);

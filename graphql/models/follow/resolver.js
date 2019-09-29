@@ -1,5 +1,6 @@
 import Follow from '@/mongo/models/follow';
 import Notification from '@/mongo/models/notification';
+import { userLoader } from '@/mongo/models/user/dataloader';
 
 async function follow(root, args, ctx, op) {
   try {
@@ -28,8 +29,65 @@ async function follow(root, args, ctx, op) {
   }
 }
 
+async function follows(root, args, ctx, op) {
+  try {
+    const { user } = args;
+    const users = await Follow.find({ user });
+    console.log('follows');
+    console.log(users);
+    return users;
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+}
+
+async function _followsMeta(root, args, ctx, op) {
+  try {
+    const { user } = args;
+    const data = await Follow.countDocuments({ user });
+    return { count: data };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function fans(root, args, ctx, op) {
+  try {
+    const { user } = args;
+
+    const users = await Follow.find({ follow: user });
+    return users;
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+}
+
+async function _fansMeta(root, args, ctx, op) {
+  try {
+    const { user } = args;
+    const data = await Follow.countDocuments({ follow: user });
+    console.log('data');
+    console.log(data);
+    return { count: data };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   Mutation: {
     follow,
+  },
+  Query: {
+    follows,
+    fans,
+    _fansMeta,
+    _followsMeta,
+  },
+  Follow: {
+    user: ({ user }) => userLoader.load(user.toString()),
+    follow: ({ follow: _id }) => userLoader.load(_id.toString()),
   },
 };

@@ -12,6 +12,7 @@ import qiniu from './models/qiniu/schema';
 import comment from './models/comment/schema';
 import like from './models/like/schema';
 import news from './models/news/schema';
+import follow from './models/follow/schema';
 
 export default `
   scalar Date
@@ -28,12 +29,17 @@ export default `
   ${other}
   ${qiniu}
   ${comment}
+  ${follow}
   ${like}
   ${news}
 
   type Result {
     status: Int!
     message: String
+  }
+
+  type ListQueryMeta {
+    count: Int!
   }
 
   type Query {
@@ -56,6 +62,12 @@ export default `
     replys(first: Int, skip: Int, commentTo: String!): [Comment]
     _commentsMeta(session: String!): CommentsMeta!
     comment(_id: String): Comment!
+
+    # 关注
+    follows(first: Int, skip: Int, user: String!): [Follow]
+    _followsMeta(user: String!): ListQueryMeta
+    fans(first: Int, skip: Int, user: String!): [Follow]
+    _fansMeta(user: String!): ListQueryMeta
 
     # 喜欢
     likes(first: Int, skip: Int, user: String, unlike: Boolean): [Like]
