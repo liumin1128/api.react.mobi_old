@@ -1,7 +1,7 @@
 export default `
   type Follow {
     _id: String!
-    createdAt: String!
+    createdAt: Date!
     user: User!
     follow: User!
   }

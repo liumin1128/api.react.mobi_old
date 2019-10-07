@@ -8,7 +8,7 @@ export default `
     iframe: String
     pictures: [String!]
     topics: [DynamicTopic]
-    createdAt: String!
+    createdAt: Date! 
     user: User
     zanCount: Int
     zanStatus: Boolean
@@ -18,7 +18,7 @@ export default `
     _id: String!
     title: String!
     number: String!
-    createdAt: String!
+    createdAt: Date!
   }
   input DynamicInput {
     content: String!

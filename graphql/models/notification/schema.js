@@ -4,7 +4,7 @@ export default `
   }
   type Notification {
     _id: String!
-    createdAt: String!
+    createdAt: Date!
     user: User
     actionor: User
     type: String

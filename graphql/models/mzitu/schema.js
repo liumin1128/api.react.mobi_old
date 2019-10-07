@@ -7,7 +7,7 @@ export default `
   type Mzitu {
     _id: String
     title: String
-    createdAt: String
+    createdAt: Date
     url: String
     view: String
     cover: MzituCover

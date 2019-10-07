@@ -1,3 +1,4 @@
+import { AuthenticationError, ApolloError } from 'apollo-server';
 import Notification from '@/mongo/models/notification';
 import { userLoader } from '@/mongo/models/user/dataloader';
 
@@ -11,8 +12,11 @@ export default {
 
     notifications: async (root, args, ctx) => {
       try {
+        console.log(
+          'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        );
         const { user } = ctx;
-        if (!user) return { status: 401, message: '尚未登录' };
+        if (!user) return AuthenticationError({ status: 401, message: '尚未登录' });
 
         const { skip = 0, first = 10, sort = '-_id', unread, type } = args;
 
@@ -25,6 +29,9 @@ export default {
           .skip(skip)
           .limit(first)
           .sort(sort);
+
+        console.log('data');
+        console.log(data);
 
         return data;
       } catch (error) {
