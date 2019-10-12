@@ -1,9 +1,9 @@
-import { Article } from '@/mongo/models';
-import {
-  commentCountLoader,
-  likeCountLoader,
-  likeStatusLoader,
-} from '../../utils';
+import Article from '@/mongo/models/article';
+// import {
+//   commentCountLoader,
+//   likeCountLoader,
+//   likeStatusLoader,
+// } from '../../utils';
 import { AuthenticationError } from 'apollo-server-koa';
 import { userLoader } from '@/mongo/models/user/dataloader';
 
@@ -15,35 +15,11 @@ export default {
       if (!user) {
         throw new AuthenticationError('must authenticate');
       }
-      const {
-        input: { _id, ...params },
-      } = args;
-      if (_id) {
-        console.log('更新模式');
-        const dynamic = await Article.findById(_id);
-        if (dynamic) {
-          if (dynamic.user.toString() === user) {
-            await dynamic.update(params);
-            return {
-              status: 200,
-              message: '更新成功',
-            };
-          }
-          return {
-            status: 403,
-            message: '权限不足',
-          };
-        } else {
-          return {
-            status: 401,
-            message: '目标不存在或已被删除',
-          };
-        }
-      }
+      const { input } = args;
 
       console.log('创建模式');
-      const dynamic = await Article.create({ ...params, user });
-      if (dynamic) {
+      const data = await Article.create({ ...input, user });
+      if (data) {
         return {
           status: 200,
           message: '创建成功',
@@ -53,6 +29,41 @@ export default {
         status: 500,
         message: '系统异常',
       };
+    },
+
+    updateArticle: async (root, args, ctx, op) => {
+      console.log('createArticle');
+      const { user } = ctx;
+      if (!user) {
+        throw new AuthenticationError('must authenticate');
+      }
+      const { input, _id } = args;
+
+      console.log('更新模式');
+
+      const data = await Article.findById(_id);
+
+      console.log('data');
+      console.log(data);
+      console.log(user);
+      if (data) {
+        if (data.user.toString() === user) {
+          await data.update(input);
+          return {
+            status: 200,
+            message: '更新成功',
+          };
+        }
+        return {
+          status: 403,
+          message: '权限不足',
+        };
+      } else {
+        return {
+          status: 401,
+          message: '目标不存在或已被删除',
+        };
+      }
     },
 
     deleteArticle: async (root, args, ctx, op) => {
@@ -75,10 +86,14 @@ export default {
             message: '目标不存在或已被删除',
           };
         }
-        const dynamic = await Article.findById(id);
-        if (dynamic) {
-          if (dynamic.user.toString() === user) {
-            await dynamic.remove();
+        const data = await Article.findById(id);
+        console.log('data');
+        console.log(data);
+        if (data) {
+          console.log(data.user.toString());
+          console.log(user);
+          if (data.user.toString() === user) {
+            await data.remove();
             return {
               status: 200,
               message: '删除成功',
@@ -113,6 +128,9 @@ export default {
           .limit(first)
           .sort(sort);
 
+        console.log('data');
+        console.log(data);
+
         return data;
       } catch (error) {
         console.log(error);
@@ -132,10 +150,10 @@ export default {
 
     // commentCount: ({ _id }) => commentCountLoader.load(_id.toString()),
     // 管道查询的关键字session为字符型
-    commentCount: ({ _id }) => commentCountLoader.load(_id),
-    likeCount: ({ _id }) => likeCountLoader.load(_id),
+    // commentCount: ({ _id }) => commentCountLoader.load(_id),
+    // likeCount: ({ _id }) => likeCountLoader.load(_id),
 
     // 查询当前帖子列表中，每一个帖子是否由当前用户点赞
-    likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
+    // likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
   },
 };

@@ -1,23 +1,23 @@
 import modalCreator from './modalCreator';
 
-import {
-  // userSchema,
-  // oauthSchema,
-  articleSchema,
-  // dynamicSchema,
-  // commentSchema,
-  likeSchema,
-  newsSchema,
-} from '../schemas';
+// import {
+//   // userSchema,
+//   // oauthSchema,
+//   articleSchema,
+//   // dynamicSchema,
+//   // commentSchema,
+//   likeSchema,
+//   newsSchema,
+// } from '../schemas';
 
 // import { commentReplysLoader, replysCountLoader } from '../dataloader';
 
 // export const Dynamic = modalCreator('Dynamic', dynamicSchema);
 // export const User = modalCreator('User', userSchema);
 // export const Oauth = modalCreator('Oauth', oauthSchema);
-export const Article = modalCreator('Article', articleSchema);
-export const Like = modalCreator('Like', likeSchema);
-export const News = modalCreator('News', newsSchema);
+// export const Article = modalCreator('Article', articleSchema);
+// export const Like = modalCreator('Like', likeSchema);
+// export const News = modalCreator('News', newsSchema);
 
 // export const Comment = modalCreator('Comment', commentSchema, (schema) => {
 //   function refreshDataloader(next) {

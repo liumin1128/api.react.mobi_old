@@ -15,7 +15,7 @@ export default `
     html: String!
     json: String!
     cover: String
-    user: User!
+    user: User
     
     commentCount: Int
     likeCount: Int
@@ -29,7 +29,6 @@ export default `
     tags: [String]
     description: String
     cover: String
-
-    _id: String
+    type: String
   }
 `;

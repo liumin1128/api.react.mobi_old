@@ -126,6 +126,7 @@ export default `
 
     # 创建文章
     createArticle(input: ArticleInput): Result!
+    updateArticle(input: ArticleInput, _id: String): Result!
 
     # 删除文章
     deleteArticle(_id: String): Result!
