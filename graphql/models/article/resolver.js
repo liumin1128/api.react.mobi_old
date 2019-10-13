@@ -1,11 +1,11 @@
+import { AuthenticationError } from 'apollo-server-koa';
 import Article from '@/mongo/models/article';
 import { verifyPermission } from '@/mongo/models/article/utils';
-// import {
-//   commentCountLoader,
-//   likeCountLoader,
-//   likeStatusLoader,
-// } from '../../utils';
-import { AuthenticationError } from 'apollo-server-koa';
+import {
+  likeCountLoader,
+  likeStatusLoader,
+} from '@/mongo/models/like/dataloader';
+import { commentsCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
@@ -132,13 +132,10 @@ export default {
   },
   Article: {
     user: ({ user }) => userLoader.load(user.toString()),
-
-    // commentCount: ({ _id }) => commentCountLoader.load(_id.toString()),
     // 管道查询的关键字session为字符型
-    // commentCount: ({ _id }) => commentCountLoader.load(_id),
-    // likeCount: ({ _id }) => likeCountLoader.load(_id),
-
+    commentCount: ({ _id }) => commentsCountLoader.load(_id.toString()),
+    likeCount: ({ _id }) => likeCountLoader.load(_id),
     // 查询当前帖子列表中，每一个帖子是否由当前用户点赞
-    // likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
+    likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
   },
 };

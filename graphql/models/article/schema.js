@@ -16,11 +16,11 @@ export default `
     json: String!
     cover: String
     user: User
+    description: String
     
     commentCount: Int
     likeCount: Int
     likeStatus: String
-    description: String
   }
   input ArticleInput {
     title: String!
