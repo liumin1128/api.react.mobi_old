@@ -9,6 +9,6 @@ export default `
 
     article: Article!
     user: User!
-    unlike: Boolean
+    status: Int
   }
 `;

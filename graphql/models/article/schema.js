@@ -20,7 +20,7 @@ export default `
     
     commentCount: Int
     likeCount: Int
-    likeStatus: String
+    likeStatus: Int
   }
   input ArticleInput {
     title: String!

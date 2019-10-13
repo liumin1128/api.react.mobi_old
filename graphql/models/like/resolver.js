@@ -12,7 +12,17 @@ export default {
           return { status: 403, message: '尚未登录' };
         }
 
-        const { id, unlike = false } = args;
+        const { id, status = 1 } = args;
+
+        const messageList = {
+          0: '无',
+          1: '喜欢',
+          2: '不喜欢',
+          12: '喜欢 > 不喜欢',
+          21: '不喜欢 > 喜欢',
+          10: '不喜欢了',
+          20: '不反对了',
+        };
 
         if (!id) {
           return { status: 401, message: '参数异常' };
@@ -20,19 +30,27 @@ export default {
 
         const data = await Like.findOne({ id, user });
 
+        console.log('data');
+        console.log(data);
+
         if (data) {
-          if (data.unlike === unlike) {
+          console.log('data.status, status');
+          console.log(data.status, status);
+          if (data.status === status) {
             await data.remove();
-            return { status: 200, message: unlike ? '不反对了' : '不喜欢了' };
+            return {
+              status: 200,
+              message: messageList[`${data.status}0`],
+            };
           }
-          await data.update({ unlike });
+          await data.update({ status });
           return {
             status: 200,
-            message: unlike ? '喜欢 => 反对' : '反对 => 喜欢',
+            message: messageList[`${data.status}${status}`],
           };
         } else {
-          await Like.create({ id, user, unlike });
-          return { status: 200, message: unlike ? '反对' : '喜欢' };
+          await Like.create({ id, user, status });
+          return { status: 200, message: messageList[`${status}`] };
         }
       } catch (error) {
         console.log('error');
@@ -43,9 +61,9 @@ export default {
   Query: {
     likes: async (root, args, ctx) => {
       try {
-        const { user, unlike, skip = 0, first = 5, sort = '-_id' } = args;
+        const { user, status, skip = 0, first = 5, sort = '-_id' } = args;
 
-        const data = await Like.find({ user, unlike })
+        const data = await Like.find({ user, status })
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -57,8 +75,8 @@ export default {
     },
     _likesMeta: async (root, args) => {
       try {
-        const { user, unlike } = args;
-        const data = await Like.countDocuments({ user, unlike });
+        const { user, status } = args;
+        const data = await Like.countDocuments({ user, status });
         return { count: data };
       } catch (error) {
         console.log(error);
@@ -66,7 +84,7 @@ export default {
     },
   },
   Like: {
-    user: ({ user }) => userLoader.load(user.toString()),
+    // user: ({ user }) => userLoader.load(user.toString()),
     // article: ({ id }) => articleLoader.load(id),
   },
 };

@@ -1,9 +1,10 @@
 import { AuthenticationError } from 'apollo-server-koa';
+import { stringify } from 'query-string';
 import Article from '@/mongo/models/article';
 import { verifyPermission } from '@/mongo/models/article/utils';
 import {
   likeCountLoader,
-  likeStatusLoader,
+  likeOrDislikeStatusLoader,
 } from '@/mongo/models/like/dataloader';
 import { commentsCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '@/mongo/models/user/dataloader';
@@ -136,6 +137,8 @@ export default {
     commentCount: ({ _id }) => commentsCountLoader.load(_id.toString()),
     likeCount: ({ _id }) => likeCountLoader.load(_id),
     // 查询当前帖子列表中，每一个帖子是否由当前用户点赞
-    likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
+    likeStatus: ({ _id }, args, { user }) => (user ? likeOrDislikeStatusLoader.load(stringify({ id: _id.toString(), user })) : 0),
+    // likeStatus: ({ _id }, args, { user }) => (user ? likeStatusLoader.load({ _id, user }) : undefined),
   },
 };
+ 

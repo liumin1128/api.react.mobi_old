@@ -71,8 +71,8 @@ export default `
     _fansMeta(user: String!): ListQueryMeta
 
     # 喜欢
-    likes(first: Int, skip: Int, user: String, unlike: Boolean): [Like]
-    _likesMeta(user: String, unlike: Boolean): LikesMeta!
+    likes(first: Int, skip: Int, user: String, status: Int): [Like]
+    _likesMeta(user: String, status: Int): LikesMeta!
 
     # 动态
     dynamic(_id: String): Dynamic
@@ -150,7 +150,7 @@ export default `
     follow(_id: String): Result!
 
     # 喜欢
-    like(id: String!, unlike: Boolean): Result!
+    like(id: String!, status: Int): Result!
 
   }
 `;
