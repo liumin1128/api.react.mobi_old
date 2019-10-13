@@ -1,4 +1,4 @@
-import { News } from '@/mongo/models';
+import News from '@/mongo/models/news';
 // import {  commentCountLoader, likeCountLoader, likeStatusLoader } from '../../utils';
 // import { userLoader } from '@/mongo/models/user/dataloader';
 

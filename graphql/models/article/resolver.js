@@ -39,13 +39,8 @@ export default {
       }
       const { input, _id } = args;
 
-      console.log('更新模式');
-
       const data = await Article.findById(_id);
 
-      console.log('data');
-      console.log(data);
-      console.log(user);
       if (data) {
         if (data.user.toString() === user) {
           await data.update(input);
