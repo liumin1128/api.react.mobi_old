@@ -1,5 +1,4 @@
-import { Like } from '@/mongo/models';
-import { articleLoader } from '../../utils';
+import Like from '@/mongo/models/like';
 import { userLoader } from '@/mongo/models/user/dataloader';
 
 export default {
@@ -14,6 +13,7 @@ export default {
         }
 
         const { id, unlike = false } = args;
+
         if (!id) {
           return { status: 401, message: '参数异常' };
         }
@@ -67,6 +67,6 @@ export default {
   },
   Like: {
     user: ({ user }) => userLoader.load(user.toString()),
-    article: ({ id }) => articleLoader.load(id),
+    // article: ({ id }) => articleLoader.load(id),
   },
 };
