@@ -1,4 +1,5 @@
 import Article from '@/mongo/models/article';
+import { verifyPermission } from '@/mongo/models/article/utils';
 // import {
 //   commentCountLoader,
 //   likeCountLoader,
@@ -65,47 +66,36 @@ export default {
       try {
         console.log('deleteArticle');
 
+        const { _id } = args;
+        if (!_id) {
+          return {
+            status: 401,
+            message: '目标不存在或已被删除',
+          };
+        }
+
         const { user } = ctx;
-        // if (!user) throw new AuthenticationError('must authenticate');
-        if (!user) {
+        const hasPermission = await verifyPermission(user, _id);
+        if (!hasPermission) {
           return {
             status: 403,
             message: '权限不足',
           };
         }
-        const { id } = args;
-        // if (!id) throw new ApolloError('参数无效', 401);
-        if (!id) {
-          return {
-            status: 401,
-            message: '目标不存在或已被删除',
-          };
-        }
-        const data = await Article.findById(id);
-        console.log('data');
-        console.log(data);
-        if (data) {
-          console.log(data.user.toString());
-          console.log(user);
-          if (data.user.toString() === user) {
-            await data.remove();
-            return {
-              status: 200,
-              message: '删除成功',
-            };
-          }
-          return {
-            status: 403,
-            message: '权限不足',
-          };
-        } else {
-          return {
-            status: 401,
-            message: '目标不存在或已被删除',
-          };
-        }
+
+        await Article.deleteOne({ _id });
+
+        return {
+          status: 200,
+          message: '删除成功',
+        };
       } catch (error) {
         console.log(error);
+
+        return {
+          status: 500,
+          message: '系统异常',
+        };
       }
     },
   },
