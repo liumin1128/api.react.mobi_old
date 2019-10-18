@@ -1,9 +1,9 @@
 import { stringify } from 'query-string';
 import fetch from 'node-fetch';
-import { API_KEY } from '@/config/idataapi';
 import uniqBy from 'lodash/uniqBy';
 import reverse from 'lodash/reverse';
-import { News } from '@/mongo/models';
+import { API_KEY } from '@/config/idataapi';
+import News from '@/mongo/models/news';
 import { format, filter, getNews } from './utils';
 import { sleep } from '@/utils/common';
 
@@ -31,33 +31,34 @@ export async function getData(args) {
     console.log(`本次查到 ${data.data.length} 条数据${data.pageToken}`);
 
     const result = uniqBy(reverse(data.data), 'title')
-    // const result = data.data
+      // const result = data.data
       .filter(i => filter(i))
       .map(i => format(i));
 
-    let hasNew = false
+    let hasNew = false;
 
-    await Promise.all(result.map(async (i) => {
-      const obj = await News.findOne({ $or: [
-        { 'sourceData.id': i.id },
-        { 'sourceData.title': i.title },
-      ] });
-      // const obj = await News.findOne({ 'sourceData.id': i.id });
-      if (obj) {
-        console.log('已存在：', i.title);
-        return;
-      }
+    await Promise.all(
+      result.map(async (i) => {
+        const obj = await News.findOne({
+          $or: [{ 'sourceData.id': i.id }, { 'sourceData.title': i.title }],
+        });
+        // const obj = await News.findOne({ 'sourceData.id': i.id });
+        if (obj) {
+          console.log('已存在：', i.title);
+          return;
+        }
 
-      hasNew = true
-      try {
-        const news = await getNews(i);
-        await News.create(news);
-        console.log('已写入：', i.title);
-      } catch (error) {
-        console.log(`写入失败：${i.title}`);
-        console.log(error);
-      }
-    }));
+        hasNew = true;
+        try {
+          const news = await getNews(i);
+          await News.create(news);
+          console.log('已写入：', i.title);
+        } catch (error) {
+          console.log(`写入失败：${i.title}`);
+          console.log(error);
+        }
+      }),
+    );
 
     if (data.hasNext && data.pageToken && hasNew) {
       await sleep(3000);
