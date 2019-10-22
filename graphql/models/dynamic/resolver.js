@@ -1,38 +1,11 @@
 import { stringify } from 'query-string';
 import Dynamic from '@/mongo/models/dynamic';
 import DynamicTopic from '@/mongo/models/dynamic/topic';
-import uniq from 'lodash/uniq';
-import { sequence } from '@/utils/promise';
 import { dynamicTopicLoader } from '@/mongo/models/dynamic/topic/dataloader';
 import { zanCountLoader, zanStatusLoader } from '@/mongo/models/zan/dataloader';
 import { commentsAndRelysCountLoader } from '@/mongo/models/comment/dataloader';
 import { userLoader } from '@/mongo/models/user/dataloader';
-
-function getTopic(str) {
-  const list = str.match(/#(\S*?)#/g);
-  if (!list) return null;
-  return uniq(list
-    .map(i => i.replace(/#/g, ''))
-    .filter(i => i));
-}
-
-async function getTopics(topicStrList) {
-  const topics = [];
-
-  await sequence(topicStrList.map(topic => async () => {
-    const that = await DynamicTopic.findOne({ title: topic });
-    if (that) {
-      topics.push(that);
-      return;
-    }
-    const last = await DynamicTopic.findOne().sort('-_id');
-    const number = (last || { number: 1000 }).number + 1;
-    const data = await DynamicTopic.create({ title: topic, number });
-    topics.push(data);
-  }));
-
-  return topics;
-}
+import { getTopic, getTopics } from './topic.js';
 
 export default {
   Mutation: {
@@ -76,7 +49,7 @@ export default {
 
         if (!dynamic) return { status: 401, message: '对象不存在或已被删除' };
 
-        if (dynamic.user+'' !== user) return { status: 403, message: '权限不足' };
+        if (`${dynamic.user}` !== user) return { status: 403, message: '权限不足' };
 
         await dynamic.updateOne({ ...input, topics });
 
@@ -98,7 +71,7 @@ export default {
 
         if (!dynamic) return { status: 401, message: '对象不存在或已被删除' };
 
-        if (dynamic.user+'' !== user) return { status: 403, message: '权限不足' };
+        if (`${dynamic.user}` !== user) return { status: 403, message: '权限不足' };
 
         await dynamic.remove();
 
@@ -113,8 +86,9 @@ export default {
     CheckNewDynamic: async (root, args) => {
       try {
         const { latest } = args;
-        const data = await Dynamic.countDocuments({ createdAt: { $gt: latest } });
-
+        const data = await Dynamic.countDocuments({
+          createdAt: { $gt: latest },
+        });
 
         if (data > 0) {
           return {
@@ -154,8 +128,7 @@ export default {
           query.user = user;
         }
 
-        const data = await Dynamic
-          .find(query)
+        const data = await Dynamic.find(query)
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -172,8 +145,7 @@ export default {
       try {
         const { skip = 0, first = 10, sort = '-_id', title } = args;
 
-        const data = await DynamicTopic
-          .find({ title: new RegExp(title) })
+        const data = await DynamicTopic.find({ title: new RegExp(title) })
           .skip(skip)
           .limit(first)
           .sort(sort);
@@ -205,7 +177,9 @@ export default {
   },
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
-    topics: ({ topics }) => Promise.all(topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString()))),
+    topics: ({ topics }) => Promise.all(
+      topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString())),
+    ),
     zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
     zanStatus: ({ _id }, _, { user }) => (user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false),
     commentCount: ({ _id }) => commentsAndRelysCountLoader.load(_id.toString()),
