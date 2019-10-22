@@ -1,11 +1,19 @@
+import { ApolloError } from 'apollo-server';
 import Dynamic from '@/mongo/models/dynamic';
 import DynamicTopicModel from '@/mongo/models/dynamic/topic';
 
 export async function dynamic(root, args) {
-  const { _id } = args;
-  const data = await Dynamic.findById(_id);
-  // if(!data) throw new
-  return data;
+  try {
+    const { _id } = args;
+    if (!_id) return new ApolloError('id不能为空', 401);
+    const data = await Dynamic.findById(_id);
+    if (!data) return new ApolloError('目标不存在', 404);
+    return data;
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+    return new ApolloError('系统错误', 502);
+  }
 }
 
 export async function dynamics(root, args) {
