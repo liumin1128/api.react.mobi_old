@@ -4,6 +4,7 @@ import DynamicTopicModel from '@/mongo/models/dynamic/topic';
 export async function dynamic(root, args) {
   const { _id } = args;
   const data = await Dynamic.findById(_id);
+  // if(!data) throw new
   return data;
 }
 
