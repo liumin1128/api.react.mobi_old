@@ -2,7 +2,7 @@ export default `
   type BxgifList {
     _id: String
     title: String
-    createdAt: Date
+    createdAt: String
     url: String
     comment: String
     cover: String

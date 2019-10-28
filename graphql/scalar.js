@@ -15,7 +15,7 @@ export default {
       } else if (_.isInteger(value)) {
         return value;
       }
-      return value.getTime();
+      return new Date(value).getTime();
     },
     parseLiteral(ast) {
       if (ast.kind === Kind.INT) {
