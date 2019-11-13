@@ -487,7 +487,7 @@ export default {
             url: 'https://api.react.mobi/rest/mail/verify?token='+token
           }),
         });
-
+ 
         await User.updateOne(
           { _id: user },
           {

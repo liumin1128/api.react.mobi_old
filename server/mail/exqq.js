@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
-import exqq from '@/config/exqq';
 import swig from 'swig';
 import path from 'path';
+import exqq from '@/config/exqq';
 
 const transporter = nodemailer.createTransport({
   // host: 'smtp.ethereal.email',
@@ -54,3 +54,21 @@ export function getVerifyMailTemplate(options) {
   );
   return template(options);
 }
+
+export function sentTestMail() {
+  const template = swig.compileFile(
+    path.join(__dirname, './templates/test2.html'),
+  );
+
+  const html = template({});
+
+  sendMail({
+    to: '970568830@qq.com',
+    subject: '邮箱测试',
+    html,
+  });
+}
+
+// setTimeout(() => {
+//   sentTestMail();
+// }, 1000);
