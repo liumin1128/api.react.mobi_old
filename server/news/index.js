@@ -8,23 +8,23 @@ import { getData } from './service';
 // test();
 // switch,cos
 
-if (!ENV) {
-  /* eslint-disable no-new */
-  new CronJob(
-    '0 */60 * * * *',
-    () => {
-      const start = moment().subtract(1, 'day');
-      const end = moment();
-      const publishDateRange = `${start.format('X')},${end.format('X')}`;
-      console.log(`抓取${start.format('llll')}至今的文章`);
-      getData({
-        keyword: 'switch',
-        catLabel1: '游戏',
-        publishDateRange,
-      });
-    },
-    null,
-    true,
-  );
-  /* eslint-enable no-new */
-}
+// if (!ENV) {
+//   /* eslint-disable no-new */
+//   new CronJob(
+//     '0 */60 * * * *',
+//     () => {
+//       const start = moment().subtract(1, 'day');
+//       const end = moment();
+//       const publishDateRange = `${start.format('X')},${end.format('X')}`;
+//       console.log(`抓取${start.format('llll')}至今的文章`);
+//       getData({
+//         keyword: 'switch',
+//         catLabel1: '游戏',
+//         publishDateRange,
+//       });
+//     },
+//     null,
+//     true,
+//   );
+//   /* eslint-enable no-new */
+// }
