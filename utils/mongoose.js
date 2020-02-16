@@ -14,18 +14,18 @@ ObjectId.prototype.valueOf = function() {
 
 // const index = client.initIndex('test_test');
 
-mongoose.connect(
-  ENV
-    ? 'mongodb://localhost:27017/react'
-    : 'mongodb://react:lol970568830@localhost:27000/react',
-  { useNewUrlParser: true },
-);
-
 // mongoose.connect(
-//   'mongodb://localhost:27017/react',
+//   ENV
+//     ? 'mongodb://localhost:27017/react'
+//     : 'mongodb://react:lol970568830@localhost:27000/react',
 //   { useNewUrlParser: true },
-//   // initAlgolia,
 // );
+
+mongoose.connect(
+  'mongodb://localhost:27017/react',
+  { useNewUrlParser: true },
+  // initAlgolia,
+);
 
 mongoose.set('debug', ENV);
 mongoose.Promise = global.Promise;
