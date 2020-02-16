@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import algoliasearch from 'algoliasearch';
 import { ENV } from '@/config/base';
 import { APP_ID, ADMIN_KEY } from '@/config/algolia';
+import { MONGODB_PATH } from '@/config/mongo';
 
 // 解决了graphql的bug
 // https://github.com/apollographql/apollo-server/issues/1633
@@ -21,13 +22,10 @@ ObjectId.prototype.valueOf = function() {
 //   { useNewUrlParser: true },
 // );
 
-mongoose.connect(
-  'mongodb://localhost:27017/react',
-  { useNewUrlParser: true },
-  // initAlgolia,
-);
+mongoose.connect(MONGODB_PATH, { useNewUrlParser: true });
 
 mongoose.set('debug', ENV);
+
 mongoose.Promise = global.Promise;
 
 // function initAlgolia() {
