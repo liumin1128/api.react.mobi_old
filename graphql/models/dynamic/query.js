@@ -36,7 +36,7 @@ export async function dynamics(root, args) {
       .limit(first)
       .sort(sort);
 
-    return data;
+    return data || [];
   } catch (error) {
     console.log(error);
   }
@@ -65,11 +65,12 @@ export async function DynamicTopic(root, args) {
   }
 }
 
-export async function _dynamicsMeta(root, args) {
+export async function _dynamicsMeta() {
   try {
     const data = await Dynamic.countDocuments();
     return { count: data };
   } catch (error) {
     console.log(error);
+    return error;
   }
 }

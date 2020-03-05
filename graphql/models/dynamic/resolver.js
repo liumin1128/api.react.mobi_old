@@ -37,11 +37,13 @@ export default {
 
   Dynamic: {
     user: ({ user }) => userLoader.load(user.toString()),
-    topics: ({ topics }) => Promise.all(
-      topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString())),
-    ),
+    topics: ({ topics }) =>
+      Promise.all(
+        topics.map(({ _id }) => dynamicTopicLoader.load(_id.toString())),
+      ),
     zanCount: ({ _id }) => zanCountLoader.load(_id.toString()),
-    zanStatus: ({ _id }, _, { user }) => (user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false),
+    zanStatus: ({ _id }, _, { user }) =>
+      user ? zanStatusLoader.load(stringify({ zanTo: _id, user })) : false,
     commentCount: ({ _id }) => commentsAndRelysCountLoader.load(_id.toString()),
   },
 };

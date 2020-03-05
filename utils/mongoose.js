@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import algoliasearch from 'algoliasearch';
+// import algoliasearch from 'algoliasearch';
 import { ENV } from '@/config/base';
-import { APP_ID, ADMIN_KEY } from '@/config/algolia';
+// import { APP_ID, ADMIN_KEY } from '@/config/algolia';
 import { MONGODB_PATH } from '@/config/mongo';
 
 // 解决了graphql的bug
@@ -15,14 +15,10 @@ ObjectId.prototype.valueOf = function() {
 
 // const index = client.initIndex('test_test');
 
-// mongoose.connect(
-//   ENV
-//     ? 'mongodb://localhost:27017/react'
-//     : 'mongodb://react:lol970568830@localhost:27000/react',
-//   { useNewUrlParser: true },
-// );
-
-mongoose.connect(MONGODB_PATH, { useNewUrlParser: true });
+mongoose.connect(MONGODB_PATH, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 mongoose.set('debug', ENV);
 
