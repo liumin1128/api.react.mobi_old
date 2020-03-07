@@ -21,5 +21,14 @@ export default {
         console.log(error);
       }
     },
+    _newsMeta: async (root, args) => {
+      try {
+        const data = await News.countDocuments();
+        return { count: data };
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    },
   },
 };

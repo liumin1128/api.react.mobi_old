@@ -110,6 +110,7 @@ export default `
 
     # 新闻资讯
     NewsList(first: Int, skip: Int, keyword: String, pageToken: String): [News]
+    _newsMeta: NewsMeta!
     NewsDetail(_id: String!): News
   }
   type Mutation {
