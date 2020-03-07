@@ -1,5 +1,11 @@
 import qiniu from 'qiniu';
-import { ACCESS_KEY, SECRET_KEY, BUCKET_NAME, EXPIRES_TIME, BUCKET_DOMAIN } from '../config/qiniu';
+import {
+  ACCESS_KEY,
+  SECRET_KEY,
+  BUCKET_NAME,
+  EXPIRES_TIME,
+  BUCKET_DOMAIN,
+} from '../config/qiniu';
 
 const mac = new qiniu.auth.digest.Mac(ACCESS_KEY, SECRET_KEY);
 const options = {
@@ -18,7 +24,7 @@ export const getQiniuToken = () => {
   };
 };
 
-export const fetch = (params) => {
+export function fetch(params) {
   let resUrl;
   let key;
   if (typeof params === 'string') {
@@ -47,13 +53,14 @@ export const fetch = (params) => {
       }
     });
   });
-};
+}
 
-export const fetchToQiniu = (params) => {
+export function fetchToQiniu(params) {
   return fetch(params)
     .then(({ key }) => `${BUCKET_DOMAIN}/${key}`)
-    .catch((err) => {
+    .catch(err => {
       console.log('拉取七牛图片出错');
       console.log(err);
+      return '';
     });
-};
+}
