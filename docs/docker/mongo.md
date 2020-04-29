@@ -1,8 +1,3 @@
-docker ps
-docker stats
-docker stop
-docker restart
-
 ### 安装并启动 mongodb
 
 docker run -itd --name mongo -p 27017:27017 mongo --auth
@@ -33,4 +28,4 @@ db.auth('react', '123456')
 
 ### 运行 docker
 
-docker run -itd -p 6379:6379 redis
+docker run -itd --name redis -p 6379:6379 redis
