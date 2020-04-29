@@ -36,3 +36,4 @@ EOF
 # echo '>>> stop mongo'
 # docker stop mongo
 
+echo '>>> init done'
