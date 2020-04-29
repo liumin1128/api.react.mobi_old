@@ -1,1 +1,0 @@
-rsync -r ./config/* root@47.94.132.105:/root/api.react.mobi/config

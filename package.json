@@ -4,7 +4,7 @@
   "description": "npm i -d  npm i -s koa koa-router koa-bodyparser koa-helmet koa-jwt koa-static koa2-cors jsonwebtoken mongoose lodash node-fetch redis bluebird moment query-string apollo-server graphql cheerio showapi-sdk @alicloud/sms-sdk qiniu",
   "main": "index.js",
   "scripts": {
-    "start": "sh ./dev.sh",
+    "start": "sh ./scripts/dev.sh",
     "dev": "nodemon index.js",
     "pm2": "pm2 restart ./process.json",
     "test": "echo \"Error: no test specified\" && exit 1"
