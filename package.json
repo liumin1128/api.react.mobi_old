@@ -29,7 +29,7 @@
     "@alicloud/sms-sdk": "^1.1.6",
     "algoliasearch": "^3.35.1",
     "apollo-server": "^2.1.0",
-    "apollo-server-koa": "^2.1.0",
+    "apollo-server-koa": "^2.14.2",
     "bluebird": "^3.5.2",
     "cheerio": "^1.0.0-rc.2",
     "cron": "^1.7.0",
