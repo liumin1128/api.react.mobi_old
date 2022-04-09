@@ -44,7 +44,7 @@
     "koa-static": "^5.0.0",
     "koa2-cors": "^2.0.6",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "mongoose": "^5.3.7",
     "node-fetch": "^2.2.0",
     "node-xlsx": "^0.12.1",
