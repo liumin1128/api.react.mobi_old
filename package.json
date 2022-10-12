@@ -28,7 +28,7 @@
   "dependencies": {
     "@alicloud/sms-sdk": "^1.1.6",
     "algoliasearch": "^3.35.1",
-    "apollo-server": "^2.1.0",
+    "apollo-server": "^2.25.4",
     "apollo-server-koa": "^2.1.0",
     "bluebird": "^3.5.2",
     "cheerio": "^1.0.0-rc.2",
